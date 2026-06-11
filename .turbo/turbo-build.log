@@ -1,0 +1,56 @@
+
+> web@0.1.0 build D:\capstone\project-link\apps\web
+> next build --webpack
+
+▲ Next.js 16.2.3 (webpack)
+- Environments: .env.local
+- Experiments (use with caution):
+  · serverActions
+
+  Creating an optimized production build ...
+✓ (serwist) Bundling the service worker script with the URL '/sw.js' and the scope '/'...
+✓ Compiled successfully in 61s
+  Running TypeScript ...
+  Finished TypeScript in 28.5s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/24) ...
+  Generating static pages using 7 workers (6/24) 
+  Generating static pages using 7 workers (12/24) 
+  Generating static pages using 7 workers (18/24) 
+✓ Generating static pages using 7 workers (24/24) in 3.2s
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /admin/dashboard
+├ ƒ /admin/health-stations/city-barangays
+├ ƒ /admin/health-stations/manage
+├ ƒ /admin/health-stations/manage/[id]/edit
+├ ƒ /admin/health-stations/manage/new
+├ ƒ /admin/health-stations/pins
+├ ƒ /admin/users
+├ ƒ /admin/users/[id]/edit
+├ ƒ /admin/users/new
+├ ƒ /bhw/dashboard
+├ ƒ /bhw/households
+├ ƒ /bhw/households/new
+├ ƒ /bhw/profile
+├ ƒ /bhw/sync
+├ ƒ /cho/dashboard
+├ ƒ /cho/health-stations/city-barangays
+├ ƒ /dashboard
+├ ○ /forgot-password
+├ ○ /login
+├ ○ /manifest.webmanifest
+├ ƒ /phn/dashboard
+├ ○ /rhm-manifest
+└ ƒ /rhm/dashboard
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

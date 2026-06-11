@@ -1,0 +1,423 @@
+PS D:\capstone\project-link\apps\web> npm run dev
+
+> web@0.1.0 dev
+> next dev --turbopack
+
+▲ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.18.66:3000
+- Environments: .env.local
+✓ Ready in 8.2s
+○ Compiling proxy ...
+- Experiments (use with caution):
+  · serverActions
+
+○ Compiling /login ...
+ GET /login 200 in 28.0s (next.js: 26.3s, proxy.ts: 52ms, application-code: 1657ms)
+ GET /manifest.webmanifest 200 in 1836ms (next.js: 1436ms, application-code: 400ms)
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+Error: aborted
+    at ignore-listed frames {
+  code: 'ECONNRESET'
+}
+⨯ uncaughtException: Error: aborted
+    at ignore-listed frames {
+  code: 'ECONNRESET'
+}
+⨯ uncaughtException:  Error: aborted
+    at ignore-listed frames {
+  code: 'ECONNRESET'
+}
+✓ Finished writing to filesystem cache in 60s
+ GET /login 200 in 56s (next.js: 7.2s, proxy.ts: 2.9s, application-code: 45s)
+ GET /manifest.webmanifest 200 in 470ms (next.js: 293ms, application-code: 177ms)
+○ Compiling /admin/dashboard ...
+✓ Finished filesystem cache database compaction in 34.3s
+⨯ ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
+Module not found: Can't resolve './header-profile-menu'
+  2 |
+  3 | import { Config } from "./config-drawer"
+> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { ThemeSwitch } from "./theme-switch"
+  6 |
+  7 | export function DashboardHeaderActions() {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./apps/web/components/layout/web/config-drawer.tsx:5:1
+Module not found: Can't resolve './theme-provider'
+  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
+  4 |
+> 5 | import { useTheme } from "./theme-provider"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Button } from "@/components/ui/button"
+  7 | import {
+  8 |   Sheet,
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
+Module not found: Can't resolve './theme-switch'
+  3 | import { Config } from "./config-drawer"
+  4 | import { HeaderProfileMenu } from "./header-profile-menu"
+> 5 | import { ThemeSwitch } from "./theme-switch"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | export function DashboardHeaderActions() {
+  8 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
+Module not found: Can't resolve './header-profile-menu'
+  2 |
+  3 | import { Config } from "./config-drawer"
+> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { ThemeSwitch } from "./theme-switch"
+  6 |
+  7 | export function DashboardHeaderActions() {
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[browser] ./apps/web/components/layout/web/config-drawer.tsx:5:1
+Module not found: Can't resolve './theme-provider'
+  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
+  4 |
+> 5 | import { useTheme } from "./theme-provider"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Button } from "@/components/ui/button"
+  7 | import {
+  8 |   Sheet,
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
+Module not found: Can't resolve './theme-switch'
+  3 | import { Config } from "./config-drawer"
+  4 | import { HeaderProfileMenu } from "./header-profile-menu"
+> 5 | import { ThemeSwitch } from "./theme-switch"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | export function DashboardHeaderActions() {
+  8 |   return (
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+○ Compiling /_error ...
+[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
+Module not found: Can't resolve './header-profile-menu'
+  2 |
+  3 | import { Config } from "./config-drawer"
+> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { ThemeSwitch } from "./theme-switch"
+  6 |
+  7 | export function DashboardHeaderActions() {
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[browser] ./apps/web/components/layout/web/config-drawer.tsx:5:1
+Module not found: Can't resolve './theme-provider'
+  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
+  4 |
+> 5 | import { useTheme } from "./theme-provider"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Button } from "@/components/ui/button"
+  7 | import {
+  8 |   Sheet,
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
+Module not found: Can't resolve './theme-switch'
+  3 | import { Config } from "./config-drawer"
+  4 | import { HeaderProfileMenu } from "./header-profile-menu"
+> 5 | import { ThemeSwitch } from "./theme-switch"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | export function DashboardHeaderActions() {
+  8 |   return (
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+ GET /admin/dashboard 500 in 64s (next.js: 57s, proxy.ts: 181ms, application-code: 6.7s)
+ POST /login 303 in 67s (next.js: 14ms, proxy.ts: 11ms, application-code: 67s)
+  └─ ƒ loginAction(null, {}) in 2010ms features/auth/login/actions.ts
+⨯ ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
+Module not found: Can't resolve './header-profile-menu'
+  2 |
+  3 | import { Config } from "./config-drawer"
+> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { ThemeSwitch } from "./theme-switch"
+  6 |
+  7 | export function DashboardHeaderActions() {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./apps/web/components/layout/web/config-drawer.tsx:5:1
+Module not found: Can't resolve './theme-provider'
+  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
+  4 |
+> 5 | import { useTheme } from "./theme-provider"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Button } from "@/components/ui/button"
+  7 | import {
+  8 |   Sheet,
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
+Module not found: Can't resolve './theme-switch'
+  3 | import { Config } from "./config-drawer"
+  4 | import { HeaderProfileMenu } from "./header-profile-menu"
+> 5 | import { ThemeSwitch } from "./theme-switch"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | export function DashboardHeaderActions() {
+  8 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /admin/dashboard 500 in 2.3s (next.js: 229ms, proxy.ts: 2.1s, application-code: 52ms)
+[browser] Uncaught Error: ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
+Module not found: Can't resolve './header-profile-menu'
+  2 |
+  3 | import { Config } from "./config-drawer"
+> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { ThemeSwitch } from "./theme-switch"
+  6 |
+  7 | export function DashboardHeaderActions() {
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
+    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
+    ./apps/web/app/(web)/layout.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1)       
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1)      
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+✓ Finished writing to filesystem cache in 13.8s
