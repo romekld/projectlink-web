@@ -1,7 +1,9 @@
 "use client"
 
+import { motion } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import type { ElementType } from "react"
 import {
   UserRound,
   Folder,
@@ -20,9 +22,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import type { SidebarSection } from "@/features/navigation/data/types"
 import { cn } from "@/lib/utils"
 
-const tabs = [
+type MobileNavTab = {
+  label: string
+  href: string
+  icon: ElementType
+  activeIcon?: ElementType
+  match: string[]
+}
+
+const defaultTabs: MobileNavTab[] = [
   {
     label: "Home",
     href: "/bhw/dashboard",
@@ -43,23 +54,40 @@ const tabs = [
   },
 ]
 
-export function BhwBottomNav() {
+function getMobileNavTabs(sections?: SidebarSection[]): MobileNavTab[] {
+  const tabs = sections?.flatMap((section) =>
+    section.items
+      .filter((item) => item.href)
+      .map((item) => ({
+        label: item.title,
+        href: item.href as string,
+        icon: item.icon ?? House,
+        activeIcon: item.activeIcon,
+        match: item.match ?? [item.href as string],
+      }))
+  )
+
+  return tabs?.length ? tabs : defaultTabs
+}
+
+export function MobileNavTab({ sections }: { sections?: SidebarSection[] }) {
   const pathname = usePathname()
+  const tabs = getMobileNavTabs(sections)
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 md:hidden">
+    <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-40">
       <div
-        className="mx-auto flex w-full max-w-md items-end justify-center gap-2 px-4"
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 0.75rem)" }}
+        className="mx-auto flex max-w-md items-end justify-center gap-2 pb-4"
       >
         <nav
           aria-label="BHW navigation"
-          className="pointer-events-auto flex h-12 flex-1 items-center gap-1 rounded-full border bg-background/95 p-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/90"
+          className="pointer-events-auto flex items-center gap-1 rounded-full bg-accent/95 p-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-accent/90"
         >
-          {tabs.map(({ label, href, icon: Icon, match }) => {
+          {tabs.map(({ label, href, icon: Icon, activeIcon, match }) => {
             const isActive = match.some(
               (m) => pathname === m || pathname.startsWith(m + "/")
             )
+            const NavIcon = isActive && activeIcon ? activeIcon : Icon
 
             return (
               <Link
@@ -67,20 +95,40 @@ export function BhwBottomNav() {
                 href={href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "flex h-10 min-w-0 items-center justify-center gap-2 rounded-full px-2.5 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.98]",
+                  "relative flex items-center justify-start rounded-full p-3 active:scale-[0.98] text-xs font-medium transition-colors duration-300",
                   isActive
-                    ? "flex-1 justify-start bg-accent text-accent-foreground"
-                    : "w-10 shrink-0 text-muted-foreground"
+                    ? "flex-1 text-background"
+                    : "shrink-0 text-muted-foreground/80 hover:text-foreground"
                 )}
               >
-                <Icon className="size-4 shrink-0" aria-hidden="true" />
-                <span
-                  className={cn(
-                    "overflow-hidden whitespace-nowrap transition-all duration-200 ease-out",
-                    isActive ? "max-w-24 opacity-100" : "max-w-0 opacity-0"
-                  )}
-                >
-                  {label}
+                {isActive && (
+                  <motion.div
+                    layoutId="active-nav-pill"
+                    className="absolute inset-0 bg-foreground rounded-full"
+                    transition={{
+                      type: "spring",
+                      bounce: 0.12,
+                      duration: 0.35,
+                    }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center">
+                  <NavIcon className="size-5 shrink-0" aria-hidden="true" />
+                  <motion.span
+                    initial={false}
+                    animate={{
+                      width: isActive ? "auto" : 0,
+                      marginLeft: isActive ? 8 : 0,
+                    }}
+                    transition={{
+                      type: "spring",
+                      bounce: 0.12,
+                      duration: 0.35,
+                    }}
+                    className="overflow-hidden whitespace-nowrap inline-block text-left"
+                  >
+                    {label}
+                  </motion.span>
                 </span>
               </Link>
             )
@@ -91,11 +139,10 @@ export function BhwBottomNav() {
           <DropdownMenuTrigger asChild>
             <Button
               type="button"
-              size="icon-lg"
               aria-label="Create a new record"
-              className="pointer-events-auto size-12 shrink-0 rounded-full shadow-sm"
+              className="pointer-events-auto shrink-0 rounded-full shadow-sm size-13"
             >
-              <Plus aria-hidden="true" />
+              <Plus aria-hidden="true" className="size-5" />
             </Button>
           </DropdownMenuTrigger>
 

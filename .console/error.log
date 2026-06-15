@@ -1,423 +1,194 @@
-PS D:\capstone\project-link\apps\web> npm run dev
+ GET /bhw/profile 200 in 974ms (next.js: 233ms, proxy.ts: 228ms, application-code: 513ms)
+ GET /manifest.webmanifest 404 in 285ms (next.js: 36ms, application-code: 249ms)
+Persisting failed: Unable to write SST file 00000239.sst
 
-> web@0.1.0 dev
-> next dev --turbopack
-
-▲ Next.js 16.2.3 (Turbopack)
-- Local:         http://localhost:3000
-- Network:       http://192.168.18.66:3000
-- Environments: .env.local
-✓ Ready in 8.2s
-○ Compiling proxy ...
-- Experiments (use with caution):
-  · serverActions
-
-○ Compiling /login ...
- GET /login 200 in 28.0s (next.js: 26.3s, proxy.ts: 52ms, application-code: 1657ms)
- GET /manifest.webmanifest 200 in 1836ms (next.js: 1436ms, application-code: 400ms)
-[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
-Error: aborted
-    at ignore-listed frames {
-  code: 'ECONNRESET'
-}
-⨯ uncaughtException: Error: aborted
-    at ignore-listed frames {
-  code: 'ECONNRESET'
-}
-⨯ uncaughtException:  Error: aborted
-    at ignore-listed frames {
-  code: 'ECONNRESET'
-}
-✓ Finished writing to filesystem cache in 60s
- GET /login 200 in 56s (next.js: 7.2s, proxy.ts: 2.9s, application-code: 45s)
- GET /manifest.webmanifest 200 in 470ms (next.js: 293ms, application-code: 177ms)
-○ Compiling /admin/dashboard ...
-✓ Finished filesystem cache database compaction in 34.3s
-⨯ ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
-Module not found: Can't resolve './header-profile-menu'
-  2 |
-  3 | import { Config } from "./config-drawer"
-> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 | import { ThemeSwitch } from "./theme-switch"
-  6 |
-  7 | export function DashboardHeaderActions() {
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-
-./apps/web/components/layout/web/config-drawer.tsx:5:1
-Module not found: Can't resolve './theme-provider'
-  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
-  4 |
-> 5 | import { useTheme } from "./theme-provider"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { Button } from "@/components/ui/button"
-  7 | import {
-  8 |   Sheet,
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-
-./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
-Module not found: Can't resolve './theme-switch'
-  3 | import { Config } from "./config-drawer"
-  4 | import { HeaderProfileMenu } from "./header-profile-menu"
-> 5 | import { ThemeSwitch } from "./theme-switch"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 |
-  7 | export function DashboardHeaderActions() {
-  8 |   return (
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
-Module not found: Can't resolve './header-profile-menu'
-  2 |
-  3 | import { Config } from "./config-drawer"
-> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 | import { ThemeSwitch } from "./theme-switch"
-  6 |
-  7 | export function DashboardHeaderActions() {
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-[browser] ./apps/web/components/layout/web/config-drawer.tsx:5:1
-Module not found: Can't resolve './theme-provider'
-  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
-  4 |
-> 5 | import { useTheme } from "./theme-provider"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { Button } from "@/components/ui/button"
-  7 | import {
-  8 |   Sheet,
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
-Module not found: Can't resolve './theme-switch'
-  3 | import { Config } from "./config-drawer"
-  4 | import { HeaderProfileMenu } from "./header-profile-menu"
-> 5 | import { ThemeSwitch } from "./theme-switch"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 |
-  7 | export function DashboardHeaderActions() {
-  8 |   return (
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
+Caused by:
+    The system cannot find the path specified. (os error 3)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
 ○ Compiling /_error ...
-[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
-Module not found: Can't resolve './header-profile-menu'
-  2 |
-  3 | import { Config } from "./config-drawer"
-> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 | import { ThemeSwitch } from "./theme-switch"
-  6 |
-  7 | export function DashboardHeaderActions() {
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-[browser] ./apps/web/components/layout/web/config-drawer.tsx:5:1
-Module not found: Can't resolve './theme-provider'
-  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
-  4 |
-> 5 | import { useTheme } from "./theme-provider"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { Button } from "@/components/ui/button"
-  7 | import {
-  8 |   Sheet,
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-[browser] ./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
-Module not found: Can't resolve './theme-switch'
-  3 | import { Config } from "./config-drawer"
-  4 | import { HeaderProfileMenu } from "./header-profile-menu"
-> 5 | import { ThemeSwitch } from "./theme-switch"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 |
-  7 | export function DashboardHeaderActions() {
-  8 |   return (
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
- GET /admin/dashboard 500 in 64s (next.js: 57s, proxy.ts: 181ms, application-code: 6.7s)
- POST /login 303 in 67s (next.js: 14ms, proxy.ts: 11ms, application-code: 67s)
-  └─ ƒ loginAction(null, {}) in 2010ms features/auth/login/actions.ts
-⨯ ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
-Module not found: Can't resolve './header-profile-menu'
-  2 |
-  3 | import { Config } from "./config-drawer"
-> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 | import { ThemeSwitch } from "./theme-switch"
-  6 |
-  7 | export function DashboardHeaderActions() {
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-
-./apps/web/components/layout/web/config-drawer.tsx:5:1
-Module not found: Can't resolve './theme-provider'
-  3 | import { RotateCcwIcon, SettingsIcon } from "lucide-react"
-  4 |
-> 5 | import { useTheme } from "./theme-provider"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { Button } from "@/components/ui/button"
-  7 | import {
-  8 |   Sheet,
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/config-drawer.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-
-./apps/web/components/layout/web/dashboard-header-actions.tsx:5:1
-Module not found: Can't resolve './theme-switch'
-  3 | import { Config } from "./config-drawer"
-  4 | import { HeaderProfileMenu } from "./header-profile-menu"
-> 5 | import { ThemeSwitch } from "./theme-switch"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 |
-  7 | export function DashboardHeaderActions() {
-  8 |   return (
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
- GET /admin/dashboard 500 in 2.3s (next.js: 229ms, proxy.ts: 2.1s, application-code: 52ms)
-[browser] Uncaught Error: ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1
-Module not found: Can't resolve './header-profile-menu'
-  2 |
-  3 | import { Config } from "./config-drawer"
-> 4 | import { HeaderProfileMenu } from "./header-profile-menu"
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  5 | import { ThemeSwitch } from "./theme-switch"
-  6 |
-  7 | export function DashboardHeaderActions() {
-
-
-
-Import traces:
-  Client Component Browser:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component Browser]      
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component Browser]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-  Client Component SSR:
-    ./apps/web/components/layout/web/dashboard-header-actions.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-header.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Client Component SSR]
-    ./apps/web/components/layout/web/dashboard-shell-frame.tsx [Server Component]
-    ./apps/web/app/(web)/layout.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-    at <unknown> (Error: ./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1)       
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
-    at <unknown> (Error: (./apps/web/components/layout/web/dashboard-header-actions.tsx:4:1)      
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
-✓ Finished writing to filesystem cache in 13.8s
+✓ Compiled in 19.4s
+⨯ Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\static\development\_buildManifest.js.tmp.vsquru6l1im'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\static\\development\\_buildManifest.js.tmp.vsquru6l1im'
+}
+⨯ Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\server\app\_not-found\page\build-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\app\\_not-found\\page\\build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'
+Require stack:
+- D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\require.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\load-components.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\build\utils.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-server.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\pages\\_document.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+ GET /bhw/profile 500 in 12.7s (next.js: 330ms, proxy.ts: 12.3s, application-code: 47ms)
+⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'
+Require stack:
+- D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\require.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\load-components.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\build\utils.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-server.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\pages\\_document.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+⨯ Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\server\app\_not-found\page\build-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\app\\_not-found\\page\\build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'
+Require stack:
+- D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\require.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\load-components.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\build\utils.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-server.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\pages\\_document.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+ GET /bhw/profile 500 in 377ms (next.js: 126ms, proxy.ts: 212ms, application-code: 38ms)
+⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'
+Require stack:
+- D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\require.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\load-components.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\build\utils.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-server.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\pages\\_document.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+⨯ Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\server\app\_not-found\page\build-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\app\\_not-found\\page\\build-manifest.json'
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+⨯ Error: Cannot find module '../chunks/ssr/[turbopack]_runtime.js'
+Require stack:
+- D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\require.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\load-components.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\build\utils.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\router-server.js
+- D:\capstone\project-link\node_modules\.pnpm\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\node_modules\next\dist\server\lib\start-server.js
+    at Object.<anonymous> (D:\capstone\project-link\apps\web\.next\dev\server\pages\_document.js:1:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\server\\pages\\_document.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\require.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\load-components.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\build\\utils.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'D:\\capstone\\project-link\\node_modules\\.pnpm\\next@16.2.9_@babel+core@7.2_ca1be24fbd112c4ab12c1aa4b561e179\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+Error: ENOENT: no such file or directory, open 'D:\capstone\project-link\apps\web\.next\dev\routes-manifest.json'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\capstone\\project-link\\apps\\web\\.next\\dev\\routes-manifest.json'
+}
+ GET /.well-known/appspecific/com.chrome.devtools.json 500 in 414ms (next.js: 171ms, proxy.ts: 201ms, application-code: 43ms)
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Compaction failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+Persisting f

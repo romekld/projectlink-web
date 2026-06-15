@@ -25,6 +25,7 @@ import {
 import type { SidebarItem } from "../data/types"
 import {
   hasActiveNavDescendant,
+  isActiveNavItem,
   isNavItemSelfActive,
 } from "../utils/is-active-nav-item"
 
@@ -38,6 +39,7 @@ export function SidebarNavItem({ item, pathname }: SidebarNavItemProps) {
   const isSelfActive = isNavItemSelfActive(pathname, item)
   const hasActiveChild = hasActiveNavDescendant(pathname, item)
   const isParentActive = isSelfActive && !hasActiveChild
+  const isItemActive = isActiveNavItem(pathname, item)
   const isCollapsed = state === "collapsed" && !isMobile
   const isChildMenuOpenByDefault = isSelfActive || hasActiveChild
 
@@ -52,7 +54,13 @@ export function SidebarNavItem({ item, pathname }: SidebarNavItemProps) {
                 tooltip={item.title}
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                {item.icon ? <item.icon /> : null}
+                    {item.icon ? (
+                      item.activeIcon && isItemActive ? (
+                        <item.activeIcon />
+                      ) : (
+                        <item.icon />
+                      )
+                    ) : null}
                 <span>{item.title}</span>
               </SidebarMenuButton>
             </DropdownMenuTrigger>
@@ -92,7 +100,13 @@ export function SidebarNavItem({ item, pathname }: SidebarNavItemProps) {
         <SidebarMenuItem>
           <CollapsibleTrigger asChild>
             <SidebarMenuButton isActive={isParentActive} tooltip={item.title}>
-              {item.icon ? <item.icon /> : null}
+              {item.icon ? (
+                item.activeIcon && isItemActive ? (
+                  <item.activeIcon />
+                ) : (
+                  <item.icon />
+                )
+              ) : null}
               <span>{item.title}</span>
               <ChevronRightIcon className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
             </SidebarMenuButton>
@@ -131,7 +145,13 @@ export function SidebarNavItem({ item, pathname }: SidebarNavItemProps) {
         tooltip={item.title}
       >
         <Link href={item.href}>
-          {item.icon ? <item.icon /> : null}
+          {item.icon ? (
+            item.activeIcon && isItemActive ? (
+              <item.activeIcon />
+            ) : (
+              <item.icon />
+            )
+          ) : null}
           <span>{item.title}</span>
         </Link>
       </SidebarMenuButton>

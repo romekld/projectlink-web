@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react"
+import type { ElementType } from "react"
 import type { Database } from "@/lib/supabase/database.types"
 
 export type UserRole = Database["public"]["Enums"]["user_role"]
@@ -18,7 +18,8 @@ export type SidebarItem = {
   id: string
   title: string
   href?: string
-  icon?: LucideIcon
+  icon?: ElementType
+  activeIcon?: ElementType
   match?: string[]
   children?: SidebarItem[]
 }

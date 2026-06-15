@@ -1,11 +1,19 @@
 "use client"
 
-import Link from "next/link"
-import { Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { PageHeader } from "@/components/layout/web/page-header"
-import { HouseholdsList } from "./components/households-list"
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 import type { Household } from "./data/schema"
+
+import { StatusTab } from "./components/status-tab"
+// import { SearchBar } from "./components/search-bar"
 
 type BhwHouseholdsPageProps = {
   households: Household[]
@@ -13,20 +21,24 @@ type BhwHouseholdsPageProps = {
 
 export function BhwHouseholdsPage({ households }: BhwHouseholdsPageProps) {
   return (
-    <section className="flex flex-col gap-4">
-      <PageHeader
-        title="Households"
-        description={`${households.length} assigned to you`}
-        controls={
-          <Button asChild className="w-full sm:w-auto">
-            <Link href="/bhw/households/new">
-              <Plus />
-              New HH Profile
-            </Link>
-          </Button>
-        }
-      />
-      <HouseholdsList households={households} />
+    <section className="flex flex-col gap-3">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            Household Lists
+          </CardTitle>
+          <CardDescription>Card Description</CardDescription>
+          <CardAction>Card Action</CardAction>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+      <StatusTab />
+
     </section>
   )
 }

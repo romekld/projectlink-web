@@ -33,7 +33,7 @@ export default async function FieldLayout({
     <>
       {children}
       <MustChangePasswordDialog initialOpen={viewer.mustChangePassword} />
-      <PwaInstallBanner />
+      {/* <PwaInstallBanner /> */}
     </>
   )
 }

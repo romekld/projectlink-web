@@ -1,7 +1,8 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { BhwBottomNav } from "@/components/layout/mobile/bhw-bottom-nav"
+import { MobileNavTab } from "@/components/layout/mobile/mobile-nav"
+import { bhwNavSections } from "./nav-config"
 
 export default function BhwLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -9,14 +10,16 @@ export default function BhwLayout({ children }: { children: React.ReactNode }) {
 
   if (isWizard) {
     return (
-      <div className="pt-3 px-3">{children}</div>
+      <div className="h-dvh ">{children}</div>
     )
   }
 
   return (
     <>
-      <div className="pb-24 md:pb-0 pt-3 px-3">{children}</div>
-      <BhwBottomNav />
+      <div className="px-4 md:px-10 lg:px-16 py-4 md:py-10 lg:py-16">
+        <MobileNavTab sections={bhwNavSections} />
+        {children}
+      </div>
     </>
   )
 }

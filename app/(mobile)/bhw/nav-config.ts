@@ -1,4 +1,4 @@
-import { CircleUserRound, Folder, House } from "lucide-react";
+import { IconSettings, IconSettingsFilled, IconHome2, IconHome2Filled, IconFolder, IconFolderFilled, IconClipboardList, IconClipboardListFilled } from '@tabler/icons-react';
 
 import type { SidebarSection } from "@/features/navigation/data/types";
 
@@ -11,7 +11,8 @@ export const bhwNavSections = [
         id: "bhw-dashboard",
         title: "Home",
         href: "/bhw/dashboard",
-        icon: House,
+        icon: IconHome2,
+        activeIcon: IconHome2Filled,
         match: ["/bhw/dashboard"],
       },
     ],
@@ -22,10 +23,25 @@ export const bhwNavSections = [
     items: [
       {
         id: "bhw-households",
-        title: "Household",
+        title: "Households",
         href: "/bhw/households",
-        icon: Folder,
+        icon: IconFolder,
+        activeIcon: IconFolderFilled,
         match: ["/bhw/households"],
+      },
+    ],
+  },
+  {
+    id: "bhw-clients",
+    label: "Clients",
+    items: [
+      {
+        id: "bhw-clients",
+        title: "Clients",
+        href: "/bhw/clients",
+        icon: IconClipboardList,
+        activeIcon: IconClipboardListFilled,
+        match: ["/bhw/clients"],
       },
     ],
   },
@@ -37,7 +53,8 @@ export const bhwNavSections = [
         id: "bhw-profile",
         title: "Profile",
         href: "/bhw/profile",
-        icon: CircleUserRound,
+        icon: IconSettings,
+        activeIcon: IconSettingsFilled,
         match: ["/bhw/profile"],
       },
     ],
