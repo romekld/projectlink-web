@@ -19,6 +19,7 @@ export interface WizardStepProps {
   onPrevious: () => void
   isFirstStep: boolean
   isLastStep: boolean
+  errors?: Record<string, string>
 }
 
 interface WizardContextValue {

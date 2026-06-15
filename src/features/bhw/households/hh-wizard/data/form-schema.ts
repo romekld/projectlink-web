@@ -24,27 +24,54 @@ export const householdInfoSchema = z.object({
 
 export const memberSchema = z.object({
   id: z.string(),
-  memberLastName: z.string().min(1, "Last name is required"),
-  memberFirstName: z.string().min(1, "First name is required"),
-  memberMiddleName: z.string().optional(),
-  memberMothersMaidenName: z.string().optional(),
-  relationshipToHhHead: z.enum([
-    "1-Head",
-    "2-Spouse",
-    "3-Son",
-    "4-Daughter",
-    "5-Others",
-  ]),
-  sex: z.enum(["M", "F"]),
+  lastName: z.string().min(1, "Last name is required"),
+  firstName: z.string().min(1, "First name is required"),
+  middleName: z.string().optional(),
+  relationshipToHhHead: z.string().min(1, "Relationship is required"),
+  sex: z.enum(["male", "female"]),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
-  dobEstimated: z.boolean(),
-  classificationQ1: z.string().optional(),
-  memberPhilhealthId: z.string().optional(),
-  memberRemarks: z.string().optional(),
+  age: z.string().optional(),
+  civilStatus: z.string().optional(),
+  education: z.string().optional(),
+  religion: z.string().optional(),
+  isIndigenousPeople: z.boolean().default(false),
+  philhealthId: z.string().optional(),
+  membershipType: z.string().optional(),
+  philhealthCategory: z.string().optional(),
+  medicalHistory: z.array(z.string()).default([]),
+  medicalOther: z.string().optional(),
+  classification: z.string().optional(),
+  usingFp: z.boolean().optional(),
+  fpMethod: z.string().optional(),
+  fpStatus: z.string().optional(),
+  lmp: z.string().optional(),
 })
 
 export type HouseholdInfoValues = z.infer<typeof householdInfoSchema>
-export type MemberValues = z.infer<typeof memberSchema>
+export type MemberValues = {
+  id: string
+  lastName: string
+  firstName: string
+  middleName?: string
+  relationshipToHhHead: string
+  sex: "male" | "female"
+  dateOfBirth: string
+  age?: string
+  civilStatus?: string
+  education?: string
+  religion?: string
+  isIndigenousPeople?: boolean
+  philhealthId?: string
+  membershipType?: string
+  philhealthCategory?: string
+  medicalHistory?: string[]
+  medicalOther?: string
+  classification?: string
+  usingFp?: boolean
+  fpMethod?: string
+  fpStatus?: string
+  lmp?: string
+}
 
 // Step-specific validation schemas for the household wizard
 
@@ -53,16 +80,17 @@ export const step1Schema = z.object({
   barangay: z.string().min(1, "Barangay is required"),
   respondentLastName: z.string().min(1, "Respondent last name is required"),
   respondentFirstName: z.string().min(1, "Respondent first name is required"),
-  waterSource: z.string().optional(),
-  toiletFacility: z.string().optional(),
+  waterSource: z.string().min(1, "Water source is required"),
+  toiletFacility: z.string().min(1, "Toilet facility is required"),
+  houseNoStreet: z.string().optional(),
+  purok: z.string().optional(),
+  quarter: z.string().optional(),
 })
 
 export const step2Schema = z.object({
-  members: z.array(z.object({
-    relationshipToHhHead: z.string(),
-  })).min(1, "At least one household member is required")
+  members: z.array(memberSchema).min(1, "At least one household member is required")
     .refine(
-      (members) => members.some(m => m.relationshipToHhHead === "1-Head"),
+      (members) => members.some(m => m.relationshipToHhHead === "1-Head" || m.relationshipToHhHead === "1"),
       "Household head is required"
     )
 })

@@ -15,11 +15,7 @@ import { InputGroupAddon } from "@/components/ui/input-group"
 import { LucideIcon } from "lucide-react"
 import {
   Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
+  ItemContent
 } from "@/components/ui/item"
 
 export interface ComboboxOption {
@@ -41,6 +37,7 @@ interface ComboboxFieldProps {
   disabled?: boolean
   error?: string
   description?: string
+  container?: HTMLElement | null
 }
 
 export function ComboboxField({
@@ -55,6 +52,7 @@ export function ComboboxField({
   disabled = false,
   error,
   description,
+  container,
 }: ComboboxFieldProps) {
   const selectedOption = React.useMemo(
     () => options.find((o) => o.value === value) || null,
@@ -83,9 +81,9 @@ export function ComboboxField({
             </InputGroupAddon>
           )}
         </ComboboxInput>
-        <ComboboxContent>
+        <ComboboxContent container={container}>
           <ComboboxEmpty>No options found.</ComboboxEmpty>
-          <ComboboxList className="max-h-[200px] !overflow-y-auto">
+          <ComboboxList>
             <ComboboxCollection>
               {(option: ComboboxOption) => (
                 <ComboboxItem key={option.value} value={option}>

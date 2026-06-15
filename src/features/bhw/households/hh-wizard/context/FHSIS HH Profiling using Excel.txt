@@ -1,0 +1,273 @@
+FHSIS Household (HH) Profiling
+using MS Excel Template
+
+Department of Health, Philippines
+
+Based on FHSIS MOP ver. 2018
+
+Household
+Profiling
+
+Department of Health, Philippines
+
+Department
+Memorandum
+2023-0060
+
+Department of Health, Philippines
+
+Department
+Memorandum
+2023-0060-A
+
+Department of Health, Philippines
+
+Date of Visit*:
+Record the date when the profiling was conducted. This is important for tracking the progress of the
+profiling project and for monitoring changes in the household's situation.
+Household Number*:
+The household number is a unique identifier for each household in the area being profiled. Write down
+the number assigned to the household you are profiling in the space provided. (yyyymm-facility codeNo.(00000))
+Note: KMITS will provide the facility code
+Barangay*:
+A barangay is the smallest political unit in the country. Generally, one enumerator is assigned to
+enumerate one barangay. For enumeration purposes, a large barangay is usually divided into parts, and
+each part is called an enumeration area (EA)
+
+Department of Health, Philippines
+
+Family:
+Write down how many Family/ies are included in the household (e.g. 1,2,3,4)
+Name of Household member*:
+Write down the full name of each household member (format: Last Name, First Name, Mother’s
+Maiden Name).
+Relationship*:
+Determine the relationship of each household member to the respondent. If the relationship is not
+listed, write down "Other" and specify the relationship to the respondent
+
+Department of Health, Philippines
+
+Department of Health, Philippines
+
+Birthdate*:
+Record the birth date of each household member (yyyy-mm-dd)
+
+Age in Years and Months*:
+Record the age of each household member
+Sex/Gender*:
+Record the Sex/Gender of each household member
+M - Male
+F - Female
+Civil Status*:
+Record the civil status of each household member
+S - Single
+M - Married
+L – Live-in
+W - Widow/er
+SP - Separated
+C - Cohabitation
+Department of Health, Philippines
+
+Educational Attainment
+Record the educational attainment of each household member
+Religion
+Record the religion of each household member
+Ethnicity (IP or Non-IP):
+Determine the IP or non-IP status of the household. Ask the respondent if they are part
+of an indigenous community or not. Mark "IP" if the household is part of an indigenous
+community or "Non-IP" if not.
+Pantawid Pamilyang Pilipino Program (4Ps) membership*:
+4Ps is a poverty reduction strategy that provides grants to extremely poor households
+to improve their health, nutrition and education particularly of children aged 0-14.
+
+Department of Health, Philippines
+
+Department of Health, Philippines
+
+Philippine Health Insurance Corporation (Philhealth) Membership and Category:
+
+PhilHealth is a government agency that provides health insurance to Filipinos. Write
+down the Philhealth number of the household head. For the Philhealth category,
+write down the Philhealth membership category of the household head.
+Categories include as follows:
+a. Direct Contribution
+b. Indirect Contribution
+
+Refer to the UHC IRR 11223 Page 10 Link: https://www.philhealth.gov.ph/about_us/UHC-IRR_Signed.pdf
+
+Department of Health, Philippines
+
+Refer to the UHC IRR 11223 Page 10 Link: https://www.philhealth.gov.ph/about_us/UHC-IRR_Signed.pdf
+
+Department of Health, Philippines
+
+Medical History*:
+A record of information about a person's health. A personal medical history may include
+information about allergies, illnesses, surgeries, immunizations, and results of physical
+exams and tests.
+Classification by age or Health risk group*:
+Record the classification by age or health risk group of each household member using
+the dropdown button
+Last Menstrual Period (LMP)
+Refers to the first day (onset of bleeding) of your last menstrual period before falling
+pregnant. This information is often used to calculate the expected date of delivery for
+your baby, which in humans is 40 ± 2 weeks from your LMP
+- if pregnant record the LMP in this date format (yyyy-mm-dd)
+
+Department of Health, Philippines
+
+Department of Health, Philippines
+
+FP Method Use (if applicable)
+Record what type of Modern
+Family method and other methods
+(e.g. DPT, Withdrawal and SDM)
+use of each household member if
+applicable
+Family Planning (FP) Status (if
+applicable)
+Record the status of FP of each
+household member if applicable
+
+Department of Health, Philippines
+
+Type of Toilet Facility*:
+The toilet facility is an important indicator of the living conditions of the household. Write
+down the type of toilet facility that the household has access to.
+
+This can be as follows:
+a. Sanitary Toilet Facility
+b. Unsanitary Toilet Facility
+
+Department of Health, Philippines
+
+Sanitary Toilet Facility
+a. Ventilated improved pit
+latrine (VIP) or composting
+toilet
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Sanitary Toilet Facility
+b. Pour/flush toilet
+connected to Septic tank
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Sanitary Toilet Facility
+c. Pour/flush toilet
+connected to septic tank
+and to sewerage system
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Unsanitary Toilet Facility
+a. Water-sealed connected
+to open drain
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Unsanitary Toilet Facility
+b. Overhung latrine
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Unsanitary Toilet Facility
+c. Open-pit Latrine
+
+Source: Department of Health - Health Promotion Bureau
+
+Department of Health, Philippines
+
+Unsanitary Toilet Facility
+d. Without toilet
+
+Department of Health, Philippines
+
+Source of Water Supply*:
+Record the source of water supply. Access to clean water is essential for the health and
+well-being of the household. Write down the source of water supply for the household.
+This can be as follows:
+Level I - A protected well or a developed spring with an outlet but without a distribution
+system, generally adaptable for rural areas where the houses are thinly scattered. A Level
+I facility normally serves an average of 15 households.
+Level II - A water supply facility composed of a source, a reservoir, a piped distribution
+network with adequate treatment facility, and communal faucets. Usually, one faucet
+serves 4 to 6 households. Generally suitable for rural and urban fringe areas where
+houses are clustered densely to justify a simple piped system. The definition was modified
+with the inclusion of the underlined phrase 'with adequate treatment' to emphasize that
+source of water supply has passed the Philippine National Standards for Drinking Water
+Department of Health, Philippines
+
+Level III - A water supply facility with a source, a reservoir, a piped distribution
+network with adequate treatment facility and household taps. Level III water supply
+facility/service is generally suited for densely populated urban areas. The definition
+was modified with the inclusion of the underlined phrase 'with adequate treatment' to
+emphasize that the source of water supply has passed the Philippine National
+Standards for Drinking Water.
+
+Department of Health, Philippines
+
+Summary
+Table
+
+Process in HH Profiling
+Source: FHSIS MOP ver. 2018
+
+It is expected that each HH in the catchment barangay has been assigned to a
+specific BHW or other community volunteer worker. Ideally, each BHW should cover
+about 20-25 HHs. However, this is not usually followed especially if there are only a
+few BHWs in the barangay. Other volunteer workers or health staff (e.g.
+NDPs/RHMPP”s) are also mobilized to handle specific HHs in a given barangay. As
+a process, the HH profiling entails the following steps:
+1. HH profiling must be conducted and completed at the beginning of the year
+(January), and must be updated on a quarterly basis. HH Profiles must be
+completed/ updated at the end of the first month of each quarter;
+
+Department of Health, Philippines
+
+Process in HH Profiling
+Source: FHSIS MOP ver. 2018
+
+2. The designated BHW/community volunteer worker/NDP shall conduct the
+profiling of HHs assigned to her by the midwife (MW). The MW must ensure that
+all HHs in her catchment barangay has been assigned to a specific
+BHW/community volunteer worker/NDP;
+3. All accomplished HH profiles will be submitted to their supervising midwives not
+later than the third week of January (and the first months of every quarter for the
+updated profiles); and
+4. The MW supervisor will compile all completed HH profiles to become the basis
+for master listing the different categories of clients to be reached/served.
+Note: the deadline for 2023 HH profiling is on or before September 29, 2023 (DM No. 2023-0060-A), and this is a onetime submission to the DOH-Epidemiology Bureau. The updated 2023 quarterly data is not required to submit.
+Department of Health, Philippines
+
+Submission of 2023 HH Profiling
+using Excel Template
+
+HH Profiling Forms,
+Templates, and Instructions
+
+BHS to RHU/MHC
+RHU/MHC to P/CHO
+P/CHO to DOH-CHD/MOH
+DOH-CHD/MOH to DOH-CO
+
+https://bit.ly/2023HHProfiling
+
+Note: submission of data from CHDs/MOH to CO is via google drive
+
+Department of Health, Philippines
+
+Maraming salamat po!
+
+

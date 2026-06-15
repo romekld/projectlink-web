@@ -27,7 +27,18 @@ import {
 } from "../../../data"
 import type { WizardStepProps } from "../wizard"
 
-export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
+import { useHouseholdWizard } from "@/lib/store/household-wizard"
+
+export function CoreIdentityStep({ data, onDataChange, errors = {}, container }: WizardStepProps & { container?: HTMLElement | null }) {
+    const { members } = useHouseholdWizard()
+    const hasHead = members.some(m => m.relationshipToHhHead === "1" || m.relationshipToHhHead === "1-Head")
+    
+    // Determine which options to disable
+    const filteredRelationshipOptions = relationshipOptions.map(opt => ({
+        ...opt,
+        disabled: opt.value === "1" && hasHead && data.relationship !== "1"
+    }))
+
     const handleDobChange = (dateString: string) => {
         const date = new Date(dateString)
         const today = new Date()
@@ -74,6 +85,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             placeholder="e.g. Dela Cruz"
                             value={(data.lastName as string) || ""}
                             onChange={(e) => onDataChange({ ...data, lastName: e.target.value })}
+                            error={errors.lastName}
                         />
                         <InputField
                             id="firstName"
@@ -81,6 +93,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             placeholder="e.g. Juanita"
                             value={(data.firstName as string) || ""}
                             onChange={(e) => onDataChange({ ...data, firstName: e.target.value })}
+                            error={errors.firstName}
                         />
                         <InputField
                             id="middleName"
@@ -88,6 +101,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             placeholder="Optional"
                             value={(data.middleName as string) || ""}
                             onChange={(e) => onDataChange({ ...data, middleName: e.target.value })}
+                            error={errors.middleName}
                         />
                     </div>
 
@@ -95,10 +109,12 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                         <ComboboxField
                             label="Relationship to Head *"
                             placeholder="Select relationship"
-                            options={relationshipOptions}
+                            options={filteredRelationshipOptions}
                             showAbbreviation
                             value={data.relationship as string}
                             onValueChange={(value) => onDataChange({ ...data, relationship: value })}
+                            error={errors.relationshipToHhHead}
+                            container={container}
                         />
                         {data.relationship === "5" && (
                             <InputField
@@ -108,6 +124,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                                 value={(data.specifyRelation as string) || ""}
                                 onChange={(e) => onDataChange({ ...data, specifyRelation: e.target.value })}
                                 className="animate-in fade-in slide-in-from-top-2 duration-300"
+                                error={errors.specifyRelation}
                             />
                         )}
                     </div>
@@ -124,6 +141,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                         <DateOfBirth
                             onDateChange={handleDobChange}
                             value={data.dateOfBirth as string}
+                            error={errors.dateOfBirth}
                         />
                         <InputField
                             id="age"
@@ -131,6 +149,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             placeholder="Auto-generated"
                             readOnly
                             value={(data.age as string) || ""}
+                            error={errors.age}
                         />
                     </div>
 
@@ -142,6 +161,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             showAbbreviation
                             value={data.sex as string}
                             onValueChange={(value) => onDataChange({ ...data, sex: value })}
+                            error={errors.sex}
                         />
                         <ComboboxField
                             label="Civil Status *"
@@ -150,6 +170,8 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             showAbbreviation
                             value={data.civilStatus as string}
                             onValueChange={(value) => onDataChange({ ...data, civilStatus: value })}
+                            error={errors.civilStatus}
+                            container={container}
                         />
                     </div>
                 </FieldGroup>
@@ -170,6 +192,8 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                         showAbbreviation
                         value={data.education as string}
                         onValueChange={(value) => onDataChange({ ...data, education: value })}
+                        error={errors.education}
+                        container={container}
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <ComboboxField
@@ -180,6 +204,8 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                             showAbbreviation={false}
                             value={data.religion as string}
                             onValueChange={(value) => onDataChange({ ...data, religion: value })}
+                            error={errors.religion}
+                            container={container}
                         />
                         {data.religion === "other" && (
                             <InputField
@@ -189,6 +215,7 @@ export function CoreIdentityStep({ data, onDataChange }: WizardStepProps) {
                                 value={(data.specifyReligion as string) || ""}
                                 onChange={(e) => onDataChange({ ...data, specifyReligion: e.target.value })}
                                 className="animate-in fade-in slide-in-from-top-2 duration-300"
+                                error={errors.specifyReligion}
                             />
                         )}
                     </div>

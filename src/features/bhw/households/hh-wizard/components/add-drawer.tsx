@@ -19,18 +19,19 @@ import { useHouseholdWizard, HouseholdMember } from "@/lib/store/household-wizar
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 
-const steps = [
-    { id: "identity", title: "Identity & Demographics", component: CoreIdentityStep },
-    { id: "socio-economic", title: "Socio-Economic & Coverage", component: SocioEconomicStep },
-    { id: "clinical", title: "Health & Reproductive", component: ClinicalReproductiveStep },
-]
-
 export function AddDrawer() {
     const { addMember, members } = useHouseholdWizard()
     const [open, setOpen] = React.useState(false)
+    const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
 
     const hasHead = members.some(m => m.relationshipToHhHead === "1-Head")
     const isAddingHead = !hasHead
+
+    const steps = React.useMemo(() => [
+        { id: "identity", title: "Identity & Demographics", component: (props: any) => <CoreIdentityStep {...props} container={container} /> },
+        { id: "socio-economic", title: "Socio-Economic & Coverage", component: SocioEconomicStep },
+        { id: "clinical", title: "Health & Reproductive", component: ClinicalReproductiveStep },
+    ], [container])
 
     const handleSubmit = (data: Record<string, unknown>) => {
         // Create a new member from the form data
@@ -83,20 +84,22 @@ export function AddDrawer() {
                 initialData={isAddingHead ? { relationship: "1-Head" } : {}}
             >
                 <DrawerContent className="!h-[92dvh] !max-h-[92dvh]">
-                    <DrawerHeader className="p-0 border-b">
-                        <div className="px-6 py-3">
-                            <DrawerTitle>
-                                {isAddingHead ? "Add the Household Head" : "Add Household Member"}
-                            </DrawerTitle>
-                        </div>
-                        <WizardProgress className="h-1 rounded-none border-none" />
-                    </DrawerHeader>
+                    <div ref={setContainer} className="flex flex-col h-full overflow-hidden">
+                        <DrawerHeader className="p-0 border-b">
+                            <div className="px-6 py-3">
+                                <DrawerTitle>
+                                    {isAddingHead ? "Add the Household Head" : "Add Household Member"}
+                                </DrawerTitle>
+                            </div>
+                            <WizardProgress className="h-1 rounded-none border-none" />
+                        </DrawerHeader>
 
-                    <WizardContent />
+                        <WizardContent />
 
-                    <DrawerFooter className="p-0">
-                        <WizardFooter />
-                    </DrawerFooter>
+                        <DrawerFooter className="p-0">
+                            <WizardFooter />
+                        </DrawerFooter>
+                    </div>
                 </DrawerContent>
             </Wizard>
         </Drawer >

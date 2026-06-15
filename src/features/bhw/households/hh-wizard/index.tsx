@@ -3,57 +3,46 @@
 import { useEffect, useCallback } from "react"
 import { ArrowLeft, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
+// import { ScrollArea } from "@/components/ui/scroll-area"
 import { Progress } from "@/components/ui/progress"
 import { BasicInfoForm } from "./components/form/form-basic-info"
 import { ReviewStep } from "./components/form/form-review"
 import { useHouseholdWizard } from "@/lib/store/household-wizard"
 import { step1Schema, step2Schema } from "./data/form-schema"
+import { toast } from "sonner"
 
-import { FieldSeparator } from "@/components/ui/field";
-import { EmptyMembers } from "./components/empty";
-import { MemberCard } from "./components/member-card";
-import { AddDrawerScrollable } from "./components/add-drawer-scrollable"
-
-export function MembersPage() {
-  const { members } = useHouseholdWizard()
-
-  return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <h1 className="font-heading text-2xl font-bold tracking-tight mb-1">Household Members</h1>
-        <p className="text-sm text-muted-foreground">
-          Please provide the basic information of the household members.
-        </p>
-      </div>
-      <FieldSeparator />
-      <div className="flex-1 flex flex-col justify-center items-center">
-        {members.length === 0 ? (
-          <EmptyMembers />
-        ) : (
-          <div className="w-full flex flex-col gap-4">
-            <div className="space-y-4">
-              {members.map((member) => (
-                <MemberCard key={member.id} member={member} />
-              ))}
-            </div>
-            <AddDrawerScrollable />
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
+import { MembersPage } from "./components/form/form-members";
 
 export function HHWizard() {
-  const { currentStep, nextStep, previousStep, householdData, members, resetWizard } = useHouseholdWizard()
+  const { 
+    currentStep, 
+    nextStep, 
+    previousStep, 
+    householdData, 
+    members, 
+    resetWizard,
+    setValidationError,
+    clearValidationErrors
+  } = useHouseholdWizard()
 
   const handleNext = useCallback(() => {
+    // Clear previous validation errors
+    clearValidationErrors()
+
     // Validate before proceeding
     if (currentStep === 0) {
       const step1Validation = step1Schema.safeParse(householdData)
       if (!step1Validation.success) {
-        alert("Please fill in all required fields: Visit Date, Barangay, and Respondent Name")
+        // Sync errors to store for the form to display
+        step1Validation.error.issues.forEach((err) => {
+          if (err.path[0]) {
+            setValidationError(err.path[0] as string, err.message)
+          }
+        })
+        toast.error("Invalid Basic Information", {
+          description: "Please check all required fields in Step 1.",
+          position: "top-center"
+        })
         return
       }
     }
@@ -61,17 +50,21 @@ export function HHWizard() {
     if (currentStep === 1) {
       const step2Validation = step2Schema.safeParse({ members })
       if (!step2Validation.success) {
-        alert("Please add at least one household member with the household head assigned")
+        toast.error("Member Validation Failed", {
+          description: step2Validation.error.issues[0].message,
+          position: "top-center"
+        })
         return
       }
     }
 
     nextStep()
-  }, [currentStep, householdData, members, nextStep])
+  }, [currentStep, householdData, members, nextStep, setValidationError, clearValidationErrors])
 
   const handlePrevious = useCallback(() => {
+    clearValidationErrors()
     previousStep()
-  }, [previousStep])
+  }, [previousStep, clearValidationErrors])
 
   const handleClose = useCallback(() => {
     if (confirm("Are you sure you want to close? Your progress will be saved as a draft.")) {

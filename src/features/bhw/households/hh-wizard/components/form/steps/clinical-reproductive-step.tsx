@@ -29,7 +29,7 @@ import type { WizardStepProps } from "../wizard"
 
 import { InputField } from "../../input-field"
 
-export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps) {
+export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {
         const currentHistory = data.medicalHistory || []
         if (checked) {
@@ -91,6 +91,7 @@ export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps
                             value={(data.medicalOther as string) || ""}
                             onChange={(e) => onDataChange({ ...data, medicalOther: e.target.value })}
                             className="animate-in fade-in slide-in-from-top-2 duration-300"
+                            error={errors.medicalOther}
                         />
                     )}
                 </FieldGroup>
@@ -109,6 +110,7 @@ export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps
                         readOnly
                         value={classificationDisplay}
                         description="This value is system-generated and cannot be edited."
+                        error={errors.classification}
                     />
                 </FieldGroup>
             </FieldSet>
@@ -121,12 +123,14 @@ export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps
                         <FieldDescription>Health data for Women of Reproductive Age.</FieldDescription>
                         <FieldGroup>
                             {isPregnant && (
-                                <Field className="animate-in fade-in slide-in-from-top-2 duration-300">
+                                <Field className="animate-in fade-in slide-in-from-top-2 duration-300" data-invalid={!!errors.lmp}>
                                     <FieldLabel htmlFor="lmp">Last Menstrual Period (LMP) *</FieldLabel>
                                     <DatePicker
                                         date={data.lmp ? new Date(data.lmp as string) : undefined}
                                         onDateChange={(date) => onDataChange({ ...data, lmp: date ? date.toISOString().split('T')[0] : '' })}
+                                        aria-invalid={!!errors.lmp}
                                     />
+                                    <FieldError>{errors.lmp}</FieldError>
                                     <FieldDescription>Required for pregnant members.</FieldDescription>
                                 </Field>
                             )}
@@ -159,6 +163,7 @@ export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps
                                         icon={Baby}
                                         value={data.fpMethod as string}
                                         onValueChange={(value) => onDataChange({ ...data, fpMethod: value })}
+                                        error={errors.fpMethod}
                                     />
                                     <SelectField
                                         label="FP Status *"
@@ -167,6 +172,7 @@ export function ClinicalReproductiveStep({ data, onDataChange }: WizardStepProps
                                         showAbbreviation
                                         value={data.fpStatus as string}
                                         onValueChange={(value) => onDataChange({ ...data, fpStatus: value })}
+                                        error={errors.fpStatus}
                                     />
                                 </div>
                             )}

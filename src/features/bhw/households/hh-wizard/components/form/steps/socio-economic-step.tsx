@@ -22,7 +22,7 @@ import type { WizardStepProps } from "../wizard"
 
 import { InputField } from "../../input-field"
 
-export function SocioEconomicStep({ data, onDataChange }: WizardStepProps) {
+export function SocioEconomicStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     return (
         <FieldGroup>
             <FieldSet>
@@ -59,6 +59,7 @@ export function SocioEconomicStep({ data, onDataChange }: WizardStepProps) {
                             onChange={(e) => onDataChange({ ...data, nhtsId: e.target.value })}
                             description="The unique identification number for the 4Ps household."
                             className="animate-in fade-in slide-in-from-top-2 duration-300"
+                            error={errors.nhtsId}
                         />
                     )}
                 </FieldGroup>
@@ -76,6 +77,7 @@ export function SocioEconomicStep({ data, onDataChange }: WizardStepProps) {
                         placeholder="00-000000000-0"
                         value={(data.philhealthId as string) || ""}
                         onChange={(e) => onDataChange({ ...data, philhealthId: e.target.value })}
+                        error={errors.philhealthId}
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <SelectField
@@ -85,6 +87,7 @@ export function SocioEconomicStep({ data, onDataChange }: WizardStepProps) {
                             showAbbreviation
                             value={data.membershipType as string}
                             onValueChange={(value) => onDataChange({ ...data, membershipType: value })}
+                            error={errors.membershipType}
                         />
                         <SelectField
                             label="Philhealth Category"
@@ -92,6 +95,7 @@ export function SocioEconomicStep({ data, onDataChange }: WizardStepProps) {
                             options={philhealthCategoryOptions}
                             value={data.philhealthCategory as string}
                             onValueChange={(value) => onDataChange({ ...data, philhealthCategory: value })}
+                            error={errors.philhealthCategory}
                         />
                     </div>
                 </FieldGroup>

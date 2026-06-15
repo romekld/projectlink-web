@@ -43,13 +43,12 @@ const barangayOptions = barangayData.map((b) => ({
 import { InputField } from "../input-field"
 
 export function BasicInfoForm() {
-  const { householdData, setHouseholdData } = useHouseholdWizard()
+  const { householdData, setHouseholdData, validationErrors, setValidationError } = useHouseholdWizard()
 
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
   } = useForm<Step1Values>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -59,6 +58,8 @@ export function BasicInfoForm() {
       respondentFirstName: householdData.respondentFirstName || "",
       waterSource: householdData.waterSource || "",
       toiletFacility: householdData.toiletFacility || "",
+      houseNoStreet: householdData.houseNoStreet || "",
+      purok: householdData.purok || "",
     },
   })
 
@@ -70,15 +71,20 @@ export function BasicInfoForm() {
     if (householdData.respondentFirstName) setValue("respondentFirstName", householdData.respondentFirstName)
     if (householdData.waterSource) setValue("waterSource", householdData.waterSource)
     if (householdData.toiletFacility) setValue("toiletFacility", householdData.toiletFacility)
+    if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
+    if (householdData.purok) setValue("purok", householdData.purok)
   }, [householdData, setValue])
 
   const onSubmit = (data: Step1Values) => {
     setHouseholdData(data)
   }
 
-  const handleFieldChange = (field: keyof Step1Values, value: string) => {
-    setValue(field, value)
+  const handleFieldChange = (field: keyof HouseholdData | keyof Step1Values, value: any) => {
     setHouseholdData({ [field]: value })
+    // Clear error for this field when changed
+    if (validationErrors[field as string]) {
+      setValidationError(field as string, "")
+    }
   }
 
   return (
@@ -96,8 +102,8 @@ export function BasicInfoForm() {
             <FieldLegend>Visit Information</FieldLegend>
             <FieldDescription>for tracking the progress of the profiling project.</FieldDescription>
             <FieldGroup>
-              <Field data-invalid={!!errors.visitDate}>
-                <FieldLabel htmlFor="visitDate">Date of Visit</FieldLabel>
+              <Field data-invalid={!!validationErrors.visitDate}>
+                <FieldLabel htmlFor="visitDate">Date of Visit *</FieldLabel>
                 <DatePicker
                   date={householdData.visitDate ? new Date(householdData.visitDate) : undefined}
                   onDateChange={(date: Date | undefined) => {
@@ -106,45 +112,24 @@ export function BasicInfoForm() {
                       handleFieldChange("visitDate", dateString)
                     }
                   }}
-                  aria-invalid={!!errors.visitDate}
+                  aria-invalid={!!validationErrors.visitDate}
                 />
-                <FieldError>{errors.visitDate?.message}</FieldError>
+                <FieldError>{validationErrors.visitDate}</FieldError>
               </Field>
               <Field>
                 <FieldLabel htmlFor="quarter">Quarter</FieldLabel>
                 <ButtonGroup>
-                  <Button
-                    variant={householdData.quarter === "First" ? "default" : "outline"}
-                    type="button"
-                    className="flex-1"
-                    onClick={() => setHouseholdData({ quarter: "First" })}
-                  >
-                    First
-                  </Button>
-                  <Button
-                    variant={householdData.quarter === "Second" ? "default" : "outline"}
-                    type="button"
-                    className="flex-1"
-                    onClick={() => setHouseholdData({ quarter: "Second" })}
-                  >
-                    Second
-                  </Button>
-                  <Button
-                    variant={householdData.quarter === "Third" ? "default" : "outline"}
-                    type="button"
-                    className="flex-1"
-                    onClick={() => setHouseholdData({ quarter: "Third" })}
-                  >
-                    Third
-                  </Button>
-                  <Button
-                    variant={householdData.quarter === "Fourth" ? "default" : "outline"}
-                    type="button"
-                    className="flex-1"
-                    onClick={() => setHouseholdData({ quarter: "Fourth" })}
-                  >
-                    Fourth
-                  </Button>
+                  {["First", "Second", "Third", "Fourth"].map((q) => (
+                    <Button
+                      key={q}
+                      variant={householdData.quarter === q ? "default" : "outline"}
+                      type="button"
+                      className="flex-1"
+                      onClick={() => handleFieldChange("quarter", q)}
+                    >
+                      {q}
+                    </Button>
+                  ))}
                 </ButtonGroup>
               </Field>
             </FieldGroup>
@@ -154,7 +139,7 @@ export function BasicInfoForm() {
 
           <FieldSet>
             <FieldLegend>Address</FieldLegend>
-            <FieldDescription>for tracking the progress of the profiling project.</FieldDescription>
+            <FieldDescription>Location details for the household.</FieldDescription>
             <FieldGroup>
               <InputField
                 id="householdNo"
@@ -165,29 +150,31 @@ export function BasicInfoForm() {
                 description="Auto-generated, read-only."
               />
               <ComboboxField
-                label="Barangay"
+                label="Barangay *"
                 placeholder="Select barangay..."
                 options={barangayOptions}
                 icon={MapPin}
                 value={householdData.barangay || ""}
                 onValueChange={(val) => handleFieldChange("barangay", val)}
-                error={errors.barangay?.message}
+                error={validationErrors.barangay}
               />
               <InputField
                 id="houseNoStreet"
                 label="House No. / Street Name / Subdivision"
                 placeholder="e.g., Blk 4 Lot 44, Sainte St."
                 value={householdData.houseNoStreet || ""}
-                onChange={(e) => setHouseholdData({ houseNoStreet: e.target.value })}
+                onChange={(e) => handleFieldChange("houseNoStreet", e.target.value)}
                 icon={House}
+                error={validationErrors.houseNoStreet}
               />
               <InputField
                 id="purok"
                 label="Purok / Zone / Phase"
                 placeholder="e.g., Purok 9"
                 value={householdData.purok || ""}
-                onChange={(e) => setHouseholdData({ purok: e.target.value })}
+                onChange={(e) => handleFieldChange("purok", e.target.value)}
                 icon={Signpost}
+                error={validationErrors.purok}
               />
             </FieldGroup>
           </FieldSet>
@@ -199,28 +186,26 @@ export function BasicInfoForm() {
             <FieldDescription>Information about the household respondents.</FieldDescription>
             <FieldGroup>
               <InputField
-                label="Last Name"
+                label="Last Name *"
                 placeholder="Dela Cruz"
-                {...register("respondentLastName")}
                 onChange={(e) => handleFieldChange("respondentLastName", e.target.value)}
                 value={householdData.respondentLastName || ""}
-                error={errors.respondentLastName?.message}
+                error={validationErrors.respondentLastName}
                 id="respondentLastName"
               />
               <InputField
-                label="First Name"
+                label="First Name *"
                 placeholder="Juan"
-                {...register("respondentFirstName")}
                 onChange={(e) => handleFieldChange("respondentFirstName", e.target.value)}
                 value={householdData.respondentFirstName || ""}
-                error={errors.respondentFirstName?.message}
+                error={validationErrors.respondentFirstName}
                 id="respondentFirstName"
               />
               <InputField
                 label="Middle Name"
                 placeholder="Optional"
                 value={householdData.respondentMiddleName || ""}
-                onChange={(e) => setHouseholdData({ respondentMiddleName: e.target.value })}
+                onChange={(e) => handleFieldChange("respondentMiddleName", e.target.value)}
                 id="respondentMiddleName"
               />
             </FieldGroup>
@@ -233,23 +218,23 @@ export function BasicInfoForm() {
             <FieldDescription>Details regarding water source and toilet facility.</FieldDescription>
             <FieldGroup>
               <ComboboxField
-                label="Type of Water Source"
+                label="Type of Water Source *"
                 placeholder="Select water source"
                 options={waterSourceOptions}
                 icon={Droplet}
                 showAbbreviation
                 value={householdData.waterSource || ""}
                 onValueChange={(val) => handleFieldChange("waterSource", val)}
-                error={errors.waterSource?.message} />
+                error={validationErrors.waterSource} />
               <ComboboxField
-                label="Type of Toilet Facility"
+                label="Type of Toilet Facility *"
                 placeholder="Select toilet facility"
                 options={toiletFacilityOptions}
                 showAbbreviation
                 icon={Toilet}
                 value={householdData.toiletFacility || ""}
                 onValueChange={(val) => handleFieldChange("toiletFacility", val)}
-                error={errors.toiletFacility?.message}
+                error={validationErrors.toiletFacility}
               />
             </FieldGroup>
           </FieldSet>
