@@ -1,0 +1,35 @@
+[33mcommit 40e4ec49c5337e5d44c458a23097c3b19a261cfe[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Wed Jun 17 09:28:50 2026 +0800
+
+    Remove Supabase token from .mcp.json
+
+[33mcommit cbe02d7a8dd3df3ba8af70f920804167b0caaf8e[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Wed Jun 17 08:48:08 2026 +0800
+
+    added: hh wizard
+
+[33mcommit f6a19c4d65be9450aabece1b1260087acffd252e[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Tue Jun 16 01:03:31 2026 +0800
+
+    fix: validation and error handling in hh wizard
+
+[33mcommit d8206688cb71a92215598bdfaf9aca374805274c[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Mon Jun 15 19:20:55 2026 +0800
+
+    added: hh wizard
+
+[33mcommit 0adb41023bf89cc471f087b7f7fbd86ce2870a42[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Thu Jun 11 17:01:28 2026 +0800
+
+    .\.agents\
+
+[33mcommit 75fe7dd247dd59a68fba940432a044d9a93ea448[m
+Author: rome <jmdelossantos@kld.edu.ph>
+Date:   Thu Jun 11 16:59:37 2026 +0800
+
+    first commit
