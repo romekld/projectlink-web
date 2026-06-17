@@ -85,6 +85,7 @@ export const step1Schema = z.object({
   houseNoStreet: z.string().optional(),
   purok: z.string().optional(),
   quarter: z.string().optional(),
+  numberOfFamilies: z.coerce.number().min(1, "Number of families must be at least 1"),
 })
 
 export const step2Schema = z.object({

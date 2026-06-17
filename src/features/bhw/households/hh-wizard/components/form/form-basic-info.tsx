@@ -30,6 +30,7 @@ import { step1Schema, Step1Values } from "../../data/form-schema"
 import { barangayData } from "@/features/admin/users/data/barangays"
 import { ComboboxField } from "../combobox-field"
 import { SelectField } from "../select-field"
+import { NumberField } from "../number-field"
 
 import {
   toiletFacilityOptions, waterSourceOptions
@@ -60,6 +61,7 @@ export function BasicInfoForm() {
       toiletFacility: householdData.toiletFacility || "",
       houseNoStreet: householdData.houseNoStreet || "",
       purok: householdData.purok || "",
+      numberOfFamilies: householdData.numberOfFamilies || 1,
     },
   })
 
@@ -73,6 +75,7 @@ export function BasicInfoForm() {
     if (householdData.toiletFacility) setValue("toiletFacility", householdData.toiletFacility)
     if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
     if (householdData.purok) setValue("purok", householdData.purok)
+    if (householdData.numberOfFamilies) setValue("numberOfFamilies", householdData.numberOfFamilies)
   }, [householdData, setValue])
 
   const onSubmit = (data: Step1Values) => {
@@ -175,6 +178,15 @@ export function BasicInfoForm() {
                 onChange={(e) => handleFieldChange("purok", e.target.value)}
                 icon={Signpost}
                 error={validationErrors.purok}
+              />
+              <NumberField
+                id="numberOfFamilies"
+                label="No. of Family/ies in the HH *"
+                placeholder="e.g., 1"
+                type="number"
+                value={householdData.numberOfFamilies || ""}
+                onChange={(e) => handleFieldChange("numberOfFamilies", parseInt(e.target.value))}
+                error={validationErrors.numberOfFamilies}
               />
             </FieldGroup>
           </FieldSet>

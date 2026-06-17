@@ -38,6 +38,7 @@ export interface HouseholdData {
   respondentMiddleName?: string
   waterSource?: string
   toiletFacility?: string
+  numberOfFamilies?: number
 }
 
 interface HouseholdWizardState {
@@ -45,6 +46,8 @@ interface HouseholdWizardState {
   householdData: HouseholdData
   members: HouseholdMember[]
   validationErrors: Record<string, string>
+  editingMemberId: string | null
+  isEditingDrawerOpen: boolean
   
   // Actions
   nextStep: () => void
@@ -57,6 +60,8 @@ interface HouseholdWizardState {
   setValidationError: (field: string, error: string) => void
   clearValidationErrors: () => void
   resetWizard: () => void
+  setEditingMember: (id: string | null) => void
+  setEditingDrawerOpen: (open: boolean) => void
 }
 
 const initialState = {
@@ -64,6 +69,8 @@ const initialState = {
   householdData: {},
   members: [],
   validationErrors: {},
+  editingMemberId: null,
+  isEditingDrawerOpen: false,
 }
 
 export const useHouseholdWizard = create<HouseholdWizardState>()(
@@ -117,6 +124,10 @@ export const useHouseholdWizard = create<HouseholdWizardState>()(
       clearValidationErrors: () => set({ validationErrors: {} }),
 
       resetWizard: () => set(initialState),
+
+      setEditingMember: (id) => set({ editingMemberId: id }),
+
+      setEditingDrawerOpen: (open) => set({ isEditingDrawerOpen: open }),
     }),
     {
       name: 'household-wizard-storage',

@@ -24,31 +24,64 @@ import { memberSchema } from "../data/form-schema"
 import { z } from "zod"
 
 export function AddDrawerScrollable() {
-    const { addMember, members } = useHouseholdWizard()
+    const { 
+        addMember, 
+        updateMember, 
+        members, 
+        editingMemberId, 
+        setEditingMember, 
+        isEditingDrawerOpen, 
+        setEditingDrawerOpen 
+    } = useHouseholdWizard()
     const [open, setOpen] = React.useState(false)
     const [formData, setFormData] = React.useState<Record<string, unknown>>({})
     const [errors, setErrors] = React.useState<Record<string, string>>({})
 
     const hasHead = members.some(m => m.relationshipToHhHead === "1" || m.relationshipToHhHead === "1-Head")
-    const isAddingHead = !hasHead
+    const isAddingHead = !hasHead && !editingMemberId
 
-    // Reset form when drawer opens/closes
+    // Sync drawer open state with store for editing
+    React.useEffect(() => {
+        if (isEditingDrawerOpen) {
+            setOpen(true)
+        }
+    }, [isEditingDrawerOpen])
+
+    const handleOpenChange = (newOpen: boolean) => {
+        setOpen(newOpen)
+        if (!newOpen) {
+            setEditingDrawerOpen(false)
+            setEditingMember(null)
+        }
+    }
+
+    // Reset form when drawer opens/closes or when editingMemberId changes
     React.useEffect(() => {
         if (open) {
-            setFormData({
-                lastName: "",
-                firstName: "",
-                middleName: "",
-                relationship: isAddingHead ? "1" : "",
-                sex: "male",
-                dateOfBirth: "",
-                civilStatus: "",
-                education: "",
-                religion: "",
-            })
+            if (editingMemberId) {
+                const memberToEdit = members.find(m => m.id === editingMemberId)
+                if (memberToEdit) {
+                    setFormData({
+                        ...memberToEdit,
+                        relationship: memberToEdit.relationshipToHhHead === "1-Head" ? "1" : memberToEdit.relationshipToHhHead
+                    })
+                }
+            } else {
+                setFormData({
+                    lastName: "",
+                    firstName: "",
+                    middleName: "",
+                    relationship: isAddingHead ? "1" : "",
+                    sex: "male",
+                    dateOfBirth: "",
+                    civilStatus: "",
+                    education: "",
+                    religion: "",
+                })
+            }
             setErrors({})
         }
-    }, [open, isAddingHead])
+    }, [open, editingMemberId, isAddingHead, members])
 
     const handleSubmit = () => {
         // Clear previous errors
@@ -56,7 +89,7 @@ export function AddDrawerScrollable() {
 
         // Use Zod to validate member data
         const validation = memberSchema.safeParse({
-            id: crypto.randomUUID(),
+            id: editingMemberId || crypto.randomUUID(),
             lastName: formData.lastName || "",
             firstName: formData.firstName || "",
             middleName: formData.middleName || "",
@@ -92,9 +125,15 @@ export function AddDrawerScrollable() {
             return
         }
 
-        addMember(validation.data as any)
-        toast.success(`${validation.data.firstName} added to household.`, { position: "top-center" })
-        setOpen(false)
+        if (editingMemberId) {
+            updateMember(editingMemberId, validation.data as any)
+            toast.success(`${validation.data.firstName} updated.`, { position: "top-center" })
+        } else {
+            addMember(validation.data as any)
+            toast.success(`${validation.data.firstName} added to household.`, { position: "top-center" })
+        }
+        
+        handleOpenChange(false)
     }
 
     const handleCancel = () => {
@@ -120,7 +159,7 @@ export function AddDrawerScrollable() {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
 
     return (
-        <Drawer open={open} onOpenChange={setOpen}>
+        <Drawer open={open} onOpenChange={handleOpenChange}>
             <DrawerTrigger asChild>
                 <Button variant={isAddingHead ? "default" : "outline"} className={cn(isAddingHead ? "" : "w-full")}>
                     <Plus />
@@ -132,7 +171,7 @@ export function AddDrawerScrollable() {
                     <DrawerHeader className="p-0 border-b">
                         <div className="px-6 py-3">
                             <DrawerTitle>
-                                {isAddingHead ? "Add the Household Head" : "Add Household Member"}
+                                {editingMemberId ? "Edit Household Member" : (isAddingHead ? "Add the Household Head" : "Add Household Member")}
                             </DrawerTitle>
                         </div>
                     </DrawerHeader>

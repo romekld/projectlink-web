@@ -25,6 +25,7 @@ export function AddDrawer() {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
 
     const hasHead = members.some(m => m.relationshipToHhHead === "1-Head")
+    const isFirstMember = members.length === 0
     const isAddingHead = !hasHead
 
     const steps = React.useMemo(() => [
@@ -40,7 +41,7 @@ export function AddDrawer() {
             lastName: (data.lastName as string) || "",
             firstName: (data.firstName as string) || "",
             middleName: (data.middleName as string) || "",
-            relationshipToHhHead: (data.relationship as string) || (isAddingHead ? "1-Head" : ""),
+            relationshipToHhHead: (data.relationship as string) || (isFirstMember ? "1" : ""),
             sex: (data.sex as string) || "M",
             dateOfBirth: (data.dateOfBirth as string) || "",
             age: (data.age as string) || "",

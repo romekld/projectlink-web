@@ -24,8 +24,8 @@ export function MembersPage() {
                 ) : (
                     <div className="w-full flex flex-col gap-4">
                         <div className="space-y-4">
-                            {members.map((member) => (
-                                <MemberCard key={member.id} member={member} />
+                            {members.map((member, index) => (
+                                <MemberCard key={member.id} member={member} index={index} />
                             ))}
                         </div>
                         <AddDrawerScrollable />
