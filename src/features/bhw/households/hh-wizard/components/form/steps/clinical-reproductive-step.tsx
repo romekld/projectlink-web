@@ -10,6 +10,7 @@ import {
     FieldSet,
     FieldSeparator,
     FieldContent,
+    FieldError,
 } from "@/components/ui/field"
 import { Textarea } from "@/components/ui/textarea"
 

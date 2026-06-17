@@ -5,9 +5,9 @@ export interface SelectOption {
 }
 
 export const relationshipOptions: SelectOption[] = [
-  { value: "1", label: "Head", abbreviation: "1" },
-  { value: "2", label: "Spouse", abbreviation: "2" },
-  { value: "3", label: "Son", abbreviation: "3" },
-  { value: "4", label: "Daughter", abbreviation: "4" },
-  { value: "5", label: "Others, specify relation", abbreviation: "5" },
+  { value: "Head", label: "Head", abbreviation: "1" },
+  { value: "Spouse", label: "Spouse", abbreviation: "2" },
+  { value: "Son", label: "Son", abbreviation: "3" },
+  { value: "Daughter", label: "Daughter", abbreviation: "4" },
+  { value: "Other", label: "Other", abbreviation: "5" },
 ]

@@ -1,106 +1,65 @@
 import { z } from "zod"
 
-export const householdInfoSchema = z.object({
+// Updated to match DATABASE_DESIGN.md and new migration
+export const householdSchema = z.object({
   visitDate: z.string().min(1, "Visit date is required"),
+  quarter: z.coerce.number().min(1).max(4),
+  barangayId: z.string().uuid("Barangay is required"),
+  houseNoStreet: z.string().optional(),
+  purok: z.string().optional(),
+  enumerationArea: z.string().optional(),
+  familyCount: z.coerce.number().min(1, "Family count must be at least 1"),
   respondentLastName: z.string().min(1, "Last name is required"),
   respondentFirstName: z.string().min(1, "First name is required"),
   respondentMiddleName: z.string().optional(),
-  nhtsStatus: z.enum(["NHTS-4Ps", "Non-NHTS"]),
-  isIndigenousPeople: z.boolean(),
-  hhHeadPhilhealthMember: z.boolean(),
-  hhHeadPhilhealthId: z.string().optional(),
-  hhHeadPhilhealthCategory: z
-    .enum(["Formal Economy", "Informal Economy", "Indigent/Sponsored", "Senior Citizen", "Other"])
-    .optional(),
-  // Address fields
-  houseNoStreet: z.string().min(1, "House No. & Street is required"),
-  purok: z.string().optional(),
-  barangayId: z.string().uuid("Please select a barangay"),
-  barangayName: z.string().optional(),
-  // Location
-  latitude: z.number().nullable().optional(),
-  longitude: z.number().nullable().optional(),
+  waterSource: z.enum(['Level I', 'Level II', 'Level III']),
+  toiletFacility: z.enum(['Sanitary-VIP', 'Sanitary-Septic', 'Unsanitary-Open', 'None']),
 })
 
 export const memberSchema = z.object({
-  id: z.string(),
   lastName: z.string().min(1, "Last name is required"),
   firstName: z.string().min(1, "First name is required"),
   middleName: z.string().optional(),
-  relationshipToHhHead: z.string().min(1, "Relationship is required"),
-  sex: z.enum(["male", "female"]),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
-  age: z.string().optional(),
-  civilStatus: z.string().optional(),
+  birthdate: z.string().min(1, "Birthdate is required"),
+  sex: z.enum(["M", "F"]),
+  relationship: z.enum(['Head', 'Spouse', 'Son', 'Daughter', 'Other']),
+  civilStatus: z.enum(['Single', 'Married', 'Widowed', 'Separated', 'Cohabitation']),
+  nhtsStatus: z.enum(['4Ps', 'Non-4Ps']),
+  fourPsId: z.string().optional(),
+  philhealthId: z.string().optional(),
+  phCategory: z.enum(['Direct', 'Indirect', 'Unknown']),
+  medicalHistory: z.array(z.string()).default([]),
+  classification: z.enum([
+    'Infant', 'Child', 'Adolescent', 'WRA', 'Pregnant', 'Post-Partum', 'Senior Citizen', 'PWD', 'Adult'
+  ]),
+  isPregnant: z.boolean().default(false),
+  lmp: z.string().optional(),
+  usingFp: z.boolean().default(false),
+  fpMethod: z.string().optional(),
   education: z.string().optional(),
   religion: z.string().optional(),
-  isIndigenousPeople: z.boolean().default(false),
-  philhealthId: z.string().optional(),
-  membershipType: z.string().optional(),
-  philhealthCategory: z.string().optional(),
-  medicalHistory: z.array(z.string()).default([]),
-  medicalOther: z.string().optional(),
-  classification: z.string().optional(),
-  usingFp: z.boolean().optional(),
-  fpMethod: z.string().optional(),
-  fpStatus: z.string().optional(),
-  lmp: z.string().optional(),
+  metadata: z.record(z.any()).default({}),
 })
 
-export type HouseholdInfoValues = z.infer<typeof householdInfoSchema>
-export type MemberValues = {
-  id: string
-  lastName: string
-  firstName: string
-  middleName?: string
-  relationshipToHhHead: string
-  sex: "male" | "female"
-  dateOfBirth: string
-  age?: string
-  civilStatus?: string
-  education?: string
-  religion?: string
-  isIndigenousPeople?: boolean
-  philhealthId?: string
-  membershipType?: string
-  philhealthCategory?: string
-  medicalHistory?: string[]
-  medicalOther?: string
-  classification?: string
-  usingFp?: boolean
-  fpMethod?: string
-  fpStatus?: string
-  lmp?: string
-}
-
-// Step-specific validation schemas for the household wizard
-
-export const step1Schema = z.object({
-  visitDate: z.string().min(1, "Visit date is required"),
-  barangay: z.string().min(1, "Barangay is required"),
-  respondentLastName: z.string().min(1, "Respondent last name is required"),
-  respondentFirstName: z.string().min(1, "Respondent first name is required"),
-  waterSource: z.string().min(1, "Water source is required"),
-  toiletFacility: z.string().min(1, "Toilet facility is required"),
-  houseNoStreet: z.string().optional(),
-  purok: z.string().optional(),
-  quarter: z.string().optional(),
-  numberOfFamilies: z.coerce.number().min(1, "Number of families must be at least 1"),
-})
-
-export const step2Schema = z.object({
-  members: z.array(memberSchema).min(1, "At least one household member is required")
+export const completeHouseholdSchema = z.object({
+  household: householdSchema,
+  members: z.array(memberSchema).min(1, "At least one member is required")
     .refine(
-      (members) => members.some(m => m.relationshipToHhHead === "1-Head" || m.relationshipToHhHead === "1"),
+      (members) => members.some(m => m.relationship === 'Head'),
+      "Household head is required"
+    ),
+})
+
+export type HouseholdValues = z.infer<typeof householdSchema>
+export type MemberValues = z.infer<typeof memberSchema>
+export type CompleteHouseholdValues = z.infer<typeof completeHouseholdSchema>
+
+// UI-specific schemas for wizard steps
+export const step1Schema = householdSchema
+export const step2Schema = z.object({
+  members: z.array(memberSchema).min(1, "At least one member is required")
+    .refine(
+      (members) => members.some(m => m.relationship === 'Head'),
       "Household head is required"
     )
 })
-
-export const step3Schema = z.object({
-  householdData: step1Schema,
-  members: step2Schema.shape.members,
-})
-
-export type Step1Values = z.infer<typeof step1Schema>
-export type Step2Values = z.infer<typeof step2Schema>
-export type Step3Values = z.infer<typeof step3Schema>

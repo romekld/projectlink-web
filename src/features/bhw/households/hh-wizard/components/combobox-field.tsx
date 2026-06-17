@@ -4,7 +4,6 @@ import * as React from "react"
 import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field"
 import {
   Combobox,
-  ComboboxCollection,
   ComboboxContent,
   ComboboxEmpty,
   ComboboxInput,
@@ -12,7 +11,7 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox"
 import { InputGroupAddon } from "@/components/ui/input-group"
-import { LucideIcon } from "lucide-react"
+import { LucideIcon, ChevronDownIcon } from "lucide-react"
 import {
   Item,
   ItemContent
@@ -54,70 +53,45 @@ export function ComboboxField({
   description,
   container,
 }: ComboboxFieldProps) {
-  const selectedOption = React.useMemo(
-    () => options.find((o) => o.value === value) || null,
-    [options, value]
-  )
-
   return (
     <Field data-invalid={!!error} className={className}>
       <FieldLabel htmlFor={label}>{label}</FieldLabel>
       <Combobox
-        value={selectedOption}
-        onValueChange={(val: ComboboxOption | null) => onValueChange?.(val?.value || "")}
+        value={value}
+        onValueChange={(val: string | null) => onValueChange?.(val || "")}
         items={options}
-        getItemText={(item) => item.label}
+        defaultValue={options[0]?.value || ""}
       >
         <ComboboxInput
           placeholder={placeholder}
           disabled={disabled}
-          showClear
           aria-invalid={!!error}
-          
+          showClear
         >
           {Icon && (
             <InputGroupAddon align="inline-start">
               <Icon className="size-4 text-muted-foreground" />
             </InputGroupAddon>
           )}
+          
         </ComboboxInput>
         <ComboboxContent container={container}>
           <ComboboxEmpty>No options found.</ComboboxEmpty>
           <ComboboxList>
-            <ComboboxCollection>
-              {(option: ComboboxOption) => (
-                <ComboboxItem key={option.value} value={option}>
-                  {/* <div className="flex flex-col">
-                    <div className="flex items-center">
-                      {showAbbreviation && option.abbreviation ? (
-                        <>
-                          <span className="font-medium">{option.abbreviation}</span>
-                          <span className="text-muted-foreground"> — {option.label}</span>
-                        </>
-                      ) : (
-                        <span>{option.label}</span>
-                      )}
-                    </div>
-                    {option.description && (
-                      <span className="text-xs text-muted-foreground leading-tight">
-                        {option.description}
-                      </span>
-                    )}
-                  </div> */}
-                  {showAbbreviation && option.abbreviation ? (
-                    <Item size="xs" className="p-0">
-                      <ItemContent className="grid grid-cols-[max-content_1fr] !gap-2">
-                        <div className="font-medium">{option.abbreviation}</div>
-                        <div className="text-muted-foreground">{option.label}</div>
-                      </ItemContent>
-                    </Item>
-                  ) : (
-                    <span>{option.label}</span>
-                  )}
-
-                </ComboboxItem>
-              )}
-            </ComboboxCollection>
+            {(option: ComboboxOption) => (
+              <ComboboxItem key={option.value} value={option.value}>
+                {showAbbreviation && option.abbreviation ? (
+                  <Item size="xs" className="p-0 bg-transparent hover:bg-transparent">
+                    <ItemContent className="grid grid-cols-[max-content_1fr] !gap-2">
+                      <div className="font-medium">{option.abbreviation}</div>
+                      <div className="text-muted-foreground">{option.label}</div>
+                    </ItemContent>
+                  </Item>
+                ) : (
+                  <span>{option.label}</span>
+                )}
+              </ComboboxItem>
+            )}
           </ComboboxList>
         </ComboboxContent>
       </Combobox>

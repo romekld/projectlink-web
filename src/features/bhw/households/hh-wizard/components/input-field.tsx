@@ -24,7 +24,7 @@ export function InputField({
     ...props
 }: InputFieldProps) {
     const InputComponent = Icon ? (
-        <InputGroup>
+        <InputGroup >
             <InputGroupInput id={id} aria-invalid={!!error} {...props} />
             <InputGroupAddon>
                 <Icon />

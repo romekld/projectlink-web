@@ -14,30 +14,22 @@ import {
   FieldSet,
   FieldError,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import {
-  ButtonGroup,
-} from "@/components/ui/button-group"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group"
 import { DatePicker } from "../date-picker"
 import { Hash, House, Signpost, MapPin, Toilet, Droplet } from "lucide-react"
-import { useHouseholdWizard } from "@/lib/store/household-wizard"
-import { step1Schema, Step1Values } from "../../data/form-schema"
+import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
+import { step1Schema, HouseholdValues } from "../../data/form-schema"
 import { barangayData } from "@/features/admin/users/data/barangays"
 import { ComboboxField } from "../combobox-field"
-import { SelectField } from "../select-field"
 import { NumberField } from "../number-field"
+import { get_bhw_station_info_action } from "../../actions/hh-wizard-actions"
+import { ButtonGroup } from "@/components/ui/button-group"
 
 import {
   toiletFacilityOptions, waterSourceOptions
 } from "../../data"
 
 const barangayOptions = barangayData.map((b) => ({
-  value: b.name,
+  value: b.id, // Changed to use ID as value
   label: b.name,
 }))
 
@@ -47,47 +39,64 @@ export function BasicInfoForm() {
   const { householdData, setHouseholdData, validationErrors, setValidationError } = useHouseholdWizard()
 
   const {
-    register,
     handleSubmit,
     setValue,
-  } = useForm<Step1Values>({
+  } = useForm<HouseholdValues>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      visitDate: householdData.visitDate || "",
-      barangay: householdData.barangay || "",
+      visitDate: householdData.visitDate || new Date().toISOString().split('T')[0],
+      quarter: (householdData.quarter as 1 | 2 | 3 | 4) || (Math.floor(new Date().getMonth() / 3) + 1),
+      barangayId: householdData.barangayId || "",
       respondentLastName: householdData.respondentLastName || "",
       respondentFirstName: householdData.respondentFirstName || "",
-      waterSource: householdData.waterSource || "",
-      toiletFacility: householdData.toiletFacility || "",
+      waterSource: householdData.waterSource as "Level I" | "Level II" | "Level III",
+      toiletFacility: householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None",
       houseNoStreet: householdData.houseNoStreet || "",
       purok: householdData.purok || "",
-      numberOfFamilies: householdData.numberOfFamilies || 1,
+      familyCount: householdData.familyCount || 1,
     },
   })
 
-  // Initialize form with store data
-  useEffect(() => {
-    if (householdData.visitDate) setValue("visitDate", householdData.visitDate)
-    if (householdData.barangay) setValue("barangay", householdData.barangay)
-    if (householdData.respondentLastName) setValue("respondentLastName", householdData.respondentLastName)
-    if (householdData.respondentFirstName) setValue("respondentFirstName", householdData.respondentFirstName)
-    if (householdData.waterSource) setValue("waterSource", householdData.waterSource)
-    if (householdData.toiletFacility) setValue("toiletFacility", householdData.toiletFacility)
-    if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
-    if (householdData.purok) setValue("purok", householdData.purok)
-    if (householdData.numberOfFamilies) setValue("numberOfFamilies", householdData.numberOfFamilies)
-  }, [householdData, setValue])
-
-  const onSubmit = (data: Step1Values) => {
-    setHouseholdData(data)
-  }
-
-  const handleFieldChange = (field: keyof HouseholdData | keyof Step1Values, value: any) => {
+  const handleFieldChange = (field: keyof HouseholdData | keyof HouseholdValues, value: string | number | undefined | null) => {
     setHouseholdData({ [field]: value })
     // Clear error for this field when changed
     if (validationErrors[field as string]) {
       setValidationError(field as string, "")
     }
+  }
+
+  // Pre-populate Barangay from BHW's station info
+  useEffect(() => {
+    async function fetchStationInfo() {
+      if (!householdData.barangayId) {
+        const result = await get_bhw_station_info_action();
+        if (result?.data?.health_stations?.barangay_id) {
+          const bId = result.data.health_stations.barangay_id;
+          handleFieldChange("barangayId", bId);
+          setValue("barangayId", bId);
+        }
+      }
+    }
+    fetchStationInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [householdData.barangayId, setValue]);
+
+  // Initialize form with store data
+  useEffect(() => {
+    if (householdData.visitDate) setValue("visitDate", householdData.visitDate)
+    if (householdData.barangayId) setValue("barangayId", householdData.barangayId)
+    if (householdData.respondentLastName) setValue("respondentLastName", householdData.respondentLastName)
+    if (householdData.respondentFirstName) setValue("respondentFirstName", householdData.respondentFirstName)
+    if (householdData.waterSource) setValue("waterSource", householdData.waterSource as "Level I" | "Level II" | "Level III")
+    if (householdData.toiletFacility) setValue("toiletFacility", householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None")
+    if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
+    if (householdData.purok) setValue("purok", householdData.purok)
+    if (householdData.familyCount) setValue("familyCount", householdData.familyCount)
+    if (householdData.quarter) setValue("quarter", householdData.quarter as 1 | 2 | 3 | 4)
+  }, [householdData, setValue])
+
+  const onSubmit = (data: HouseholdValues) => {
+    setHouseholdData(data)
   }
 
   return (
@@ -157,9 +166,9 @@ export function BasicInfoForm() {
                 placeholder="Select barangay..."
                 options={barangayOptions}
                 icon={MapPin}
-                value={householdData.barangay || ""}
-                onValueChange={(val) => handleFieldChange("barangay", val)}
-                error={validationErrors.barangay}
+                value={householdData.barangayId || ""}
+                onValueChange={(val) => handleFieldChange("barangayId", val)}
+                error={validationErrors.barangayId}
               />
               <InputField
                 id="houseNoStreet"
@@ -180,13 +189,13 @@ export function BasicInfoForm() {
                 error={validationErrors.purok}
               />
               <NumberField
-                id="numberOfFamilies"
+                id="familyCount"
                 label="No. of Family/ies in the HH *"
                 placeholder="e.g., 1"
                 type="number"
-                value={householdData.numberOfFamilies || ""}
-                onChange={(e) => handleFieldChange("numberOfFamilies", parseInt(e.target.value))}
-                error={validationErrors.numberOfFamilies}
+                value={householdData.familyCount || ""}
+                onChange={(e) => handleFieldChange("familyCount", parseInt(e.target.value))}
+                error={validationErrors.familyCount}
               />
             </FieldGroup>
           </FieldSet>

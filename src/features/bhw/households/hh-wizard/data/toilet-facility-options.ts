@@ -6,11 +6,8 @@ export interface SelectOption {
 }
 
 export const toiletFacilityOptions: SelectOption[] = [
-  { value: "p", label: "Pour/flush toilet connected to septic tank", abbreviation: "P", category: "sanitary" },
-  { value: "pf", label: "Pour/flush toilet connected to septic tank and to sewerage system", abbreviation: "PF", category: "sanitary" },
-  { value: "vip", label: "Ventilated improved pit latrine (VIP) or composting toilet", abbreviation: "VIP", category: "sanitary" },
-  { value: "ws", label: "Water-sealed connected to open drain", abbreviation: "WS", category: "unsanitary" },
-  { value: "oh", label: "Overhung Latrine", abbreviation: "OH", category: "unsanitary" },
-  { value: "op", label: "Open-pit Latrine", abbreviation: "OP", category: "unsanitary" },
-  { value: "wo", label: "Without toilet", abbreviation: "WO", category: "unsanitary" },
+  { value: "Sanitary-Septic", label: "Pour/flush connected to septic tank", abbreviation: "P", category: "sanitary" },
+  { value: "Sanitary-VIP", label: "VIP or composting toilet", abbreviation: "VIP", category: "sanitary" },
+  { value: "Unsanitary-Open", label: "Open drain/latrine", abbreviation: "OP", category: "unsanitary" },
+  { value: "None", label: "Without toilet", abbreviation: "WO", category: "unsanitary" },
 ]

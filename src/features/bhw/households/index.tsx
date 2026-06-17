@@ -21,24 +21,10 @@ type BhwHouseholdsPageProps = {
 
 export function BhwHouseholdsPage({ households }: BhwHouseholdsPageProps) {
   return (
-    <section className="flex flex-col gap-3">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            Household Lists
-          </CardTitle>
-          <CardDescription>Card Description</CardDescription>
-          <CardAction>Card Action</CardAction>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
+    <div className="flex flex-col gap-3 ">
+ {/* px-4 md:px-10 lg:px-16 py-4 md:py-10 lg:py-16 */}
       <StatusTab />
 
-    </section>
+    </div>
   )
 }

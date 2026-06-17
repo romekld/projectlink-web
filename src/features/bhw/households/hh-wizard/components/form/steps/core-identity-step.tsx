@@ -31,13 +31,13 @@ import { useHouseholdWizard } from "@/lib/store/household-wizard"
 
 export function CoreIdentityStep({ data, onDataChange, errors = {}, container }: WizardStepProps & { container?: HTMLElement | null }) {
     const { members } = useHouseholdWizard()
-    const hasHead = members.some(m => m.relationshipToHhHead === "1" || m.relationshipToHhHead === "1-Head")
+    const hasHead = members.some(m => m.relationshipToHhHead === "Head")
     const isFirstMember = members.length === 0
     
     // Determine which options to disable
     const filteredRelationshipOptions = relationshipOptions.map(opt => {
-        const isHeadOption = opt.value === "1"
-        const isEditingThisHead = data.relationship === "1" || data.relationship === "1-Head"
+        const isHeadOption = opt.value === "Head"
+        const isEditingThisHead = data.relationship === "Head"
         
         return {
             ...opt,
@@ -48,8 +48,8 @@ export function CoreIdentityStep({ data, onDataChange, errors = {}, container }:
 
     // If it's the first member, force relationship to Head if not already set
     React.useEffect(() => {
-        if (isFirstMember && data.relationship !== "1") {
-            onDataChange({ ...data, relationship: "1" })
+        if (isFirstMember && data.relationship !== "Head") {
+            onDataChange({ ...data, relationship: "Head" })
         }
     }, [isFirstMember, data.relationship, onDataChange, data])
 

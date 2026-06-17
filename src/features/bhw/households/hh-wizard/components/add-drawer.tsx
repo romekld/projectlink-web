@@ -24,7 +24,7 @@ export function AddDrawer() {
     const [open, setOpen] = React.useState(false)
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null)
 
-    const hasHead = members.some(m => m.relationshipToHhHead === "1-Head")
+    const hasHead = members.some(m => m.relationshipToHhHead === "Head")
     const isFirstMember = members.length === 0
     const isAddingHead = !hasHead
 
@@ -41,7 +41,7 @@ export function AddDrawer() {
             lastName: (data.lastName as string) || "",
             firstName: (data.firstName as string) || "",
             middleName: (data.middleName as string) || "",
-            relationshipToHhHead: (data.relationship as string) || (isFirstMember ? "1" : ""),
+            relationshipToHhHead: (data.relationship as string) || (isFirstMember ? "Head" : ""),
             sex: (data.sex as string) || "M",
             dateOfBirth: (data.dateOfBirth as string) || "",
             age: (data.age as string) || "",
@@ -82,7 +82,7 @@ export function AddDrawer() {
                 steps={steps} 
                 onSubmit={handleSubmit} 
                 onCancel={handleCancel}
-                initialData={isAddingHead ? { relationship: "1-Head" } : {}}
+                initialData={isAddingHead ? { relationship: "Head" } : undefined}
             >
                 <DrawerContent className="!h-[92dvh] !max-h-[92dvh]">
                     <div ref={setContainer} className="flex flex-col h-full overflow-hidden">

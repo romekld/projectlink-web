@@ -5,9 +5,9 @@ export interface SelectOption {
 }
 
 export const civilStatusOptions: SelectOption[] = [
-  { value: "married", label: "Married", abbreviation: "M" },
-  { value: "single", label: "Single", abbreviation: "S" },
-  { value: "widowed", label: "Widow/er", abbreviation: "W" },
-  { value: "separated", label: "Separated", abbreviation: "SP" },
-  { value: "cohabitation", label: "Cohabitation", abbreviation: "C" },
+  { value: "Single", label: "Single", abbreviation: "S" },
+  { value: "Married", label: "Married", abbreviation: "M" },
+  { value: "Widowed", label: "Widow/er", abbreviation: "W" },
+  { value: "Separated", label: "Separated", abbreviation: "SP" },
+  { value: "Cohabitation", label: "Cohabitation", abbreviation: "C" },
 ]

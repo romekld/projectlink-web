@@ -16,7 +16,7 @@ export default function BhwLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="px-4 md:px-10 lg:px-16 py-4 md:py-10 lg:py-16">
+      <div className="">
         <MobileNavTab sections={bhwNavSections} />
         {children}
       </div>

@@ -2,7 +2,7 @@
 
 Feature-Driven Architecture (FDA) organizes code by **business domain** rather than file type. Each feature is a self-contained module: it owns its data access, mutations, validation, UI, and client state. The rest of the app consumes it only through its public `index.ts` barrel.
 
-This guide is scoped to the **Next.js App Router + Supabase** stack and reflects its specific constraints — Server Components, Server Actions, cookie-based auth sessions, and auto-generated database types.
+This guide is scoped to the **Next.js 15 App Router + Supabase** stack and reflects its specific constraints — Server Components, Server Actions, cookie-based auth sessions (async), and auto-generated database types.
 
 ---
 
@@ -60,17 +60,17 @@ src/
 │
 ├── lib/
 │   ├── supabase/                 → Supabase client factory (the only place clients are created)
-│   │   ├── server.ts             → createServerClient — for RSC, Server Actions, Route Handlers
-│   │   ├── browser.ts            → createBrowserClient — for Client Components
+│   │   ├── server.ts             → createClient — for RSC, Server Actions, Route Handlers
+│   │   ├── client.ts             → createClient — for Client Components
 │   │   └── middleware.ts         → createMiddlewareClient — for middleware.ts
 │   ├── query-client.ts           → Shared TanStack Query client factory
-│   └── env.ts                    → @t3-oss/env-nextjs validated env schema
+│   └── utils.ts                  → Shared tailwind-merge + clsx utility
 │
 ├── shared/
 │   ├── components/
-│   │   ├── ui/                   → shadcn/ui primitives (Button, Input, Dialog …)
-│   │   └── layout/               → AppShell, Sidebar, Header, PageHeader
-│   ├── hooks/                    → Generic hooks (useDebounce, useMediaQuery …)
+│   │   ├── ui/                   → shadcn/ui primitives (button.tsx, input.tsx, dialog.tsx …)
+│   │   └── layout/               → app-shell.tsx, sidebar.tsx, header.tsx
+│   ├── hooks/                    → Generic hooks (use-debounce.ts, use-media-query.ts …)
 │   └── types/                    → Global TS utility types
 │
 ├── providers/                    → Root React context providers
@@ -90,38 +90,38 @@ src/
 
 ## Feature Structure
 
-Every feature follows the same internal layout. Add only the layers you actually need — a read-only feature may have no `actions/` or `stores/`.
+Every feature follows the same internal layout. Add only the layers you actually need — a read-only feature may have no `actions/` or `stores/`. **All files must use kebab-case.**
 
 ```text
 features/<feature-name>/
 ├── actions/                      → Next.js Server Actions (mutations)
-│   └── <feature>Actions.ts       → next-safe-action wrappers, calls services/
+│   └── <feature>-actions.ts      → next-safe-action wrappers, calls services/
 │
 ├── components/                   → Feature-scoped UI
-│   ├── <Feature>Table.tsx
-│   ├── <Feature>Form.tsx
-│   └── <Feature>Card.tsx
+│   ├── <feature>-table.tsx
+│   ├── <feature>-form.tsx
+│   └── <feature>-card.tsx
 │
 ├── hooks/                        → Client-side React hooks
-│   └── use<Feature>.ts           → Wraps React Query + stores
+│   └── use-<feature>.ts          → Wraps React Query + stores
 │
 ├── queries/                      → TanStack Query hooks (client-side data fetching)
-│   └── use<Feature>Query.ts      → useQuery / useMutation calling Server Actions
+│   └── use-<feature>-query.ts    → useQuery / useMutation calling Server Actions
 │
 ├── options/                      → Query key factories + queryOptions() definitions
-│   └── <feature>Options.ts       → Centralises cache keys; consumed by queries/ and actions/
+│   └── <feature>-options.ts      → Centralises cache keys; consumed by queries/ and actions/
 │
 ├── schemas/                      → Zod schemas (isomorphic — runs server + client)
-│   └── <feature>Schema.ts        → Input validation; exported to actions/ and components/
+│   └── <feature>-schema.ts       → Input validation; exported to actions/ and components/
 │
 ├── services/                     → Supabase data access (server-only)
-│   └── <feature>Service.ts       → Direct Supabase queries; never imported by Client Components
+│   └── <feature>-service.ts      → Direct Supabase queries; never imported by Client Components
 │
 ├── stores/                       → Zustand stores (UI state only — no server data)
-│   └── <feature>Store.ts         → Modal open/close, selected rows, filters
+│   └── <feature>-store.ts        → Modal open/close, selected rows, filters
 │
 ├── types/                        → Feature-specific TypeScript types
-│   └── <feature>Types.ts         → Derived from database.ts + feature-local types
+│   └── <feature>-types.ts        → Derived from database.ts + feature-local types
 │
 └── index.ts                      → Public barrel export (the feature's external API)
 ```
@@ -140,7 +140,7 @@ features/<feature-name>/
 [actions/ Server Action]   ← validated by schemas/ (Zod + next-safe-action)
       │
       ▼
-[services/ Supabase query]  ← uses lib/supabase/server.ts
+[services/ Supabase query]  ← uses lib/supabase/server.ts (await cookies())
       │
       ▼
 [Supabase DB]  — RLS enforces row-level access
@@ -149,41 +149,46 @@ features/<feature-name>/
 For **read-only Server Components** skip actions/ and queries/ entirely — call `services/` directly in the page component.
 
 ```tsx
-// app/(dashboard)/users/page.tsx  — Server Component
-import { getUserList } from "@/features/user/services/userService";
+// app/(web)/users/page.tsx  — Server Component
+import { get_user_list } from "@/features/user/services/user-service";
 
 export default async function UsersPage() {
-  const users = await getUserList();        // direct service call, no hook needed
+  const users = await get_user_list();        // direct service call, no hook needed
   return <UserTable initialData={users} />;
 }
 ```
 
 ---
 
-## Supabase Client Conventions
+## Supabase Client Conventions (Next.js 15)
 
 ```ts
 // lib/supabase/server.ts
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import type { Database } from "@/types/database";
+import type { Database } from "@/lib/supabase/database.types";
 
-export function createSupabaseServerClient() {
-  const cookieStore = cookies();
+export async function createClient() {
+  const cookieStore = await cookies(); // MUST be awaited in Next.js 15
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll(), setAll: (c) => c.forEach(({ name, value, options }) => cookieStore.set(name, value, options)) } }
+    { 
+      cookies: { 
+        getAll: () => cookieStore.getAll(), 
+        setAll: (c) => c.forEach(({ name, value, options }) => cookieStore.set(name, value, options)) 
+      } 
+    }
   );
 }
 ```
 
 ```ts
-// lib/supabase/browser.ts
+// lib/supabase/client.ts
 import { createBrowserClient } from "@supabase/ssr";
-import type { Database } from "@/types/database";
+import type { Database } from "@/lib/supabase/database.types";
 
-export function createSupabaseBrowserClient() {
+export function createClient() {
   return createBrowserClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -192,7 +197,7 @@ export function createSupabaseBrowserClient() {
 ```
 
 ```ts
-// middleware.ts
+// middleware.ts (now named src/proxy.ts in some setups, but logic remains)
 import { createMiddlewareClient } from "@/lib/supabase/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -212,57 +217,37 @@ export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico).*)
 ### Server Actions (mutations)
 
 ```ts
-// features/user/actions/userActions.ts
+// features/user/actions/user-actions.ts
 "use server";
 import { actionClient } from "@/lib/safe-action";
-import { createUserSchema } from "@/features/user/schemas/userSchema";
-import { insertUser } from "@/features/user/services/userService";
+import { create_user_schema } from "@/features/user/schemas/user-schema";
+import { insert_user } from "@/features/user/services/user-service";
 
-export const createUserAction = actionClient
-  .schema(createUserSchema)
+export const create_user_action = actionClient
+  .schema(create_user_schema)
   .action(async ({ parsedInput }) => {
-    return insertUser(parsedInput);
+    return insert_user(parsedInput);
   });
 ```
 
 ### React Query hook (client)
 
 ```ts
-// features/user/queries/useUserQuery.ts
+// features/user/queries/use-user-query.ts
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { userKeys } from "@/features/user/options/userOptions";
-import { createUserAction } from "@/features/user/actions/userActions";
+import { user_keys } from "@/features/user/options/user-options";
+import { create_user_action } from "@/features/user/actions/user-actions";
 
-export function useUsers() {
-  return useQuery(userKeys.list());
+export function use_users() {
+  return useQuery(user_keys.list());
 }
 
-export function useCreateUser() {
+export function use_create_user() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: createUserAction,
-    onSuccess: () => qc.invalidateQueries({ queryKey: userKeys.all }),
+    mutationFn: create_user_action,
+    onSuccess: () => qc.invalidateQueries({ queryKey: user_keys.all }),
   });
-}
-```
-
-### Page consuming both patterns
-
-```tsx
-// app/(dashboard)/users/page.tsx
-import { getUsers } from "@/features/user/services/userService";
-import { UserTable } from "@/features/user/components/UserTable";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { userKeys } from "@/features/user/options/userOptions";
-
-export default async function UsersPage() {
-  const qc = new QueryClient();
-  await qc.prefetchQuery({ queryKey: userKeys.list().queryKey, queryFn: getUsers });
-  return (
-    <HydrationBoundary state={dehydrate(qc)}>
-      <UserTable />
-    </HydrationBoundary>
-  );
 }
 ```
 
@@ -272,14 +257,14 @@ export default async function UsersPage() {
 
 | Artifact | Convention | Example |
 | --- | --- | --- |
-| Server Action file | `<feature>Actions.ts` | `userActions.ts` |
-| Service file | `<feature>Service.ts` | `userService.ts` |
-| Zod schema file | `<feature>Schema.ts` | `userSchema.ts` |
-| React Query hook | `use` prefix + `Query` suffix | `useUserQuery.ts` |
-| Zustand store | `<feature>Store.ts` | `userStore.ts` |
-| Query key factory | `<feature>Keys` | `userKeys` |
-| Component | PascalCase | `UserTable.tsx` |
-| Types file | `<feature>Types.ts` | `userTypes.ts` |
+| Server Action file | `<feature>-actions.ts` | `user-actions.ts` |
+| Service file | `<feature>-service.ts` | `user-service.ts` |
+| Zod schema file | `<feature>-schema.ts` | `user-schema.ts` |
+| React Query hook | `use-<feature>-query.ts` | `use-user-query.ts` |
+| Zustand store | `<feature>-store.ts` | `user-store.ts` |
+| Query key factory | `<feature>-keys` (variable) | `user-keys` |
+| Component | `<feature>-<name>.tsx` | `user-table.tsx` |
+| Types file | `<feature>-types.ts` | `user-types.ts` |
 
 ---
 
@@ -287,10 +272,10 @@ export default async function UsersPage() {
 
 | Folder | Contents |
 | --- | --- |
-| `shared/components/ui/` | shadcn/ui primitives — installed via CLI, not hand-written |
-| `shared/components/layout/` | AppShell, Sidebar, PageHeader, Breadcrumb |
-| `shared/hooks/` | `useDebounce`, `useMediaQuery`, `useLocalStorage` |
-| `shared/types/` | `Nullable<T>`, `PaginatedResponse<T>`, `ApiError` |
+| `shared/components/ui/` | shadcn/ui primitives — installed via CLI (e.g., `button.tsx`) |
+| `shared/components/layout/` | `app-shell.tsx`, `sidebar.tsx`, `page-header.tsx` |
+| `shared/hooks/` | `use-debounce.ts`, `use-media-query.ts`, `use-local-storage.ts` |
+| `shared/types/` | `nullable.ts`, `api-error.ts` |
 
 ---
 
@@ -299,25 +284,25 @@ export default async function UsersPage() {
 ```text
 features/user/
 ├── actions/
-│   └── userActions.ts            → createUser, updateUser, deleteUser
+│   └── user-actions.ts           → create_user, update_user, delete_user
 ├── components/
-│   ├── UserTable.tsx
-│   ├── UserForm.tsx
-│   └── UserAvatar.tsx
+│   ├── user-table.tsx
+│   ├── user-form.tsx
+│   └── user-avatar.tsx
 ├── hooks/
-│   └── useUserTable.ts           → table sort/filter UI state
+│   └── use-user-table.ts         → table sort/filter UI state
 ├── queries/
-│   └── useUserQuery.ts           → useUsers(), useCreateUser()
+│   └── use-user-query.ts         → use_users(), use_create_user()
 ├── options/
-│   └── userOptions.ts            → userKeys factory + queryOptions defs
+│   └── user-options.ts           → user_keys factory + queryOptions defs
 ├── schemas/
-│   └── userSchema.ts             → createUserSchema, updateUserSchema
+│   └── user-schema.ts            → create_user_schema, update_user_schema
 ├── services/
-│   └── userService.ts            → getUsers(), insertUser(), updateUser()
+│   └── user-service.ts           → get_users(), insert_user(), update_user()
 ├── stores/
-│   └── userStore.ts              → selectedUserId, isCreateModalOpen
+│   └── user-store.ts             → selected_user_id, is_create_modal_open
 ├── types/
-│   └── userTypes.ts              → User, UserRow, CreateUserInput
+│   └── user-types.ts             → User, UserRow, CreateUserInput
 └── index.ts                      → re-exports public API
 ```
 
@@ -325,11 +310,11 @@ features/user/
 
 ## Workflow for Adding a New Feature
 
-1. **Generate DB types** if you added a migration: `supabase gen types typescript --local > src/types/database.ts`
-2. **Create** `features/<name>/` with the folders you need.
+1. **Generate DB types** if you added a migration: `supabase gen types typescript --local > src/lib/supabase/database.types.ts`
+2. **Create** `features/<feature-name>/` with the folders you need.
 3. **Define types** in `types/` derived from `Database` generated types.
 4. **Write Zod schemas** in `schemas/` for every mutation input.
-5. **Write service functions** in `services/` using `createSupabaseServerClient()`.
+5. **Write service functions** in `services/` using `await createClient()` from `@/lib/supabase/server`.
 6. **Wrap in Server Actions** in `actions/` using `next-safe-action` + your schemas.
 7. **Add query keys + queryOptions** in `options/`.
 8. **Add React Query hooks** in `queries/` for client components.
@@ -345,8 +330,8 @@ features/user/
 | --- | --- |
 | Supabase client creation | `lib/supabase/` only |
 | shadcn/ui base components | `shared/components/ui/` |
-| Env variable access | `lib/env.ts` via `@t3-oss/env-nextjs` |
+| Env variable access | `lib/env.ts` (if implemented) |
 | Auth session logic | `middleware.ts` + `app/(auth)/` |
 | Webhook receivers | `app/api/webhooks/` Route Handlers |
-| DB type definitions | `types/database.ts` (auto-generated) |
+| DB type definitions | `lib/supabase/database.types.ts` |
 | Cross-feature shared logic | `shared/` only — never feature-to-feature |
