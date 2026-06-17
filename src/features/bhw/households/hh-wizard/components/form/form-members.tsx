@@ -9,6 +9,7 @@ import { MemberCard } from "../../components/member-card";
 import { AddDrawerScrollable } from "../../components/add-drawer-scrollable"
 import { CompleteHouseholdValues } from "../../data/form-schema";
 import { save_household_action } from "../../actions/hh-wizard-actions";
+import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
 
 export function MembersPage() {
     const { members, householdData, resetWizard } = useHouseholdWizard()
@@ -40,14 +41,13 @@ export function MembersPage() {
 
     return (
         <div className="flex flex-col gap-4">
-            <div>
+            <header className="p-5 border-b">
                 <h1 className="font-heading text-2xl font-bold tracking-tight mb-1">Household Members</h1>
                 <p className="text-sm text-muted-foreground">
                     Please provide the basic information of the household members.
                 </p>
-            </div>
-            <FieldSeparator />
-            <div className="flex-1 flex flex-col justify-center items-center">
+            </header>
+            <div className="flex-1 flex flex-col justify-center items-center p-5">
                 {members.length === 0 ? (
                     <EmptyMembers />
                 ) : (
@@ -58,9 +58,9 @@ export function MembersPage() {
                             ))}
                         </div>
                         <AddDrawerScrollable />
-                        
-                        <Button 
-                            className="w-full mt-4" 
+
+                        <Button
+                            className="w-full mt-4"
                             onClick={handleSaveHousehold}
                             disabled={isSubmitting}
                         >

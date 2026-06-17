@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect, useCallback } from "react"
 import { ArrowLeft, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,14 +13,20 @@ import { step1Schema, step2Schema } from "./data/form-schema"
 import { toast } from "sonner"
 
 import { MembersPage } from "./components/form/form-members";
+import type { BarangayOption } from "./services/barangay-service";
 
-export function HHWizard() {
-  const { 
-    currentStep, 
-    nextStep, 
-    previousStep, 
-    householdData, 
-    members, 
+type HHWizardProps = {
+  barangays: BarangayOption[]
+  defaultBarangayId?: string | null
+}
+
+export function HHWizard({ barangays, defaultBarangayId }: HHWizardProps) {
+  const {
+    currentStep,
+    nextStep,
+    previousStep,
+    householdData,
+    members,
     resetWizard,
     setValidationError,
     clearValidationErrors
@@ -114,9 +121,15 @@ export function HHWizard() {
       </header>
 
       {/* Main Content with ScrollArea */}
-      <main className="p-5 h-full flex-1 flex flex-col overflow-y-auto">
+      <main className="h-full flex-1 flex flex-col overflow-y-auto">
         {/* Step 1: Basic Information */}
-        {currentStep === 0 && <BasicInfoForm />}
+        {currentStep === 0 && (
+          <BasicInfoForm
+            key={defaultBarangayId || "initial"}
+            barangays={barangays}
+            defaultBarangayId={defaultBarangayId}
+          />
+        )}
 
         {/* Step 2: Household Members */}
         {currentStep === 1 && <MembersPage />}
@@ -132,14 +145,14 @@ export function HHWizard() {
           <span className="text-sm font-semibold">Step {currentStep + 1} of 3</span>
           <div className="flex gap-2">
             {currentStep > 0 && (
-              <Button variant="outline" onClick={handlePrevious}>
+              <Button variant="outline" onClick={handlePrevious} size="lg">
                 Previous
               </Button>
             )}
             {!isLastStep ? (
-              <Button onClick={handleNext} className="px-8">
+              <Button onClick={handleNext} className="px-8" size="lg">
                 Next
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight />
               </Button>
             ) : null}
           </div>

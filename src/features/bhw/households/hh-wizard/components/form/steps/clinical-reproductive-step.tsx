@@ -43,10 +43,9 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
     const showOtherMedical = (data.medicalHistory || []).includes("other")
 
     const classification = React.useMemo(() => {
-        if (!data.dateOfBirth || !data.sex) return ""
-        const sexMap: Record<string, "M" | "F"> = { male: "M", female: "F" }
-        return autoSuggestClassification(data.dateOfBirth, sexMap[data.sex as string]) || ""
-    }, [data.dateOfBirth, data.sex])
+        if (!data.birthdate || !data.sex) return ""
+        return autoSuggestClassification(data.birthdate as string, data.sex as "M" | "F") || ""
+    }, [data.birthdate, data.sex])
 
     const classificationDisplay = React.useMemo(() => {
         if (!classification) return ""
@@ -55,7 +54,7 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
     }, [classification])
 
     const isWRA = classification === "WRA"
-    const isFemale = data.sex === "female"
+    const isFemale = data.sex === "F"
     const isPregnant = classification === "P" || classification === "AP"
     const showReproductive = (isWRA || isPregnant) && isFemale
 
@@ -175,6 +174,17 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
                                         onValueChange={(value) => onDataChange({ ...data, fpStatus: value })}
                                         error={errors.fpStatus}
                                     />
+                                    {data.fpMethod === "other" && (
+                                        <InputField
+                                            id="fpMethodOther"
+                                            label="Specify FP Method *"
+                                            placeholder="Input method"
+                                            value={(data.fpMethodOther as string) || ""}
+                                            onChange={(e) => onDataChange({ ...data, fpMethodOther: e.target.value })}
+                                            className="md:col-span-2 animate-in fade-in slide-in-from-top-2 duration-300"
+                                            error={errors.fpMethodOther}
+                                        />
+                                    )}
                                 </div>
                             )}
                         </FieldGroup>

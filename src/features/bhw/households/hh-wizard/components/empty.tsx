@@ -21,9 +21,9 @@ export function EmptyMembers() {
                 <EmptyMedia variant="icon">
                     <UserRoundPlus />
                 </EmptyMedia>
-                <EmptyTitle className="text-lg text-primary">No Household Members Yet</EmptyTitle>
+                <EmptyTitle>No Household Members Yet</EmptyTitle>
                 <EmptyDescription>
-                    Start by adding the <span className="font-medium text-primary">household head</span>. Then add the spouse, son/daughter (eldest to youngest), and other members
+                    Start by adding the <span className="font-bold">household head</span>. Then add the spouse, son/daughter (eldest to youngest), and other members
                 </EmptyDescription>
             </EmptyHeader>
             <EmptyContent className="flex-row justify-center gap-2">

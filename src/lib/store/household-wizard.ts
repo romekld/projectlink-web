@@ -28,17 +28,19 @@ export interface HouseholdMember {
 
 export interface HouseholdData {
   visitDate?: string
-  quarter?: string
+  quarter?: number
   householdNo?: string
-  barangay?: string
+  barangayId?: string
+  barangayName?: string
   houseNoStreet?: string
   purok?: string
+  enumerationArea?: string
+  familyCount?: number
   respondentLastName?: string
   respondentFirstName?: string
   respondentMiddleName?: string
   waterSource?: string
   toiletFacility?: string
-  numberOfFamilies?: number
 }
 
 interface HouseholdWizardState {

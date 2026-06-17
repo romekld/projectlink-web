@@ -56,11 +56,14 @@ export function ReviewStep() {
             </div>
             <div className="space-y-1">
               <span className="text-muted-foreground block font-medium">Barangay</span>
-              <span className="font-semibold">{householdData.barangay || "Not set"}</span>
+              <span className="font-semibold">{householdData.barangayName || "Not set"}</span>
             </div>
             <div className="space-y-1">
               <span className="text-muted-foreground block font-medium">Visit Date</span>
-              <span className="font-semibold">{householdData.visitDate || "Not set"} ({householdData.quarter || "N/A"} Quarter)</span>
+              <span className="font-semibold">
+                {householdData.visitDate || "Not set"}
+                {householdData.quarter ? ` (Q${householdData.quarter})` : ""}
+              </span>
             </div>
             <div className="space-y-1">
               <span className="text-muted-foreground block font-medium">Respondent</span>
@@ -71,7 +74,7 @@ export function ReviewStep() {
               <span className="font-semibold">
                 {householdData.houseNoStreet ? `${householdData.houseNoStreet}, ` : ""}
                 {householdData.purok ? `${householdData.purok}, ` : ""}
-                {householdData.barangay}
+                {householdData.barangayName}
               </span>
             </div>
           </CardContent>
@@ -139,7 +142,7 @@ export function ReviewStep() {
                         )}
                       </div>
                       <div className="text-xs text-muted-foreground">
-                        {member.sex === "male" ? "Male" : "Female"} • {member.age}
+                        {member.sex === "M" ? "Male" : "Female"} • {member.age}
                       </div>
                     </div>
                   </div>

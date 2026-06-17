@@ -3,7 +3,13 @@
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/ui/button"
+import { Hash, House, Signpost, MapPin, Toilet, Droplet } from "lucide-react"
+import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
+import { step1Schema, HouseholdValues } from "../../data/form-schema"
+import { ComboboxField } from "../combobox-field"
+import { NumberField } from "../number-field"
+import { InputField } from "../input-field"
+import { DatePicker } from "../date-picker"
 import {
   Field,
   FieldDescription,
@@ -14,29 +20,33 @@ import {
   FieldSet,
   FieldError,
 } from "@/components/ui/field"
-import { DatePicker } from "../date-picker"
-import { Hash, House, Signpost, MapPin, Toilet, Droplet } from "lucide-react"
-import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
-import { step1Schema, HouseholdValues } from "../../data/form-schema"
-import { barangayData } from "@/features/admin/users/data/barangays"
-import { ComboboxField } from "../combobox-field"
-import { NumberField } from "../number-field"
-import { get_bhw_station_info_action } from "../../actions/hh-wizard-actions"
-import { ButtonGroup } from "@/components/ui/button-group"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { toiletFacilityOptions, waterSourceOptions } from "../../data"
+import type { BarangayOption } from "../../services/barangay-service"
 
-import {
-  toiletFacilityOptions, waterSourceOptions
-} from "../../data"
+const QUARTER_OPTIONS = [
+  { value: 1, label: "1st" },
+  { value: 2, label: "2nd" },
+  { value: 3, label: "3rd" },
+  { value: 4, label: "4th" },
+] as const
 
-const barangayOptions = barangayData.map((b) => ({
-  value: b.id, // Changed to use ID as value
-  label: b.name,
-}))
+function currentQuarter(): 1 | 2 | 3 | 4 {
+  return (Math.floor(new Date().getMonth() / 3) + 1) as 1 | 2 | 3 | 4
+}
 
-import { InputField } from "../input-field"
+type BasicInfoFormProps = {
+  barangays: BarangayOption[]
+  defaultBarangayId?: string | null
+}
 
-export function BasicInfoForm() {
+export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormProps) {
   const { householdData, setHouseholdData, validationErrors, setValidationError } = useHouseholdWizard()
+
+  const barangayOptions = barangays.map((barangay) => ({
+    value: barangay.id,
+    label: barangay.name,
+  }))
 
   const {
     handleSubmit,
@@ -44,8 +54,8 @@ export function BasicInfoForm() {
   } = useForm<HouseholdValues>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      visitDate: householdData.visitDate || new Date().toISOString().split('T')[0],
-      quarter: (householdData.quarter as 1 | 2 | 3 | 4) || (Math.floor(new Date().getMonth() / 3) + 1),
+      visitDate: householdData.visitDate || new Date().toISOString().split("T")[0],
+      quarter: householdData.quarter || currentQuarter(),
       barangayId: householdData.barangayId || "",
       respondentLastName: householdData.respondentLastName || "",
       respondentFirstName: householdData.respondentFirstName || "",
@@ -53,45 +63,69 @@ export function BasicInfoForm() {
       toiletFacility: householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None",
       houseNoStreet: householdData.houseNoStreet || "",
       purok: householdData.purok || "",
-      familyCount: householdData.familyCount || 1,
+      familyCount: householdData.familyCount && householdData.familyCount >= 1 ? householdData.familyCount : 1,
     },
   })
 
-  const handleFieldChange = (field: keyof HouseholdData | keyof HouseholdValues, value: string | number | undefined | null) => {
+  const handleFieldChange = (
+    field: keyof HouseholdData | keyof HouseholdValues,
+    value: string | number | undefined | null
+  ) => {
     setHouseholdData({ [field]: value })
-    // Clear error for this field when changed
     if (validationErrors[field as string]) {
       setValidationError(field as string, "")
     }
   }
 
-  // Pre-populate Barangay from BHW's station info
-  useEffect(() => {
-    async function fetchStationInfo() {
-      if (!householdData.barangayId) {
-        const result = await get_bhw_station_info_action();
-        if (result?.data?.health_stations?.barangay_id) {
-          const bId = result.data.health_stations.barangay_id;
-          handleFieldChange("barangayId", bId);
-          setValue("barangayId", bId);
-        }
-      }
+  const handleBarangayChange = (barangayId: string) => {
+    const barangayName = barangays.find((barangay) => barangay.id === barangayId)?.name
+    setHouseholdData({
+      barangayId,
+      ...(barangayName ? { barangayName } : {}),
+    })
+    setValue("barangayId", barangayId)
+    if (validationErrors.barangayId) {
+      setValidationError("barangayId", "")
     }
-    fetchStationInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [householdData.barangayId, setValue]);
+  }
 
-  // Initialize form with store data
+  // Ensure family count and quarter always have valid defaults
+  useEffect(() => {
+    const updates: Partial<HouseholdData> = {}
+
+    if (!householdData.familyCount || householdData.familyCount < 1) {
+      updates.familyCount = 1
+    }
+
+    if (!householdData.quarter) {
+      updates.quarter = currentQuarter()
+    }
+
+    if (Object.keys(updates).length > 0) {
+      setHouseholdData(updates)
+    }
+  }, [householdData.familyCount, householdData.quarter, setHouseholdData])
+
+  // Sync react-hook-form with store data
   useEffect(() => {
     if (householdData.visitDate) setValue("visitDate", householdData.visitDate)
     if (householdData.barangayId) setValue("barangayId", householdData.barangayId)
     if (householdData.respondentLastName) setValue("respondentLastName", householdData.respondentLastName)
     if (householdData.respondentFirstName) setValue("respondentFirstName", householdData.respondentFirstName)
-    if (householdData.waterSource) setValue("waterSource", householdData.waterSource as "Level I" | "Level II" | "Level III")
-    if (householdData.toiletFacility) setValue("toiletFacility", householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None")
+    if (householdData.waterSource) {
+      setValue("waterSource", householdData.waterSource as "Level I" | "Level II" | "Level III")
+    }
+    if (householdData.toiletFacility) {
+      setValue(
+        "toiletFacility",
+        householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None"
+      )
+    }
     if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
     if (householdData.purok) setValue("purok", householdData.purok)
-    if (householdData.familyCount) setValue("familyCount", householdData.familyCount)
+    if (householdData.familyCount && householdData.familyCount >= 1) {
+      setValue("familyCount", householdData.familyCount)
+    }
     if (householdData.quarter) setValue("quarter", householdData.quarter as 1 | 2 | 3 | 4)
   }, [householdData, setValue])
 
@@ -99,16 +133,18 @@ export function BasicInfoForm() {
     setHouseholdData(data)
   }
 
+  const selectedQuarter = householdData.quarter ?? currentQuarter()
+
   return (
     <div className="flex flex-col">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldGroup>
-          <div>
-            <h1 className="font-heading text-2xl font-bold tracking-tight mb-1">Basic Information</h1>
-            <p className="text-sm text-muted-foreground">
-              Please provide the basic information of the household.
-            </p>
-          </div>
+        <header className="p-5 border-b">
+          <h1 className="font-heading text-2xl font-bold tracking-tight mb-1">Basic Information</h1>
+          <p className="text-sm text-muted-foreground">
+            Please provide the basic information of the household.
+          </p>
+        </header>
+        <FieldGroup className="p-5">
 
           <FieldSet>
             <FieldLegend>Visit Information</FieldLegend>
@@ -120,29 +156,41 @@ export function BasicInfoForm() {
                   date={householdData.visitDate ? new Date(householdData.visitDate) : undefined}
                   onDateChange={(date: Date | undefined) => {
                     if (date) {
-                      const dateString = date.toISOString().split('T')[0]
+                      const dateString = date.toISOString().split("T")[0]
                       handleFieldChange("visitDate", dateString)
                     }
                   }}
                   aria-invalid={!!validationErrors.visitDate}
                 />
-                <FieldError>{validationErrors.visitDate}</FieldError>
+                {validationErrors.visitDate ? (
+                  <FieldError>{validationErrors.visitDate}</FieldError>
+                ) : null}
               </Field>
               <Field>
                 <FieldLabel htmlFor="quarter">Quarter</FieldLabel>
-                <ButtonGroup>
-                  {["First", "Second", "Third", "Fourth"].map((q) => (
-                    <Button
-                      key={q}
-                      variant={householdData.quarter === q ? "default" : "outline"}
-                      type="button"
+                <ToggleGroup
+                  type="single"
+                  variant="outline"
+                  value={String(selectedQuarter)}
+                  onValueChange={(nextValue) => {
+                    if (!nextValue) return
+                    const quarter = Number(nextValue) as 1 | 2 | 3 | 4
+                    handleFieldChange("quarter", quarter)
+                    setValue("quarter", quarter)
+                  }}
+                  className="w-full"
+                >
+                  {QUARTER_OPTIONS.map((quarter) => (
+                    <ToggleGroupItem
+                      key={quarter.value}
+                      value={String(quarter.value)}
+                      aria-label={`${quarter.label} quarter`}
                       className="flex-1"
-                      onClick={() => handleFieldChange("quarter", q)}
                     >
-                      {q}
-                    </Button>
+                      {quarter.label}
+                    </ToggleGroupItem>
                   ))}
-                </ButtonGroup>
+                </ToggleGroup>
               </Field>
             </FieldGroup>
           </FieldSet>
@@ -166,8 +214,9 @@ export function BasicInfoForm() {
                 placeholder="Select barangay..."
                 options={barangayOptions}
                 icon={MapPin}
-                value={householdData.barangayId || ""}
-                onValueChange={(val) => handleFieldChange("barangayId", val)}
+                defaultValue={defaultBarangayId || ""}
+                value={householdData.barangayId}
+                onValueChange={handleBarangayChange}
                 error={validationErrors.barangayId}
               />
               <InputField
@@ -193,8 +242,12 @@ export function BasicInfoForm() {
                 label="No. of Family/ies in the HH *"
                 placeholder="e.g., 1"
                 type="number"
-                value={householdData.familyCount || ""}
-                onChange={(e) => handleFieldChange("familyCount", parseInt(e.target.value))}
+                min={1}
+                value={householdData.familyCount && householdData.familyCount >= 1 ? householdData.familyCount : 1}
+                onChange={(e) => {
+                  const parsed = parseInt(e.target.value, 10)
+                  handleFieldChange("familyCount", Number.isNaN(parsed) ? 1 : Math.max(1, parsed))
+                }}
                 error={validationErrors.familyCount}
               />
             </FieldGroup>
@@ -246,7 +299,8 @@ export function BasicInfoForm() {
                 showAbbreviation
                 value={householdData.waterSource || ""}
                 onValueChange={(val) => handleFieldChange("waterSource", val)}
-                error={validationErrors.waterSource} />
+                error={validationErrors.waterSource}
+              />
               <ComboboxField
                 label="Type of Toilet Facility *"
                 placeholder="Select toilet facility"

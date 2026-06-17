@@ -22,6 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { FieldGroup, FieldSeparator } from "@/components/ui/field"
 import { memberSchema } from "../data/form-schema"
 import { z } from "zod"
+import { autoSuggestClassification } from "../data/classification"
 
 export function AddDrawerScrollable() {
     const { 
@@ -37,7 +38,7 @@ export function AddDrawerScrollable() {
     const [formData, setFormData] = React.useState<Record<string, unknown>>({})
     const [errors, setErrors] = React.useState<Record<string, string>>({})
 
-    const hasHead = members.some(m => m.relationshipToHhHead === "1" || m.relationshipToHhHead === "1-Head")
+    const hasHead = members.some(m => m.relationshipToHhHead === "Head")
     const isAddingHead = !hasHead && !editingMemberId
 
     // Sync drawer open state with store for editing
@@ -63,7 +64,8 @@ export function AddDrawerScrollable() {
                 if (memberToEdit) {
                     setFormData({
                         ...memberToEdit,
-                        relationship: memberToEdit.relationshipToHhHead === "1-Head" ? "1" : memberToEdit.relationshipToHhHead
+                        birthdate: memberToEdit.dateOfBirth, // map store dateOfBirth to form birthdate
+                        relationship: memberToEdit.relationshipToHhHead
                     })
                 }
             } else {
@@ -71,12 +73,26 @@ export function AddDrawerScrollable() {
                     lastName: "",
                     firstName: "",
                     middleName: "",
-                    relationship: isAddingHead ? "1" : "",
-                    sex: "male",
-                    dateOfBirth: "",
+                    relationship: isAddingHead ? "Head" : "",
+                    sex: "M",
+                    birthdate: "",
                     civilStatus: "",
+                    nhtsStatus: "Non-4Ps",
+                    fourPsId: "",
+                    philhealthId: "",
+                    phCategory: "Unknown",
+                    membershipType: "",
+                    medicalHistory: [],
+                    medicalOther: "",
+                    isPregnant: false,
+                    lmp: "",
+                    usingFp: false,
+                    fpMethod: "",
+                    fpMethodOther: "",
+                    fpStatus: "",
                     education: "",
                     religion: "",
+                    specifyReligion: "",
                 })
             }
             setErrors({})
@@ -87,30 +103,38 @@ export function AddDrawerScrollable() {
         // Clear previous errors
         setErrors({})
 
+        const birthdate = (formData.birthdate as string) || ""
+        const sex = (formData.sex as "M" | "F") || "M"
+        
+        // Auto-compute classification
+        const computedClassification = autoSuggestClassification(birthdate, sex)
+
         // Use Zod to validate member data
         const validation = memberSchema.safeParse({
-            id: editingMemberId || crypto.randomUUID(),
             lastName: formData.lastName || "",
             firstName: formData.firstName || "",
             middleName: formData.middleName || "",
-            relationshipToHhHead: formData.relationship || (isAddingHead ? "1" : ""),
-            sex: formData.sex || "male",
-            dateOfBirth: formData.dateOfBirth || "",
-            age: formData.age || "",
+            birthdate: birthdate,
+            sex: sex,
+            relationship: formData.relationship || (isAddingHead ? "Head" : ""),
+            specifyRelation: formData.specifyRelation || "",
             civilStatus: formData.civilStatus || "",
-            education: formData.education || "",
-            religion: formData.religion || "",
-            isIndigenousPeople: !!formData.isIndigenousPeople,
+            nhtsStatus: formData.nhtsStatus || "Non-4Ps",
+            fourPsId: formData.fourPsId || "",
             philhealthId: formData.philhealthId || "",
-            membershipType: formData.membershipType || "",
-            philhealthCategory: formData.philhealthCategory || "",
+            phCategory: formData.phCategory || "Unknown",
             medicalHistory: formData.medicalHistory || [],
             medicalOther: formData.medicalOther || "",
-            classification: formData.classification || "",
+            classification: computedClassification || "",
+            isPregnant: !!formData.isPregnant,
+            lmp: formData.lmp || "",
             usingFp: !!formData.usingFp,
             fpMethod: formData.fpMethod || "",
+            fpMethodOther: formData.fpMethodOther || "",
             fpStatus: formData.fpStatus || "",
-            lmp: formData.lmp || "",
+            education: formData.education || "",
+            specifyReligion: formData.specifyReligion || "",
+            metadata: formData.metadata || {},
         })
 
         if (!validation.success) {
@@ -121,15 +145,41 @@ export function AddDrawerScrollable() {
                 }
             })
             setErrors(newErrors)
-            toast.error("Please fill in all required member fields.", { position: "top-center" })
+            toast.error("Please correct the errors in the form.", { position: "top-center" })
             return
         }
 
+        const memberData: HouseholdMember = {
+            id: editingMemberId || crypto.randomUUID(),
+            lastName: validation.data.lastName,
+            firstName: validation.data.firstName,
+            middleName: validation.data.middleName,
+            relationshipToHhHead: validation.data.relationship,
+            sex: validation.data.sex,
+            dateOfBirth: validation.data.birthdate, // store expects dateOfBirth
+            age: (formData.age as string) || "",
+            civilStatus: validation.data.civilStatus,
+            education: validation.data.education,
+            religion: validation.data.religion,
+            isIndigenousPeople: !!formData.isIndigenousPeople,
+            philhealthId: validation.data.philhealthId,
+            membershipType: "", // Added to match interface if needed
+            philhealthCategory: validation.data.phCategory,
+            medicalHistory: validation.data.medicalHistory,
+            classification: validation.data.classification,
+            usingFp: validation.data.usingFp,
+            fpMethod: validation.data.fpMethod,
+            fpMethodOther: validation.data.fpMethodOther,
+            fpStatus: (formData.fpStatus as string) || "",
+            // Additional fields for local state mapping if needed
+            ...formData, // include other fields like specifyRelation, etc.
+        } as any
+
         if (editingMemberId) {
-            updateMember(editingMemberId, validation.data as any)
+            updateMember(editingMemberId, memberData)
             toast.success(`${validation.data.firstName} updated.`, { position: "top-center" })
         } else {
-            addMember(validation.data as any)
+            addMember(memberData)
             toast.success(`${validation.data.firstName} added to household.`, { position: "top-center" })
         }
         
@@ -145,11 +195,10 @@ export function AddDrawerScrollable() {
         // Clear error for field when changed
         const fieldChanged = Object.keys(newData)[0]
         if (fieldChanged) {
-            const errorKey = fieldChanged === "relationship" ? "relationshipToHhHead" : fieldChanged
-            if (errors[errorKey]) {
+            if (errors[fieldChanged]) {
                 setErrors(prev => {
                     const next = { ...prev }
-                    delete next[errorKey]
+                    delete next[fieldChanged]
                     return next
                 })
             }

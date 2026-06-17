@@ -8,12 +8,19 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Providers } from "@/components/layout/shared/providers";
 
-const geistHeading = Geist({ subsets: ["latin"], variable: "--font-geist-heading" });
+const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  display: "swap",
   subsets: ["latin"],
 });
 
@@ -32,15 +39,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "h-full",
-        "antialiased",
-        inter.variable,
-        geistMono.variable,
-        geistHeading.variable,
-      )}
+      className={cn("font-sans", inter.variable, geistHeading.variable)}
     >
-      <body className="min-h-full flex flex-col">
+      <body className={`${geistSans.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Providers>
             <TooltipProvider>{children}</TooltipProvider>

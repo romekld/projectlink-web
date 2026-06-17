@@ -81,7 +81,7 @@ export function CoreIdentityStep({ data, onDataChange, errors = {}, container }:
 
         onDataChange({
             ...data,
-            dateOfBirth: dateString,
+            birthdate: dateString,
             age: ageString,
         })
     }
@@ -127,10 +127,10 @@ export function CoreIdentityStep({ data, onDataChange, errors = {}, container }:
                             showAbbreviation
                             value={data.relationship as string}
                             onValueChange={(value) => onDataChange({ ...data, relationship: value })}
-                            error={errors.relationshipToHhHead}
+                            error={errors.relationship}
                             container={container}
                         />
-                        {data.relationship === "5" && (
+                        {data.relationship === "Other" && (
                             <InputField
                                 id="specifyRelation"
                                 label="Specify Relation *"
@@ -154,8 +154,8 @@ export function CoreIdentityStep({ data, onDataChange, errors = {}, container }:
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <DateOfBirth
                             onDateChange={handleDobChange}
-                            value={data.dateOfBirth as string}
-                            error={errors.dateOfBirth}
+                            value={data.birthdate as string}
+                            error={errors.birthdate}
                         />
                         <InputField
                             id="age"

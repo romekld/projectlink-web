@@ -42,24 +42,24 @@ export function SocioEconomicStep({ data, onDataChange, errors = {} }: WizardSte
                             </FieldContent>
                             <Switch
                                 id="is4Ps"
-                                checked={data.nhtsStatus === "NHTS-4Ps"}
+                                checked={data.nhtsStatus === "4Ps"}
                                 onCheckedChange={(checked) => onDataChange({
                                     ...data,
-                                    nhtsStatus: checked ? "NHTS-4Ps" : "Non-NHTS"
+                                    nhtsStatus: checked ? "4Ps" : "Non-4Ps"
                                 })}
                             />
                         </Field>
                     </FieldLabel>
-                    {data.nhtsStatus === "NHTS-4Ps" && (
+                    {data.nhtsStatus === "4Ps" && (
                         <InputField
-                            id="nhtsId"
+                            id="fourPsId"
                             label="4Ps Household ID *"
                             placeholder="Enter ID number"
-                            value={(data.nhtsId as string) || ""}
-                            onChange={(e) => onDataChange({ ...data, nhtsId: e.target.value })}
+                            value={(data.fourPsId as string) || ""}
+                            onChange={(e) => onDataChange({ ...data, fourPsId: e.target.value })}
                             description="The unique identification number for the 4Ps household."
                             className="animate-in fade-in slide-in-from-top-2 duration-300"
-                            error={errors.nhtsId}
+                            error={errors.fourPsId}
                         />
                     )}
                 </FieldGroup>
@@ -93,9 +93,9 @@ export function SocioEconomicStep({ data, onDataChange, errors = {} }: WizardSte
                             label="Philhealth Category"
                             placeholder="Select category"
                             options={philhealthCategoryOptions}
-                            value={data.philhealthCategory as string}
-                            onValueChange={(value) => onDataChange({ ...data, philhealthCategory: value })}
-                            error={errors.philhealthCategory}
+                            value={data.phCategory as string}
+                            onValueChange={(value) => onDataChange({ ...data, phCategory: value })}
+                            error={errors.phCategory}
                         />
                     </div>
                 </FieldGroup>

@@ -38,7 +38,7 @@ export function InputField({
         <Field data-invalid={!!error} className={className}>
             <FieldLabel htmlFor={id}>{label}</FieldLabel>
             {InputComponent}
-            <FieldError>{error}</FieldError>
+            {error ? <FieldError>{error}</FieldError> : null}
             {description && !error && (
                 <FieldDescription>{description}</FieldDescription>
             )}

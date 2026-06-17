@@ -83,7 +83,7 @@ export function MemberCard({ member, index }: MemberCardProps) {
                     </span>
                     <span className="flex items-center gap-1">
                         <span className="size-1 rounded-full bg-muted-foreground/30" />
-                        {member.sex === "M" || member.sex === "male" ? "Male" : "Female"}
+                        {member.sex === "M" ? "Male" : "Female"}
                     </span>
                     <span className="flex items-center gap-1">
                         <span className="size-1 rounded-full bg-muted-foreground/30" />

@@ -5,6 +5,6 @@ export interface SelectOption {
 }
 
 export const sexOptions: SelectOption[] = [
-  { value: "male", label: "Male", abbreviation: "M" },
-  { value: "female", label: "Female", abbreviation: "F" },
+  { value: "M", label: "Male", abbreviation: "M" },
+  { value: "F", label: "Female", abbreviation: "F" },
 ]

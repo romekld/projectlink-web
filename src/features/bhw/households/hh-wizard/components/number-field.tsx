@@ -24,11 +24,15 @@ export function NumberField({
     description,
     id,
     className,
-    value = 0,
+    value = 1,
     onChange,
     ...props
 }: InputFieldProps) {
-    const [localValue, setLocalValue] = React.useState(Number(value) || 0)
+    const toCount = (raw: string | number | readonly string[]) => {
+        if (Array.isArray(raw)) return 1
+        return Math.max(1, Number(raw) || 1)
+    }
+    const [localValue, setLocalValue] = React.useState(toCount(value))
 
     const increment = () => {
         const newValue = localValue + 1
@@ -39,7 +43,7 @@ export function NumberField({
     }
 
     const decrement = () => {
-        const newValue = Math.max(0, localValue - 1)
+        const newValue = Math.max(1, localValue - 1)
         setLocalValue(newValue)
         if (onChange) {
             onChange({ target: { value: newValue.toString() } } as React.ChangeEvent<HTMLInputElement>)
@@ -47,7 +51,7 @@ export function NumberField({
     }
 
     React.useEffect(() => {
-        setLocalValue(Number(value) || 0)
+        setLocalValue(toCount(value))
     }, [value])
 
     const InputComponent = Icon ? (
@@ -91,7 +95,7 @@ export function NumberField({
                     <Plus />
                 </Button>
             </ButtonGroup>
-            <FieldError>{error}</FieldError>
+            {error ? <FieldError>{error}</FieldError> : null}
             {description && !error && (
                 <FieldDescription>{description}</FieldDescription>
             )}
