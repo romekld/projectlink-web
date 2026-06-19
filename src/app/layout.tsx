@@ -26,7 +26,7 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: "Project LINK",
-  description: "Barangay Health Worker field operations platform.",
+  description: "Local Information Network for Kalusugan",
   formatDetection: { telephone: false },
 };
 
@@ -39,9 +39,10 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("font-sans", inter.variable, geistHeading.variable)}
+      // className={cn("font-sans", inter.variable, geistHeading.variable, geistMono.variable, geistSans.variable)}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${geistHeading.variable} h-full antialiased`}
     >
-      <body className={`${geistSans.className} antialiased`}>
+      <body className="min-h-screen bg-background font-sans">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Providers>
             <TooltipProvider>{children}</TooltipProvider>

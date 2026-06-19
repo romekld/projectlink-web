@@ -57,12 +57,14 @@ interface WizardProps {
 export function Wizard({ steps, onSubmit, onCancel, initialData = {}, children }: WizardProps) {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [formData, setFormData] = React.useState<Record<string, unknown>>(initialData)
+  const [prevInitialData, setPrevInitialData] = React.useState(initialData)
 
   // Reset form data when initialData changes (e.g. when opening for different member types)
-  React.useEffect(() => {
+  if (initialData !== prevInitialData) {
+    setPrevInitialData(initialData)
     setFormData(initialData)
     setCurrentStep(0)
-  }, [initialData])
+  }
 
   // Filter steps based on conditions
   const activeSteps = React.useMemo(() => {

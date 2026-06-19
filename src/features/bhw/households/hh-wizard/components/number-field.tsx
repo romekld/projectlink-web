@@ -33,6 +33,12 @@ export function NumberField({
         return Math.max(1, Number(raw) || 1)
     }
     const [localValue, setLocalValue] = React.useState(toCount(value))
+    const [prevValue, setPrevValue] = React.useState(value)
+
+    if (value !== prevValue) {
+        setPrevValue(value)
+        setLocalValue(toCount(value))
+    }
 
     const increment = () => {
         const newValue = localValue + 1
@@ -50,9 +56,6 @@ export function NumberField({
         }
     }
 
-    React.useEffect(() => {
-        setLocalValue(toCount(value))
-    }, [value])
 
     const InputComponent = Icon ? (
         <InputGroup>

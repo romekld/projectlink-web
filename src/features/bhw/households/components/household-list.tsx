@@ -8,6 +8,7 @@ import {
     ShoppingBag,
     Folder,
 } from 'lucide-react'
+import { HouseholdCard } from './household-card'
 
 export function HouseholdList() {
     const items = [
@@ -62,9 +63,9 @@ export function HouseholdList() {
     ]
 
     return (
-        <>
+        <div className="flex items-center flex-col gap-4">
             {/* List Container */}
-            <ListItemContainer>
+            {/* <ListItemContainer>
                 {
                     items.map((item) => (
                         <ListItem
@@ -79,9 +80,16 @@ export function HouseholdList() {
                         />
                     ))
                 }
-            </ListItemContainer >
+            </ListItemContainer > */}
 
             {/* Info Section */}
-        </>
+
+            <HouseholdCard />
+            <HouseholdCard />
+            <HouseholdCard />
+            <HouseholdCard />
+            <HouseholdCard />
+            <HouseholdCard />
+        </div>
     )
 }

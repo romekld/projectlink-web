@@ -1,4 +1,4 @@
-import { Database } from "@/types/database";
+import { Database } from "@/lib/supabase/database.types";
 
 export type DbHousehold = Database["public"]["Tables"]["households"]["Row"];
 export type DbHouseholdInsert = Database["public"]["Tables"]["households"]["Insert"];

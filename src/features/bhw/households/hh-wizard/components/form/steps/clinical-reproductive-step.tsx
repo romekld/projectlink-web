@@ -32,7 +32,7 @@ import { InputField } from "../../input-field"
 
 export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {
-        const currentHistory = data.medicalHistory || []
+        const currentHistory = (data.medicalHistory as string[]) || []
         if (checked) {
             onDataChange({ ...data, medicalHistory: [...currentHistory, optionValue] })
         } else {
@@ -40,7 +40,7 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
         }
     }
 
-    const showOtherMedical = (data.medicalHistory || []).includes("other")
+    const showOtherMedical = ((data.medicalHistory as string[]) || []).includes("other")
 
     const classification = React.useMemo(() => {
         if (!data.birthdate || !data.sex) return ""
@@ -153,40 +153,39 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
                                     />
                                 </Field>
                             </FieldLabel>
-
-                            {data.usingFp && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                                    <SelectField
-                                        label="FP Method *"
-                                        placeholder="Select method"
-                                        options={fpMethodOptions}
-                                        icon={Baby}
-                                        value={data.fpMethod as string}
-                                        onValueChange={(value) => onDataChange({ ...data, fpMethod: value })}
-                                        error={errors.fpMethod}
-                                    />
-                                    <SelectField
-                                        label="FP Status *"
-                                        placeholder="Select status"
-                                        options={fpStatusOptions}
-                                        showAbbreviation
-                                        value={data.fpStatus as string}
-                                        onValueChange={(value) => onDataChange({ ...data, fpStatus: value })}
-                                        error={errors.fpStatus}
-                                    />
-                                    {data.fpMethod === "other" && (
-                                        <InputField
-                                            id="fpMethodOther"
-                                            label="Specify FP Method *"
-                                            placeholder="Input method"
-                                            value={(data.fpMethodOther as string) || ""}
-                                            onChange={(e) => onDataChange({ ...data, fpMethodOther: e.target.value })}
-                                            className="md:col-span-2 animate-in fade-in slide-in-from-top-2 duration-300"
-                                            error={errors.fpMethodOther}
-                                        />
-                                    )}
-                                </div>
-                            )}
+{data.usingFp && (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+        <SelectField
+            label="FP Method *"
+            placeholder="Select method"
+            options={fpMethodOptions}
+            icon={Baby}
+            value={data.fpMethod as string}
+            onValueChange={(value) => onDataChange({ ...data, fpMethod: value })}
+            error={errors.fpMethod}
+        />
+        <SelectField
+            label="FP Status *"
+            placeholder="Select status"
+            options={fpStatusOptions}
+            showAbbreviation
+            value={data.fpStatus as string}
+            onValueChange={(value) => onDataChange({ ...data, fpStatus: value })}
+            error={errors.fpStatus}
+        />
+        {data.fpMethod === "other" && (
+            <InputField
+                id="fpMethodOther"
+                label="Specify FP Method *"
+                placeholder="Input method"
+                value={(data.fpMethodOther as string) || ""}
+                onChange={(e) => onDataChange({ ...data, fpMethodOther: e.target.value })}
+                className="md:col-span-2 animate-in fade-in slide-in-from-top-2 duration-300"
+                error={errors.fpMethodOther}
+            />
+        )}
+    </div>
+)}
                         </FieldGroup>
                     </FieldSet>
                 </>

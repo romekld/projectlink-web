@@ -44,7 +44,7 @@ export function AddDrawerScrollable() {
     // Sync drawer open state with store for editing
     React.useEffect(() => {
         if (isEditingDrawerOpen) {
-            setOpen(true)
+            queueMicrotask(() => setOpen(true))
         }
     }, [isEditingDrawerOpen])
 
@@ -59,43 +59,45 @@ export function AddDrawerScrollable() {
     // Reset form when drawer opens/closes or when editingMemberId changes
     React.useEffect(() => {
         if (open) {
-            if (editingMemberId) {
-                const memberToEdit = members.find(m => m.id === editingMemberId)
-                if (memberToEdit) {
+            queueMicrotask(() => {
+                if (editingMemberId) {
+                    const memberToEdit = members.find(m => m.id === editingMemberId)
+                    if (memberToEdit) {
+                        setFormData({
+                            ...memberToEdit,
+                            birthdate: memberToEdit.dateOfBirth, // map store dateOfBirth to form birthdate
+                            relationship: memberToEdit.relationshipToHhHead
+                        })
+                    }
+                } else {
                     setFormData({
-                        ...memberToEdit,
-                        birthdate: memberToEdit.dateOfBirth, // map store dateOfBirth to form birthdate
-                        relationship: memberToEdit.relationshipToHhHead
+                        lastName: "",
+                        firstName: "",
+                        middleName: "",
+                        relationship: isAddingHead ? "Head" : "",
+                        sex: "M",
+                        birthdate: "",
+                        civilStatus: "",
+                        nhtsStatus: "Non-4Ps",
+                        fourPsId: "",
+                        philhealthId: "",
+                        phCategory: "Unknown",
+                        membershipType: "",
+                        medicalHistory: [],
+                        medicalOther: "",
+                        isPregnant: false,
+                        lmp: "",
+                        usingFp: false,
+                        fpMethod: "",
+                        fpMethodOther: "",
+                        fpStatus: "",
+                        education: "",
+                        religion: "",
+                        specifyReligion: "",
                     })
                 }
-            } else {
-                setFormData({
-                    lastName: "",
-                    firstName: "",
-                    middleName: "",
-                    relationship: isAddingHead ? "Head" : "",
-                    sex: "M",
-                    birthdate: "",
-                    civilStatus: "",
-                    nhtsStatus: "Non-4Ps",
-                    fourPsId: "",
-                    philhealthId: "",
-                    phCategory: "Unknown",
-                    membershipType: "",
-                    medicalHistory: [],
-                    medicalOther: "",
-                    isPregnant: false,
-                    lmp: "",
-                    usingFp: false,
-                    fpMethod: "",
-                    fpMethodOther: "",
-                    fpStatus: "",
-                    education: "",
-                    religion: "",
-                    specifyReligion: "",
-                })
-            }
-            setErrors({})
+                setErrors({})
+            })
         }
     }, [open, editingMemberId, isAddingHead, members])
 
@@ -173,7 +175,7 @@ export function AddDrawerScrollable() {
             fpStatus: (formData.fpStatus as string) || "",
             // Additional fields for local state mapping if needed
             ...formData, // include other fields like specifyRelation, etc.
-        } as any
+        } as unknown as HouseholdMember
 
         if (editingMemberId) {
             updateMember(editingMemberId, memberData)

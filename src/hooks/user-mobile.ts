@@ -12,7 +12,7 @@ export function useIsMobile() {
     }
 
     mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    queueMicrotask(onChange)
 
     return () => mql.removeEventListener("change", onChange)
   }, [])

@@ -1,69 +1,108 @@
-"use client"
-
-import Link from "next/link"
-import { AlertTriangle, ChevronRight, Users } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import type { Household } from "../data/schema"
-import { syncStatusConfig, formatVisitQuartersSummary } from "../data/formatters"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
-type HouseholdCardProps = {
-  household: Household
+import { House, CalendarSearch } from "lucide-react"
+
+export function HouseholdCard() {
+  return (
+    <Card size="sm" className="w-full ">
+      <CardHeader>
+        <div className="flex items-center justify-between mb-2">
+          <span className="inline-flex items-center gap-2 text-sm">
+            {/* Icon Container Wrapper */}
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-muted-foreground">
+              <House className="size-4" />
+            </span>
+            <span className="font-mono text-sm text-muted-foreground">202606-10026-0001</span>
+          </span>
+          <BadgeStatus />
+        </div>
+        <CardTitle className="!text-lg">
+          Dela Cruz Household
+        </CardTitle>
+        <CardDescription>
+          Blk 4 Lot 44, Purok 1, Victoria Reyes
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-2">
+            <CalendarSearch className="size-4 text-sm text-muted-foreground" />
+            <span className="font-mono text-sm text-muted-foreground">3 Jun 2026</span>
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <span className="font-mono text-sm text-muted-foreground">5 members</span>
+            <MembersAvatar />
+          </span>
+        </div>
+      </CardContent>
+      <CardFooter >
+        <ProgressWithLabel />
+      </CardFooter>
+    </Card >
+  )
 }
 
-export function HouseholdCard({ household }: HouseholdCardProps) {
-  const statusCfg = syncStatusConfig[household.syncStatus]
-  const quartersSummary = formatVisitQuartersSummary(
-    household.visitDateQ1,
-    household.visitDateQ2,
-    household.visitDateQ3,
-    household.visitDateQ4
-  )
 
+import { Field, FieldLabel } from "@/components/ui/field"
+import { Progress } from "@/components/ui/progress"
+
+export function ProgressWithLabel() {
   return (
-    <article className="rounded-lg border bg-card p-3 shadow-none">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="truncate font-medium">
-            {household.respondentLastName}, {household.respondentFirstName}
-          </p>
-          <p className="text-xs text-muted-foreground">{household.householdNumber}</p>
-        </div>
-        <Badge variant={statusCfg.variant} className="shrink-0 capitalize">
-          {statusCfg.label}
-        </Badge>
-      </div>
+    <Field className="w-full max-w-sm">
+      <FieldLabel htmlFor="progress-upload">
+        <span>33%</span>
+        <span className="ml-auto text-muted-foreground text-sm">1/3 step</span>
+      </FieldLabel>
+      <Progress value={33} id="progress-upload" />
+    </Field>
+  )
+}
+import { Loader, CircleCheckBig } from "lucide-react"
 
-      <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1">
-          <Users className="size-3.5" />
-          {household.members.length} member{household.members.length !== 1 ? "s" : ""}
-        </span>
-        <span>{quartersSummary}</span>
-        {household.nhtsStatus === "NHTS-4Ps" && (
-          <Badge variant="outline" className="text-[10px]">4Ps</Badge>
-        )}
-      </div>
+import { Badge } from "@/components/ui/badge"
 
-      {household.syncStatus === "returned" && household.returnedReason && (
-        <div className="mt-2 flex items-start gap-2 rounded-md border border-destructive/30 bg-destructive/5 px-2.5 py-2 text-xs text-destructive">
-          <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-          <span className="line-clamp-2">{household.returnedReason}</span>
-        </div>
-      )}
+export function BadgeStatus() {
+  return (
+    <Badge variant="outline" className="border-transparent bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300">
+      <Loader data-icon="inline-start" />
+      Pending
+    </Badge>
+    // <Badge variant="outline" className="border-transparent bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">
+    //   <CircleCheckBig  data-icon="inline-start" />
+    //   Approved
+    // </Badge>
+  )
+}
 
-      <div className="mt-3 flex gap-2">
-        <Button asChild variant="outline" size="sm" className="flex-1">
-          <Link href={`/bhw/households/${household.id}/edit`}>
-            Edit
-          </Link>
-        </Button>
-        <Button asChild variant="ghost" size="sm" className="px-3">
-          <Link href={`/bhw/households/${household.id}`} aria-label="View details">
-            <ChevronRight className="size-4" />
-          </Link>
-        </Button>
-      </div>
-    </article>
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarImage,
+  AvatarGroupCount,
+} from "@/components/ui/avatar"
+
+export function MembersAvatar() {
+  return (
+    <AvatarGroup className="">
+      <Avatar size="sm">
+        <AvatarFallback>J</AvatarFallback>
+      </Avatar>
+      <Avatar size="sm">
+        <AvatarFallback>JR</AvatarFallback>
+      </Avatar>
+      <Avatar size="sm">
+        <AvatarFallback>J</AvatarFallback>
+      </Avatar>
+      <AvatarGroupCount>+2</AvatarGroupCount>
+    </AvatarGroup>
   )
 }

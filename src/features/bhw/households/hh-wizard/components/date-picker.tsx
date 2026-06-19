@@ -42,8 +42,8 @@ export function DatePicker({ date, onDateChange, className, "aria-invalid": aria
                         selected={date} 
                         onSelect={onDateChange}
                         captionLayout="dropdown"
-                        fromYear={1900}
-                        toYear={new Date().getFullYear()}
+                        startMonth={new Date(1900, 0)}
+                        endMonth={new Date()}
                         disabled={(date) => date > new Date()}
                     />
                 </PopoverContent>

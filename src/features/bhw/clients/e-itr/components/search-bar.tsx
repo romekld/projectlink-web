@@ -11,7 +11,7 @@ export function SearchBar({ className }: { className?: string }) {
     return (
         <div className={`flex gap-2 w-full ${className}`}>
             <InputGroup>
-                <InputGroupInput placeholder="Search household..." />
+                <InputGroupInput placeholder="Search residents..." />
                 <InputGroupAddon>
                     <Search />
                 </InputGroupAddon>

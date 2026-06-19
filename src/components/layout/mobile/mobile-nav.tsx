@@ -81,7 +81,7 @@ export function MobileNavTab({ sections }: { sections?: SidebarSection[] }) {
       >
         <nav
           aria-label="BHW navigation"
-          className="pointer-events-auto flex items-center gap-1 rounded-full bg-accent/95 p-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-accent/90"
+          className="pointer-events-auto flex items-center gap-1 rounded-full bg-accent p-1 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-accent/50"
         >
           {tabs.map(({ label, href, icon: Icon, activeIcon, match }) => {
             const isActive = match.some(
@@ -95,16 +95,16 @@ export function MobileNavTab({ sections }: { sections?: SidebarSection[] }) {
                 href={href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "relative flex items-center justify-start rounded-full p-3 active:scale-[0.98] text-xs font-medium transition-colors duration-300",
+                  "supports-[backdrop-filter]:bg-accent/20 relative flex items-center justify-start rounded-full p-3 active:scale-[0.98] text-xs font-medium transition-colors duration-300",
                   isActive
-                    ? "flex-1 text-background"
+                    ? "flex-1  dark:text-foreground text-background"
                     : "shrink-0 text-muted-foreground/80 hover:text-foreground"
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="active-nav-pill"
-                    className="absolute inset-0 bg-foreground rounded-full"
+                    className="absolute inset-0 bg-primary rounded-full"
                     transition={{
                       type: "spring",
                       bounce: 0.12,
@@ -139,6 +139,7 @@ export function MobileNavTab({ sections }: { sections?: SidebarSection[] }) {
           <DropdownMenuTrigger asChild>
             <Button
               type="button"
+              variant="default"
               aria-label="Create a new record"
               className="pointer-events-auto shrink-0 rounded-full shadow-sm size-13"
             >

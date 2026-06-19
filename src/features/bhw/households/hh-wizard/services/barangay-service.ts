@@ -45,7 +45,7 @@ export const barangayService = {
 
     const physicalCityBarangayId = station?.physical_city_barangay_id ?? null
 
-    const scopedBarangays: BarangayOption[] = ((coverageRows ?? []) as any[])
+    const scopedBarangays: BarangayOption[] = ((coverageRows ?? []) as unknown as { city_barangay_id: string; barangay_name: string }[])
       .filter((r) => !!r.city_barangay_id && !!r.barangay_name)
       .map((r) => ({ id: r.city_barangay_id, name: r.barangay_name }))
 
@@ -61,7 +61,7 @@ export const barangayService = {
         .eq("is_active", true)
         .order("name")
 
-      barangays = ((allRows ?? []) as any[]).map((r) => ({
+      barangays = ((allRows ?? []) as { city_barangay_id: string; name: string }[]).map((r) => ({
         id: r.city_barangay_id,
         name: r.name,
       }))

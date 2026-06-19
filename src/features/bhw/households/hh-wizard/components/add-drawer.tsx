@@ -29,7 +29,7 @@ export function AddDrawer() {
     const isAddingHead = !hasHead
 
     const steps = React.useMemo(() => [
-        { id: "identity", title: "Identity & Demographics", component: (props: any) => <CoreIdentityStep {...props} container={container} /> },
+        { id: "identity", title: "Identity & Demographics", component: (props: import("./form/wizard").WizardStepProps) => <CoreIdentityStep {...props} container={container} /> },
         { id: "socio-economic", title: "Socio-Economic & Coverage", component: SocioEconomicStep },
         { id: "clinical", title: "Health & Reproductive", component: ClinicalReproductiveStep },
     ], [container])

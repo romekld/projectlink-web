@@ -20,7 +20,7 @@ export function MembersPage() {
             setIsSubmitting(true)
             const result = await save_household_action({
                 household: householdData as CompleteHouseholdValues["household"],
-                members: members as CompleteHouseholdValues["members"],
+                members: members as unknown as CompleteHouseholdValues["members"],
             })
 
             if (result?.data?.success) {

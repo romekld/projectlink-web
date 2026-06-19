@@ -7,25 +7,26 @@ import { HouseholdList } from "./household-list"
 
 export function StatusTab() {
     return (
-        <Tabs defaultValue="pending" >
-            <TabsList variant="line" className="w-full">
+        <Tabs defaultValue="all" className="flex flex-col gap-4 w-full">
+            <TabsList className="w-full">
+                <TabsTrigger value="all">
+                    All (1)
+                    {/* <Badge variant="secondary" className="text-[10px] px-1">5</Badge> */}
+                </TabsTrigger>
                 <TabsTrigger value="pending">
-                    Pending <Badge className="text-[10px] px-1">25</Badge>
+                    Pending (1)
+                    {/* <Badge className="text-[10px] px-1">25</Badge> */}
                 </TabsTrigger>
                 <TabsTrigger value="approved">
-                    Approved <Badge variant="secondary" className="text-[10px] px-1">1</Badge>
-                </TabsTrigger>
-                <TabsTrigger value="all">
-                    All <Badge variant="secondary" className="text-[10px] px-1">5</Badge>
+                    Approved (1)
+                    {/* <Badge variant="secondary" className="text-[10px] px-1">1</Badge> */}
                 </TabsTrigger>
             </TabsList>
-            <TabsContent value="pending" className="flex flex-col gap-3">
-                <div className="flex gap-2 w-full">
-                    <SearchBar className="flex-1" />
-                    <FilterDrawer />
-                </div>
+            <TabsContent value="all">
+
                 {/* <ReviewForm /> */}
                 <HouseholdList />
+                **Tab content current setup**
             </TabsContent>
         </Tabs>
     )

@@ -1,3 +1,5 @@
-export default function Page() {
-    return <h1 className="font-heading text-2xl">PHN Dashboard</h1>
-  }
+import { ClientsPage } from "@/features/bhw/clients"
+
+export default async function Page() {
+  return <ClientsPage />
+}
