@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -65,7 +64,7 @@ export function ProgressWithLabel() {
     </Field>
   )
 }
-import { Loader, CircleCheckBig } from "lucide-react"
+import { Loader } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 
@@ -86,7 +85,6 @@ import {
   Avatar,
   AvatarFallback,
   AvatarGroup,
-  AvatarImage,
   AvatarGroupCount,
 } from "@/components/ui/avatar"
 

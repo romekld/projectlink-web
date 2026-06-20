@@ -3,12 +3,11 @@
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Hash, House, Signpost, MapPin, Toilet, Droplet } from "lucide-react"
+import { Hash, House, Signpost, MapPin } from "lucide-react"
 import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
 import { step1Schema, HouseholdValues } from "../../data/form-schema"
-import { ComboboxField } from "../combobox-field"
-import { NumberField } from "../number-field"
-import { InputField } from "../input-field"
+import { ComboboxField } from "../../../../../../components/shared/field-combobox"
+import { InputField } from "../../../../../../components/shared/field-input"
 import { DatePicker } from "../date-picker"
 import {
   Field,
@@ -21,7 +20,6 @@ import {
   FieldError,
 } from "@/components/ui/field"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { toiletFacilityOptions, waterSourceOptions } from "../../data"
 import type { BarangayOption } from "../../services/barangay-service"
 
 const QUARTER_OPTIONS = [
@@ -54,16 +52,14 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
   } = useForm<HouseholdValues>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
+      year: householdData.year || new Date().getFullYear(),
       visitDate: householdData.visitDate || new Date().toISOString().split("T")[0],
       quarter: householdData.quarter || currentQuarter(),
       barangayId: householdData.barangayId || "",
       respondentLastName: householdData.respondentLastName || "",
       respondentFirstName: householdData.respondentFirstName || "",
-      waterSource: householdData.waterSource as "Level I" | "Level II" | "Level III",
-      toiletFacility: householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None",
       houseNoStreet: householdData.houseNoStreet || "",
       purok: householdData.purok || "",
-      familyCount: householdData.familyCount && householdData.familyCount >= 1 ? householdData.familyCount : 1,
     },
   })
 
@@ -89,12 +85,12 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
     }
   }
 
-  // Ensure family count and quarter always have valid defaults
+  // Ensure year and quarter always have valid defaults
   useEffect(() => {
     const updates: Partial<HouseholdData> = {}
 
-    if (!householdData.familyCount || householdData.familyCount < 1) {
-      updates.familyCount = 1
+    if (!householdData.year) {
+      updates.year = new Date().getFullYear()
     }
 
     if (!householdData.quarter) {
@@ -104,28 +100,17 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
     if (Object.keys(updates).length > 0) {
       setHouseholdData(updates)
     }
-  }, [householdData.familyCount, householdData.quarter, setHouseholdData])
+  }, [householdData.year, householdData.quarter, setHouseholdData])
 
   // Sync react-hook-form with store data
   useEffect(() => {
+    if (householdData.year) setValue("year", householdData.year)
     if (householdData.visitDate) setValue("visitDate", householdData.visitDate)
     if (householdData.barangayId) setValue("barangayId", householdData.barangayId)
     if (householdData.respondentLastName) setValue("respondentLastName", householdData.respondentLastName)
     if (householdData.respondentFirstName) setValue("respondentFirstName", householdData.respondentFirstName)
-    if (householdData.waterSource) {
-      setValue("waterSource", householdData.waterSource as "Level I" | "Level II" | "Level III")
-    }
-    if (householdData.toiletFacility) {
-      setValue(
-        "toiletFacility",
-        householdData.toiletFacility as "Sanitary-VIP" | "Sanitary-Septic" | "Unsanitary-Open" | "None"
-      )
-    }
     if (householdData.houseNoStreet) setValue("houseNoStreet", householdData.houseNoStreet)
     if (householdData.purok) setValue("purok", householdData.purok)
-    if (householdData.familyCount && householdData.familyCount >= 1) {
-      setValue("familyCount", householdData.familyCount)
-    }
     if (householdData.quarter) setValue("quarter", householdData.quarter as 1 | 2 | 3 | 4)
   }, [householdData, setValue])
 
@@ -150,6 +135,19 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
             <FieldLegend>Visit Information</FieldLegend>
             <FieldDescription>for tracking the progress of the profiling project.</FieldDescription>
             <FieldGroup>
+              <Field data-invalid={!!validationErrors.year}>
+                <FieldLabel htmlFor="year">Year *</FieldLabel>
+                <InputField
+                  id="year"
+                  label="Year"
+                  type="number"
+                  min={2020}
+                  max={2100}
+                  value={householdData.year || new Date().getFullYear()}
+                  onChange={(e) => handleFieldChange("year", parseInt(e.target.value, 10))}
+                  error={validationErrors.year}
+                />
+              </Field>
               <Field data-invalid={!!validationErrors.visitDate}>
                 <FieldLabel htmlFor="visitDate">Date of Visit *</FieldLabel>
                 <DatePicker
@@ -237,19 +235,6 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
                 icon={Signpost}
                 error={validationErrors.purok}
               />
-              <NumberField
-                id="familyCount"
-                label="No. of Family/ies in the HH *"
-                placeholder="e.g., 1"
-                type="number"
-                min={1}
-                value={householdData.familyCount && householdData.familyCount >= 1 ? householdData.familyCount : 1}
-                onChange={(e) => {
-                  const parsed = parseInt(e.target.value, 10)
-                  handleFieldChange("familyCount", Number.isNaN(parsed) ? 1 : Math.max(1, parsed))
-                }}
-                error={validationErrors.familyCount}
-              />
             </FieldGroup>
           </FieldSet>
 
@@ -281,35 +266,6 @@ export function BasicInfoForm({ barangays, defaultBarangayId }: BasicInfoFormPro
                 value={householdData.respondentMiddleName || ""}
                 onChange={(e) => handleFieldChange("respondentMiddleName", e.target.value)}
                 id="respondentMiddleName"
-              />
-            </FieldGroup>
-          </FieldSet>
-
-          <FieldSeparator />
-
-          <FieldSet>
-            <FieldLegend>Water & Sanitation</FieldLegend>
-            <FieldDescription>Details regarding water source and toilet facility.</FieldDescription>
-            <FieldGroup>
-              <ComboboxField
-                label="Type of Water Source *"
-                placeholder="Select water source"
-                options={waterSourceOptions}
-                icon={Droplet}
-                showAbbreviation
-                value={householdData.waterSource || ""}
-                onValueChange={(val) => handleFieldChange("waterSource", val)}
-                error={validationErrors.waterSource}
-              />
-              <ComboboxField
-                label="Type of Toilet Facility *"
-                placeholder="Select toilet facility"
-                options={toiletFacilityOptions}
-                showAbbreviation
-                icon={Toilet}
-                value={householdData.toiletFacility || ""}
-                onValueChange={(val) => handleFieldChange("toiletFacility", val)}
-                error={validationErrors.toiletFacility}
               />
             </FieldGroup>
           </FieldSet>

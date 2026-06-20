@@ -9,7 +9,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { LucideIcon } from "lucide-react"
 
 interface SelectOption {
     value: string
@@ -21,7 +20,6 @@ interface SelectFieldProps {
     label: string
     placeholder: string
     options: SelectOption[]
-    icon?: LucideIcon
     className?: string
     showAbbreviation?: boolean
     onValueChange?: (value: string) => void
@@ -34,7 +32,6 @@ export function SelectField({
     label,
     placeholder,
     options,
-    icon: Icon,
     className,
     showAbbreviation = true,
     onValueChange,

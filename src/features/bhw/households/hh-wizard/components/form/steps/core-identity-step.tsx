@@ -11,13 +11,13 @@ import {
     FieldSeparator,
     FieldContent,
 } from "@/components/ui/field"
-import { SelectField } from "../../select-field"
+import { SelectField } from "../../../../../../../components/shared/field-select"
 
 import { Switch } from "@/components/ui/switch"
 import { GraduationCap, Church } from "lucide-react"
-import { InputField } from "../../input-field"
-import { DateOfBirth } from "../../date-of-birth"
-import { ComboboxField } from "../../combobox-field"
+import { InputField } from "../../../../../../../components/shared/field-input"
+import { DateOfBirth } from "../../../../../../../components/shared/field-date-of-birth"
+import { ComboboxField } from "../../../../../../../components/shared/field-combobox"
 import {
     relationshipOptions,
     sexOptions,

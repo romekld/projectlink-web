@@ -1,7 +1,7 @@
 
-import { EITRPage } from "./e-itr"
+import { ITRPage } from "./e-itr"
 export function ClientsPage() {
     return (
-        <EITRPage />
+        <ITRPage />
     )
 }

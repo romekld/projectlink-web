@@ -1,15 +1,5 @@
 "use client"
 
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-
 import type { Household } from "./data/schema"
 import { Folder, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -20,7 +10,7 @@ type BhwHouseholdsPageProps = {
   households: Household[]
 }
 
-export function BhwHouseholdsPage({ households }: BhwHouseholdsPageProps) {
+export function BhwHouseholdsPage({ }: BhwHouseholdsPageProps) {
   return (
     <div className="flex flex-col h-dvh">
       {/* px-4 md:px-10 lg:px-16 py-4 md:py-10 lg:py-16 */}

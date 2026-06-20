@@ -6,7 +6,7 @@ import { bhwNavSections } from "./nav-config"
 
 export default function BhwLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isWizard = pathname.startsWith("/bhw/households/new")
+  const isWizard = pathname.startsWith("/bhw/household/new") || pathname.startsWith("/bhw/clients/new")
 
   if (isWizard) {
     return (

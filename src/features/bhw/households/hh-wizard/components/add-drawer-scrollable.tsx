@@ -18,10 +18,8 @@ import { cn } from "@/lib/utils"
 import { CoreIdentityStep } from "./form/steps/core-identity-step"
 import { SocioEconomicStep } from "./form/steps/socio-economic-step"
 import { ClinicalReproductiveStep } from "./form/steps/clinical-reproductive-step"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { FieldGroup, FieldSeparator } from "@/components/ui/field"
 import { memberSchema } from "../data/form-schema"
-import { z } from "zod"
 import { autoSuggestClassification } from "../data/classification"
 
 export function AddDrawerScrollable() {
@@ -186,10 +184,6 @@ export function AddDrawerScrollable() {
         }
         
         handleOpenChange(false)
-    }
-
-    const handleCancel = () => {
-        setOpen(false)
     }
 
     const onDataChange = (newData: Record<string, unknown>) => {

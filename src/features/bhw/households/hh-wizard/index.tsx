@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { useEffect, useCallback } from "react"
 import { ArrowLeft, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"

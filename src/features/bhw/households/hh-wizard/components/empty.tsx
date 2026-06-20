@@ -1,7 +1,5 @@
-import { IconFolderCode } from "@tabler/icons-react"
-import { ArrowUpRightIcon, Plus, UserRoundPlus } from "lucide-react"
+import { UserRoundPlus } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { AddDrawerScrollable } from "./add-drawer-scrollable";
 
 import {
@@ -12,7 +10,6 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from "@/components/ui/empty"
-import { IconUserPlus } from "@tabler/icons-react"
 
 export function EmptyMembers() {
     return (

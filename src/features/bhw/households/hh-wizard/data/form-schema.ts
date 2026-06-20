@@ -2,22 +2,15 @@ import { z } from "zod"
 
 // Updated to match DATABASE_DESIGN.md and new migration
 export const householdSchema = z.object({
+  year: z.number({ message: "Year is required" }).min(2020, "Year must be at least 2020").max(2100, "Year must be at most 2100"),
+  quarter: z.number({ message: "Quarter is required" }).min(1, "Quarter must be at least 1").max(4, "Quarter must be at most 4"),
   visitDate: z.string().min(1, "Date of visit is required"),
-  quarter: z.number({ required_error: "Quarter is required" }).min(1).max(4),
   barangayId: z.string().uuid("Please select a barangay"),
   houseNoStreet: z.string().optional(),
   purok: z.string().optional(),
-  enumerationArea: z.string().optional(),
-  familyCount: z.number({ required_error: "Family count is required" }).min(1, "Family count must be at least 1"),
   respondentLastName: z.string().min(1, "Respondent last name is required"),
   respondentFirstName: z.string().min(1, "Respondent first name is required"),
   respondentMiddleName: z.string().optional(),
-  waterSource: z.enum(['Level I', 'Level II', 'Level III'], {
-    errorMap: () => ({ message: "Please select a water source" })
-  }),
-  toiletFacility: z.enum(['Sanitary-VIP', 'Sanitary-Septic', 'Unsanitary-Open', 'None'], {
-    errorMap: () => ({ message: "Please select a toilet facility" })
-  }),
 })
 
 export const memberSchema = z.object({
@@ -26,29 +19,29 @@ export const memberSchema = z.object({
   middleName: z.string().optional(),
   birthdate: z.string().min(1, "Birthdate is required"),
   sex: z.enum(["M", "F"], {
-    errorMap: () => ({ message: "Please select sex" })
+    message: "Please select sex"
   }),
   relationship: z.enum(['Head', 'Spouse', 'Son', 'Daughter', 'Other'], {
-    errorMap: () => ({ message: "Please select relationship" })
+    message: "Please select relationship"
   }),
   specifyRelation: z.string().optional(),
   civilStatus: z.enum(['Single', 'Married', 'Widowed', 'Separated', 'Cohabitation'], {
-    errorMap: () => ({ message: "Please select civil status" })
+    message: "Please select civil status"
   }),
   nhtsStatus: z.enum(['4Ps', 'Non-4Ps'], {
-    errorMap: () => ({ message: "Please select NHTS status" })
+    message: "Please select NHTS status"
   }),
   fourPsId: z.string().optional(),
   philhealthId: z.string().optional(),
   phCategory: z.enum(['Direct', 'Indirect', 'Unknown'], {
-    errorMap: () => ({ message: "Please select PhilHealth category" })
+    message: "Please select PhilHealth category"
   }),
   medicalHistory: z.array(z.string()).default([]),
   medicalOther: z.string().optional(),
   classification: z.enum([
     'Infant', 'Child', 'Adolescent', 'WRA', 'Pregnant', 'Post-Partum', 'Senior Citizen', 'PWD', 'Adult'
   ], {
-    errorMap: () => ({ message: "System classification is required" })
+    message: "System classification is required"
   }),
   isPregnant: z.boolean().default(false),
   lmp: z.string().optional(),

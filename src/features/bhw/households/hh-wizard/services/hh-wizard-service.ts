@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { CompleteHouseholdValues, HouseholdValues, MemberValues } from "../data/form-schema";
+import { Database } from "@/lib/supabase/database.types";
+import { CompleteHouseholdValues } from "../data/form-schema";
 import { DbHouseholdInsert, DbHouseholdMemberInsert } from "../types/hh-wizard-types";
 
 /**
@@ -19,21 +20,20 @@ export const hhWizardService = {
 
     // 2. Insert Household
     const householdInsert: DbHouseholdInsert = {
-      visit_date: household.visitDate,
-      quarter: household.quarter,
-      barangay_id: household.barangayId,
-      house_no_street: household.houseNoStreet,
-      purok: household.purok,
-      enumeration_area: household.enumerationArea,
-      family_count: household.familyCount,
+      year: household.year,
       respondent_last_name: household.respondentLastName,
       respondent_first_name: household.respondentFirstName,
       respondent_middle_name: household.respondentMiddleName,
-      water_source: household.waterSource,
-      toilet_facility: household.toiletFacility,
+      barangay_id: household.barangayId,
+      house_no_street: household.houseNoStreet,
+      purok: household.purok,
       assigned_bhw_id: user.id,
       sync_status: "pending_validation",
     };
+
+    // Set the appropriate quarter visit date based on quarter value
+    const quarterField = `visit_date_q${household.quarter}` as keyof DbHouseholdInsert;
+    (householdInsert as Record<string, unknown>)[quarterField] = household.visitDate;
 
     const { data: hhData, error: hhError } = await supabase
       .from("households")
@@ -44,29 +44,23 @@ export const hhWizardService = {
     if (hhError) throw hhError;
 
     // 3. Insert Members
-    const membersInsert: DbHouseholdMemberInsert[] = members.map((m) => ({
-      household_id: hhData.id,
-      last_name: m.lastName,
-      first_name: m.firstName,
-      middle_name: m.middleName,
-      birthdate: m.birthdate,
-      sex: m.sex,
-      relationship: m.relationship,
-      civil_status: m.civilStatus,
-      nhts_status: m.nhtsStatus,
-      four_ps_id: m.fourPsId,
-      philhealth_id: m.philhealthId,
-      ph_category: m.phCategory,
-      medical_history: m.medicalHistory,
-      classification: m.classification,
-      is_pregnant: m.isPregnant,
-      lmp: m.lmp,
-      using_fp: m.usingFp,
-      fp_method: m.fpMethod,
-      education: m.education,
-      religion: m.religion,
-      metadata: m.metadata,
-    }));
+    const membersInsert: DbHouseholdMemberInsert[] = members.map((m) => {
+      const memberInsert: DbHouseholdMemberInsert = {
+        household_id: hhData.id,
+        member_last_name: m.lastName,
+        member_first_name: m.firstName,
+        member_middle_name: m.middleName,
+        date_of_birth: m.birthdate,
+        sex: m.sex,
+        relationship_to_hh_head: m.relationship as Database["public"]["Enums"]["relationship_to_hh_head"],
+      };
+
+      // Set the appropriate quarter classification based on household quarter
+      const classificationField = `classification_q${household.quarter}` as keyof DbHouseholdMemberInsert;
+      (memberInsert as Record<string, unknown>)[classificationField] = m.classification;
+
+      return memberInsert;
+    });
 
     const { error: membersError } = await supabase
       .from("household_members")

@@ -9,28 +9,28 @@ import {
     CardAction,
 } from "@/components/ui/card"
 
-import { MapPin, Cake, CalendarSearch, Mars } from "lucide-react"
+import { MapPin, Cake, ArrowRight } from "lucide-react"
 
 export function ResidentCard() {
     return (
-        <Button
-            asChild
-            variant="ghost"
-            className="hover:bg-transparent"
-            // onClick={() => console.log("Card clicked!")}
-        >
-            <Card size="sm" className="w-full h-full border bg-muted/50 dark:bg-card !p-1 !gap-0">
-                <div className="p-2 bg-background dark:bg-accent rounded-md gap-2 flex flex-col w-full">
-                    <CardHeader className="p-0">
-                        <CardAction>
-                            {/* <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 ">
+        // <Button
+        //     asChild
+        //     variant="ghost"
+        //     className="hover:bg-transparent"
+        //     // onClick={() => console.log("Card clicked!")}
+        // >
+        <Card size="sm" className="w-full border bg-muted dark:bg-card !p-[5px] !gap-0 rounded-xl">
+            <div className="p-2 bg-background dark:bg-accent rounded-lg gap-2 flex flex-col w-full">
+                <CardHeader className="p-0">
+                    <CardAction>
+                        {/* <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300 ">
                             Male
                         </Badge> */}
-                            <Badge className="bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300">
-                                Female
-                            </Badge>
-                        </CardAction>
-                        {/* <div className="flex items-center justify-between mb-2">
+                        <Badge className="bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300">
+                            Female
+                        </Badge>
+                    </CardAction>
+                    {/* <div className="flex items-center justify-between mb-2">
                         <span className="inline-flex items-center gap-2">
                             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
                                 <House className="size-4" />
@@ -39,45 +39,51 @@ export function ResidentCard() {
                         </span>
                         <BadgeStatus />
                     </div> */}
-                        <CardTitle>
-                            Delos Santos, Jerome Mancia
-                        </CardTitle>
-                        <CardDescription>
-                            <span className="inline-flex items-center gap-1 text-muted-foreground truncate">
-                                <Cake className="size-4 " />
-                                17 Dec 2004 • 18 years old
-                            </span>
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-0 ">
-                        <div className="flex items-center flex-wrap gap-1">
+                    <CardTitle>
+                        Delos Santos, Jerome Mancia
+                    </CardTitle>
+                    <CardDescription>
+                        <span className="inline-flex items-center gap-1 text-muted-foreground truncate">
+                            <Cake className="size-4 " />
+                            17 Dec 2004 • 18 years old
+                        </span>
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="p-0 ">
+                    <div className="flex items-center flex-wrap gap-1">
 
-                            <Badge variant="outline">
-                                Married
-                            </Badge>
-                            <Badge variant="outline">
-                                Catholic
-                            </Badge>
+                        <Badge variant="outline">
+                            Married
+                        </Badge>
+                        <Badge variant="outline">
+                            Catholic
+                        </Badge>
+                        <Badge variant="outline">
+                            Student Undegrate
+                        </Badge>
 
-                        </div>
-                    </CardContent>
-                </div>
+                    </div>
+                </CardContent>
+            </div>
 
-                <CardFooter className="p-2 pb-1 border-none dark:bg-card w-full">
-                    {/* <ProgressWithLabel /> */}
+            <CardFooter className="p-2 pb-1 bg-transparent border-none dark:bg-card w-full flex justify-between items-center gap-3">
+                {/* <ProgressWithLabel /> */}
 
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground truncate">
-                        <MapPin className="size-3 " />
-                        Blk 4 Lot 44, Purok 1, Victoria Reyes
-                    </span>
-                </CardFooter>
-            </Card >
-        </Button >
+                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground truncate">
+                    <MapPin className="size-3 " />
+                    Blk 4 Lot 44, Purok 1, Victoria Reyes
+                </span>
+                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                    Select
+                    <ArrowRight className="size-3 " />
+                </span>
+            </CardFooter>
+        </Card >
+        // </Button >
     )
 }
 
 
-import { Field, FieldLabel } from "@/components/ui/field"
 import { Progress } from "@/components/ui/progress"
 
 export function ProgressWithLabel() {
@@ -85,7 +91,7 @@ export function ProgressWithLabel() {
         <Progress value={33} id="progress-upload" />
     )
 }
-import { Loader, CircleCheckBig } from "lucide-react"
+import { Loader } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 
@@ -106,7 +112,6 @@ import {
     Avatar,
     AvatarFallback,
     AvatarGroup,
-    AvatarImage,
     AvatarGroupCount,
 } from "@/components/ui/avatar"
 

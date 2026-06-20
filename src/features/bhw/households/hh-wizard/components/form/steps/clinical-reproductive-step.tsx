@@ -12,14 +12,10 @@ import {
     FieldContent,
     FieldError,
 } from "@/components/ui/field"
-import { Textarea } from "@/components/ui/textarea"
-
-import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
 import { DatePicker } from "../../date-picker"
-import { Baby } from "lucide-react"
-import { SelectField } from "../../select-field"
+import { SelectField } from "../../../../../../../components/shared/field-select"
 import {
     medicalHistoryOptions,
     fpMethodOptions,
@@ -28,7 +24,7 @@ import {
 import { autoSuggestClassification, classificationOptions } from "../../../data/classification"
 import type { WizardStepProps } from "../wizard"
 
-import { InputField } from "../../input-field"
+import { InputField } from "../../../../../../../components/shared/field-input"
 
 export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {
@@ -69,7 +65,7 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
                             <Field key={option.value} orientation="horizontal" className="flex items-center gap-3">
                                 <Checkbox
                                     id={option.value}
-                                    checked={(data.medicalHistory || []).includes(option.value)}
+                                    checked={((data.medicalHistory as string[]) || []).includes(option.value)}
                                     onCheckedChange={(checked) => handleCheckboxChange(option.value, checked as boolean)}
                                 />
                                 <FieldLabel htmlFor={option.value} className="">
@@ -153,13 +149,12 @@ export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: Wi
                                     />
                                 </Field>
                             </FieldLabel>
-{data.usingFp && (
+{!!data.usingFp && (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
         <SelectField
             label="FP Method *"
             placeholder="Select method"
             options={fpMethodOptions}
-            icon={Baby}
             value={data.fpMethod as string}
             onValueChange={(value) => onDataChange({ ...data, fpMethod: value })}
             error={errors.fpMethod}

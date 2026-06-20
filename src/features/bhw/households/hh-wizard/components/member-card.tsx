@@ -24,7 +24,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { Pencil, Trash2, MoreHorizontal, User, Calendar } from "lucide-react"
+import { Pencil, Trash2, User, Calendar } from "lucide-react"
 import { useHouseholdWizard, HouseholdMember } from "@/lib/store/household-wizard"
 import { autoSuggestClassification, classificationOptions } from "../data/classification"
 import { Sex } from "../../data/schema"

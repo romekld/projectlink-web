@@ -11,16 +11,15 @@ import {
     FieldSeparator,
     FieldContent,
 } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
-import { SelectField } from "../../select-field"
+import { SelectField } from "../../../../../../../components/shared/field-select"
 import {
     philhealthCategoryOptions,
     membershipTypeOptions,
 } from "../../../data"
 import type { WizardStepProps } from "../wizard"
 
-import { InputField } from "../../input-field"
+import { InputField } from "../../../../../../../components/shared/field-input"
 
 export function SocioEconomicStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     return (

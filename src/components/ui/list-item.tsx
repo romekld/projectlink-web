@@ -11,7 +11,6 @@ export interface ListItemProps {
     subtitle: string
     status?: string
     statusVariant?: 'default' | 'secondary' | 'destructive' | 'outline'
-    amount: string | number
     onClick?: () => void
     className?: string
 }
@@ -22,7 +21,6 @@ export function ListItem({
     subtitle,
     status,
     statusVariant = 'secondary',
-    amount,
     onClick,
     className,
 }: ListItemProps) {

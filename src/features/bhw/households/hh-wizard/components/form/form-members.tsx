@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { FieldSeparator } from "@/components/ui/field";
 import { EmptyMembers } from "../../components/empty";
 import { MemberCard } from "../../components/member-card";
 import { AddDrawerScrollable } from "../../components/add-drawer-scrollable"
 import { CompleteHouseholdValues } from "../../data/form-schema";
 import { save_household_action } from "../../actions/hh-wizard-actions";
-import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
+import { useHouseholdWizard } from "@/lib/store/household-wizard"
 
 export function MembersPage() {
     const { members, householdData, resetWizard } = useHouseholdWizard()
@@ -32,7 +31,7 @@ export function MembersPage() {
                     description: result?.data?.error || "Unknown error",
                 })
             }
-        } catch (error) {
+        } catch {
             toast.error("An error occurred")
         } finally {
             setIsSubmitting(false)

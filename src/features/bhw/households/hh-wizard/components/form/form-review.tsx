@@ -6,14 +6,10 @@ import { useHouseholdWizard } from "@/lib/store/household-wizard"
 import { toast } from "sonner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, MapPin, User, Droplet, Toilet } from "lucide-react"
-import { waterSourceOptions, toiletFacilityOptions } from "../../data"
+import { CheckCircle2, MapPin, User } from "lucide-react"
 
 export function ReviewStep() {
   const { householdData, members, resetWizard } = useHouseholdWizard()
-
-  const waterSource = waterSourceOptions.find(opt => opt.value === householdData.waterSource)
-  const toiletFacility = toiletFacilityOptions.find(opt => opt.value === householdData.toiletFacility)
 
   const handleSubmit = () => {
     // In a real app, this would be an API call
@@ -59,11 +55,16 @@ export function ReviewStep() {
               <span className="font-semibold">{householdData.barangayName || "Not set"}</span>
             </div>
             <div className="space-y-1">
+              <span className="text-muted-foreground block font-medium">Year</span>
+              <span className="font-semibold">{householdData.year || "Not set"}</span>
+            </div>
+            <div className="space-y-1">
+              <span className="text-muted-foreground block font-medium">Quarter</span>
+              <span className="font-semibold">Q{householdData.quarter || "Not set"}</span>
+            </div>
+            <div className="space-y-1">
               <span className="text-muted-foreground block font-medium">Visit Date</span>
-              <span className="font-semibold">
-                {householdData.visitDate || "Not set"}
-                {householdData.quarter ? ` (Q${householdData.quarter})` : ""}
-              </span>
+              <span className="font-semibold">{householdData.visitDate || "Not set"}</span>
             </div>
             <div className="space-y-1">
               <span className="text-muted-foreground block font-medium">Respondent</span>
@@ -76,41 +77,6 @@ export function ReviewStep() {
                 {householdData.purok ? `${householdData.purok}, ` : ""}
                 {householdData.barangayName}
               </span>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Environmental Health */}
-        <Card>
-          <CardHeader className="pb-3 border-b">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Droplet className="size-5 text-primary" />
-              Environmental Health
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-4 grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="space-y-1">
-              <span className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <Droplet className="size-4" /> Water Source
-              </span>
-              <span className="font-semibold">{waterSource?.label || "Not specified"}</span>
-              {waterSource?.abbreviation && (
-                <Badge variant="outline" className="ml-2">{waterSource.abbreviation}</Badge>
-              )}
-            </div>
-            <div className="space-y-1">
-              <span className="text-muted-foreground flex items-center gap-1.5 font-medium">
-                <Toilet className="size-4" /> Toilet Facility
-              </span>
-              <span className="font-semibold">{toiletFacility?.label || "Not specified"}</span>
-              {toiletFacility?.category && (
-                <Badge 
-                  variant={toiletFacility.category === "sanitary" ? "default" : "destructive"} 
-                  className="ml-2 capitalize"
-                >
-                  {toiletFacility.category}
-                </Badge>
-              )}
             </div>
           </CardContent>
         </Card>

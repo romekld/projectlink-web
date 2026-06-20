@@ -8,12 +8,12 @@ export const bhwNavSections = [
     label: "Overview",
     items: [
       {
-        id: "bhw-dashboard",
+        id: "bhw-home",
         title: "Home",
-        href: "/bhw/dashboard",
+        href: "/bhw/home",
         icon: IconHome2,
         activeIcon: IconHome2Filled,
-        match: ["/bhw/dashboard"],
+        match: ["/bhw/home"],
       },
     ],
   },

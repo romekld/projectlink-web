@@ -1,11 +1,12 @@
 import {
     Avatar as AvatarComponent,
     AvatarFallback,
-    AvatarImage,
 } from "@/components/ui/avatar"
 
 export function Avatar() {
     return (
+
+        // make this dynamic that would accept props for size and image source and the text fallback in the initials of the name being passed.
         <AvatarComponent size="lg">
             {/* <AvatarImage
                 src="https://github.com/shadcn.png"

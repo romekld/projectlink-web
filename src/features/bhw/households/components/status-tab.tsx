@@ -1,7 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { SearchBar } from "./search-bar"
-import { FilterDrawer } from "./filter-drawer"
 import { HouseholdList } from "./household-list"
 // import { ReviewForm } from "../hh-wizard/components/form/form-review"
 
