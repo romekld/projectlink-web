@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Hash, House, Signpost, MapPin } from "lucide-react"
 import { useHouseholdWizard, HouseholdData } from "@/lib/store/household-wizard"
 import { step1Schema, HouseholdValues } from "../../data/form-schema"
-import { ComboboxField } from "../../../../../../components/shared/field-combobox"
-import { InputField } from "../../../../../../components/shared/field-input"
+import { ComboboxField } from "../../../../../../components/shared-1/field-combobox"
+import { InputField } from "../../../../../../components/shared-1/field-input"
 import { DatePicker } from "../date-picker"
 import {
   Field,

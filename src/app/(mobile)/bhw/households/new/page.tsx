@@ -1,10 +1,8 @@
-import { HHWizard } from "@/features/bhw/households/hh-wizard"
-import { getHouseholdFormData } from "@/features/bhw/households/actions/get-household-form-data"
+import { NewHouseholdPage } from "@/features/bhw/households/new"
+import { mapService } from "@/features/bhw/households/new/services/map-service"
 
 export default async function Page() {
-  const { barangays, defaultBarangayId } = await getHouseholdFormData()
+  const mapData = await mapService.getMapData()
 
-  return (
-    <HHWizard barangays={barangays} defaultBarangayId={defaultBarangayId} />
-  )
+  return <NewHouseholdPage mapData={mapData} />
 }

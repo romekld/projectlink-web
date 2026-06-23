@@ -69,9 +69,9 @@ export function ITRPage() {
 
             {/* Main Content with ScrollArea */}
             <main className="h-full flex-1 flex flex-col overflow-y-auto">
-                {/* <Step1Search /> */}
+                <Step1Search />
                 {/* <Step2Triage /> */}
-                <Step3TriageLogging />
+                {/* <Step3TriageLogging /> */}
             </main>
 
             {/* Fixed Bottom Bar */}

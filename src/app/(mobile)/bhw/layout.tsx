@@ -6,11 +6,11 @@ import { bhwNavSections } from "./nav-config"
 
 export default function BhwLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isWizard = pathname.startsWith("/bhw/household/new") || pathname.startsWith("/bhw/clients/new")
+  const isWizard = pathname.startsWith("/bhw/households/new")
 
   if (isWizard) {
     return (
-      <div className="h-dvh ">{children}</div>
+      <div className="flex h-dvh flex-col">{children}</div>
     )
   }
 

@@ -8,7 +8,7 @@ import {
     FieldSeparator,
     FieldSet,
 } from "@/components/ui/field"
-import { InputField } from "@/components/shared/field-input"
+import { InputField } from "@/components/shared-1/field-input"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Heart, Thermometer, Weight, Ruler, Activity, Stethoscope } from "lucide-react"
 

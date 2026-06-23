@@ -12,14 +12,14 @@ import {
     FieldContent,
 } from "@/components/ui/field"
 import { Switch } from "@/components/ui/switch"
-import { SelectField } from "../../../../../../../components/shared/field-select"
+import { SelectField } from "../../../../../../../components/shared-1/field-select"
 import {
     philhealthCategoryOptions,
     membershipTypeOptions,
 } from "../../../data"
 import type { WizardStepProps } from "../wizard"
 
-import { InputField } from "../../../../../../../components/shared/field-input"
+import { InputField } from "../../../../../../../components/shared-1/field-input"
 
 export function SocioEconomicStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     return (

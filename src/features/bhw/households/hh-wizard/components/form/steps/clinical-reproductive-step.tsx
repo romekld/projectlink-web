@@ -15,7 +15,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
 import { DatePicker } from "../../date-picker"
-import { SelectField } from "../../../../../../../components/shared/field-select"
+import { SelectField } from "../../../../../../../components/shared-1/field-select"
 import {
     medicalHistoryOptions,
     fpMethodOptions,
@@ -24,7 +24,7 @@ import {
 import { autoSuggestClassification, classificationOptions } from "../../../data/classification"
 import type { WizardStepProps } from "../wizard"
 
-import { InputField } from "../../../../../../../components/shared/field-input"
+import { InputField } from "../../../../../../../components/shared-1/field-input"
 
 export function ClinicalReproductiveStep({ data, onDataChange, errors = {} }: WizardStepProps) {
     const handleCheckboxChange = (optionValue: string, checked: boolean) => {

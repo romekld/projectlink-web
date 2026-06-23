@@ -1,4 +1,96 @@
+$ eslint
 
-> web@0.1.0 lint D:\capstone\project-link\apps\web
-> eslint
+D:\capstone\project-link\apps\web\src\app\(mobile)\bhw\home\page.tsx
+  2:10  warning  'mockBhwDashboard' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\app\(mobile)\bhw\households\new\page.tsx
+  5:11  warning  'barangays' is assigned a value but never used          @typescript-eslint/no-unused-vars
+  5:22  warning  'defaultBarangayId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\components\shared-1\field-checkbox.tsx
+   7:5   warning  'FieldGroup' is defined but never used   @typescript-eslint/no-unused-vars
+   9:5   warning  'FieldLegend' is defined but never used  @typescript-eslint/no-unused-vars
+  10:5   warning  'FieldSet' is defined but never used     @typescript-eslint/no-unused-vars
+  12:10  warning  'Checkbox' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\components\shared\field-radio.tsx
+  4:3  warning  'FieldDescription' is defined but never used  @typescript-eslint/no-unused-vars
+  5:3  warning  'FieldGroup' is defined but never used        @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\components\shared\field-switch.tsx
+  5:5  warning  'FieldGroup' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\clients\e-itr\components\resident-card.tsx
+  1:10  warning  'Button' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\clients\e-itr\index.tsx
+  5:10  warning  'SearchBar' is defined but never used     @typescript-eslint/no-unused-vars
+  6:10  warning  'ToggleFilter' is defined but never used  @typescript-eslint/no-unused-vars
+  7:10  warning  'ResidentCard' is defined but never used  @typescript-eslint/no-unused-vars
+  8:10  warning  'Step1Search' is defined but never used   @typescript-eslint/no-unused-vars
+  9:10  warning  'Step2Triage' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\home\index.tsx
+  3:10  warning  'SyncStatusBanner' is defined but never used       @typescript-eslint/no-unused-vars
+  4:10  warning  'ReturnedRecordsAlert' is defined but never used   @typescript-eslint/no-unused-vars
+  5:10  warning  'QuickActionCards' is defined but never used       @typescript-eslint/no-unused-vars
+  6:10  warning  'HouseholdsSummaryCard' is defined but never used  @typescript-eslint/no-unused-vars
+  7:10  warning  'SummaryStatsGrid' is defined but never used       @typescript-eslint/no-unused-vars
+  8:10  warning  'RecentActivityList' is defined but never used     @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\households\new\components\field-date.tsx
+   7:10  warning  'cn' is defined but never used              @typescript-eslint/no-unused-vars
+  19:3   warning  'FieldContent' is defined but never used    @typescript-eslint/no-unused-vars
+  21:3   warning  'FieldError' is defined but never used      @typescript-eslint/no-unused-vars
+  22:3   warning  'FieldGroup' is defined but never used      @typescript-eslint/no-unused-vars
+  24:3   warning  'FieldLegend' is defined but never used     @typescript-eslint/no-unused-vars
+  25:3   warning  'FieldSeparator' is defined but never used  @typescript-eslint/no-unused-vars
+  26:3   warning  'FieldSet' is defined but never used        @typescript-eslint/no-unused-vars
+  27:3   warning  'FieldTitle' is defined but never used      @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\households\new\components\field-quarter.tsx
+  8:3  warning  'InputGroupText' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\households\new\components\forms\form-household-info.tsx
+   3:10  warning  'Button' is defined but never used         @typescript-eslint/no-unused-vars
+   4:10  warning  'Checkbox' is defined but never used       @typescript-eslint/no-unused-vars
+   7:10  warning  'FieldSwitch' is defined but never used    @typescript-eslint/no-unused-vars
+   8:10  warning  'FieldRadio' is defined but never used     @typescript-eslint/no-unused-vars
+  12:5   warning  'Field' is defined but never used          @typescript-eslint/no-unused-vars
+  13:5   warning  'FieldContent' is defined but never used   @typescript-eslint/no-unused-vars
+  15:5   warning  'FieldError' is defined but never used     @typescript-eslint/no-unused-vars
+  17:5   warning  'FieldLabel' is defined but never used     @typescript-eslint/no-unused-vars
+  21:5   warning  'FieldTitle' is defined but never used     @typescript-eslint/no-unused-vars
+  23:10  warning  'Input' is defined but never used          @typescript-eslint/no-unused-vars
+  25:5   warning  'Select' is defined but never used         @typescript-eslint/no-unused-vars
+  26:5   warning  'SelectContent' is defined but never used  @typescript-eslint/no-unused-vars
+  27:5   warning  'SelectGroup' is defined but never used    @typescript-eslint/no-unused-vars
+  28:5   warning  'SelectItem' is defined but never used     @typescript-eslint/no-unused-vars
+  29:5   warning  'SelectTrigger' is defined but never used  @typescript-eslint/no-unused-vars
+  30:5   warning  'SelectValue' is defined but never used    @typescript-eslint/no-unused-vars
+  32:10  warning  'Textarea' is defined but never used       @typescript-eslint/no-unused-vars
+  33:10  warning  'Switch' is defined but never used         @typescript-eslint/no-unused-vars
+  34:17  warning  'Search' is defined but never used         @typescript-eslint/no-unused-vars
+
+D:\capstone\project-link\apps\web\src\features\bhw\households\new\components\forms\form-member-info.tsx
+   1:10  warning  'Button' is defined but never used         @typescript-eslint/no-unused-vars
+   2:10  warning  'Checkbox' is defined but never used       @typescript-eslint/no-unused-vars
+   3:10  warning  'FieldInput' is defined but never used     @typescript-eslint/no-unused-vars
+   4:10  warning  'FieldCombobox' is defined but never used  @typescript-eslint/no-unused-vars
+   9:5   warning  'Field' is defined but never used          @typescript-eslint/no-unused-vars
+  10:5   warning  'FieldContent' is defined but never used   @typescript-eslint/no-unused-vars
+  12:5   warning  'FieldError' is defined but never used     @typescript-eslint/no-unused-vars
+  14:5   warning  'FieldLabel' is defined but never used     @typescript-eslint/no-unused-vars
+  18:5   warning  'FieldTitle' is defined but never used     @typescript-eslint/no-unused-vars
+  20:10  warning  'Input' is defined but never used          @typescript-eslint/no-unused-vars
+  22:5   warning  'Select' is defined but never used         @typescript-eslint/no-unused-vars
+  23:5   warning  'SelectContent' is defined but never used  @typescript-eslint/no-unused-vars
+  24:5   warning  'SelectGroup' is defined but never used    @typescript-eslint/no-unused-vars
+  25:5   warning  'SelectItem' is defined but never used     @typescript-eslint/no-unused-vars
+  26:5   warning  'SelectTrigger' is defined but never used  @typescript-eslint/no-unused-vars
+  27:5   warning  'SelectValue' is defined but never used    @typescript-eslint/no-unused-vars
+  29:10  warning  'Textarea' is defined but never used       @typescript-eslint/no-unused-vars
+  30:10  warning  'Switch' is defined but never used         @typescript-eslint/no-unused-vars
+
+✖ 68 problems (0 errors, 68 warnings)
 

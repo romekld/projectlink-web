@@ -1,0 +1,323 @@
+﻿HOUSEHOLD PROFILING
+
+
+Household (HH) Profiling is an essential process of listing every household in a given barangay and obtaining the names of each member of the household with their basic demographic information. This process is expected to facilitate the identification of clients to be targeted for delivering packages of health care services. The information collected through household profiling helps in identifying the socio-economic characteristics of households and their access to basic services and resources. This information is then used to plan and implement programs and interventions that are tailored to the specific needs of the household. Please follow the instructions below in filling up the HH profiling.
+
+
+All information provided are strictly confidential pursuant to Section 10 (Confidentiality of Information) of Republic Act (RA) No. 11315 and the Data Privacy Act of 2012. This will not be used against you or to any of your household members for taxation, investigation, or law enforcement purposes.
+
+
+Instructions:
+
+
+1. Date of Visit (yyyy-mm-dd)*: 
+Record the date when the profiling was conducted. This is important for tracking the progress of the profiling project and for monitoring changes in the household's situation.
+
+
+2. Household Number*: 
+The household number is a unique identifier for each household in the area being profiled. Write down the number assigned to the household you are profiling in the space provided. (yyyymm-facility code-No.(00000)) 
+Note: Facilitycode will provide by KMITS
+
+
+3. Barangay*: 
+A barangay is the smallest political unit in the country. Generally, one enumerator is assigned to enumerate one barangay. For enumeration purposes, a large barangay is usually divided into parts, and each part is called an enumeration area (EA)
+
+
+4. Family:
+Write down how many Family/ies are included in the household (e.g. 1,2,3,4)
+
+
+1. Name of Household member*:
+Write down the full name of each household member (format: Last Name, First Name, Middle Name).
+
+
+2. Member of Household
+The following are included as members of the household:
+* Persons who are present at the time of visit and whose usual place of residence is the housing unit where the household lives. 
+* Family members who are overseas workers and who have been away at the time of the census for not more than five years from the date of departure and are expected to be back within five years from the date of last departure.
+* Those whose usual place of residence is where the household lives but are temporarily away at the time of the census for the following reasons:
+   * on vacation, business/pleasure trip, or training somewhere in the Philippines and are expected to be back within six months from the date of departure.
+   * on vacation, business/pleasure trip, on study/training abroad and are expected to be back within a year from the date of departure
+   * working or attending school outside their usual place of residence but usually come home at least once a week
+   * confined in hospitals for a period of not more than six months as of the time of enumeration, except when they are confined as patients in mental hospitals, leprosaria/leper colonies or drug rehabilitation centers, regardless of the duration of their confinement
+   * detained in national/provincial/city/municipal jails or in military camps for a period of not more than six months as of the time of enumeration, except when their sentence or detention is expected to exceed six months
+   * on board coastal, interisland, or fishing vessels within Philippine territories
+   * on board oceangoing vessels but are expected to be back within five years from the date of departure.
+* Boarders/lodgers of the household or employees of household-operated business who do not usually return to their respective homes weekly.
+* Citizens of foreign countries who have resided or are expected to reside in the Philippines for at least a year from their arrival, except members of diplomatic missions and non-Filipino members of international organizations.
+* Filipino balikbayans with usual place of residence in a foreign country but have resided or are expected to reside in the Philippines for at least a year from their arrival.
+* Persons temporarily staying with the household who have no usual place of residence or who are not certain to be enumerated elsewhere.
+        Reference: PSA website
+
+
+3. Relationship*:
+Determine the relationship of each household member to the respondent. If the relationship is not listed, write down "Other" and specify the relationship to the respondent
+
+
+4. Birthdate*:
+Record the birth date of each household member (yyyy-mm-dd)
+
+
+5. Age in Years and Months*:
+Record the age of each household member
+
+
+6. Sex/Gender*:
+Record the Sex/Gender of each household member
+* M - Male
+* F - Female
+
+
+
+
+7. Civil Status*:
+Record the civil status of each household member 
+* S - Single
+* M - Married
+* L - Lived In
+* W - Widow/er
+* SP - Separated
+* C - Cohabitation
+
+
+8. Educational Attainment 
+Record the educational attainment of each household member
+
+
+9. Religion
+Record the religion of each household member
+
+
+10. Ethnicity (IP or Non-IP):
+Determine the IP or non-IP status of the household. Ask the respondent if they are part of an indigenous community or not. Mark "IP" if the household is part of an indigenous community or "Non-IP" if not.
+
+
+11. Pantawid Pamilyang Pilipino Program (4Ps) membership*:
+4Ps is a poverty reduction strategy that provides grants to extremely poor households to improve their health, nutrition and education particularly of children aged 0-14.
+
+
+12. Philippine Health Insurance Corporation (Philhealth) Membership and Category:
+PhilHealth is a government agency that provides health insurance to Filipinos. Write down the Philhealth number of the household head. For the Philhealth category, write down the Philhealth membership category of the household head. Categories include as follows: (Refer to the UHC IRR 11223 Page 10 Link: https://www.philhealth.gov.ph/about_us/UHC-IRR_Signed.pdf)
+
+
+   1. Direct contributors - including their qualified dependents shall be composed of, but not limited to, the following: 
+      1. Employees with formal employment characterized by the existence of an employer-employee relationship, which include workers in the government and private sector, whether regular, casual, or contractual, are occupying either an elective or appointive position, regardless of the status of appointment, whose premium contribution payments are equally shared by the employee and the employer; 
+      2. Kasambahays, as defined in RA 10361 (Domestic Workers Act); 
+      3. All other workers who are not covered by formal contracts or agreements or who have no employee-employer relationship and whose premium contributions are self-paid, and with capacity to pay premiums, such as the following: 
+      4. Self-earning individuals; 
+      5. Professional practitioners; 
+      6. Overseas Filipino Workers, as defined in RA 10022 (Migrant Workers Act) and RA 10801 (OWWA Act) such as, but not limited to: 
+      7. Sea-based Filipino workers or seafarers; and, 
+      8. Land-based overseas Filipino workers; 
+      9. Filipinos living abroad; 
+      10. Filipinos with dual citizenship; 
+      11. Lifetime members as defined in RA 10606 (National Health Insurance Act); and, 
+      12. All Filipinos aged 21 years and above who have the capacity to pay premiums.
+   2. Indirect contributors - including their qualified dependents shall be composed of, but not limited to, the following: 
+      1. Indigents identified by the DSWD; 
+      2. Beneficiaries of Pantawid Pamilyang Filipino Program Modified Conditional Cash Transfer ( 4Ps/MCCT); 
+      3. Senior citizens who are not currently covered by the Program;
+      4. Persons with disability, as defined in RA 10754 (An Act Expanding the Benefits and Privileges of Persons with Disability); 
+      5. All Filipinos aged 21 years old and above without the capacity to pay premiums; 
+      6. Sangguniang Kabataan officials, as defined in R.A. 10742 (Sangguniang Kabataan Reform Act); and, 
+      7. Those previously identified at point-of-service (POS) or during registration, members previously sponsored by LGUs and those who are not yet in the PhilHealth database and are financially incapable to pay premiums. 
+
+
+
+
+13. Philhealth Membership status
+Record the Philhealth number of each household member and identify if they are qualified members, dependents or >21 years old dependent
+Note: Please Refer to the Philhealth website for the Definitions of qualified members, dependents and >21 years old dependents
+14. Medical History*:
+A record of information about a person's health. A personal medical history may include information about allergies, illnesses, surgeries, immunizations, and results of physical exams and tests.
+
+
+
+
+15. Classification by age or Health risk group*:
+Record the classification by age or health risk group of each household member using the dropdown button
+
+
+16.  Last Menstrual Period (LMP) 
+Refers to the first day (onset of bleeding) of your last menstrual period before falling pregnant. This information is often used to calculate the expected date of delivery for your baby, which in humans is 40 ± 2 weeks from your LMP
+- if pregnant record the LMP in this date format (yyyy-mm-dd)
+
+
+17.  A. FP Method Use (if applicable)
+Record what type of Modern Family method and other methods (e.g. Condom, IUD, BTL) use of each household member if applicable
+
+
+2. Family Planning (FP) Status (if applicable)
+Record the status of FP of each household member if applicable
+
+
+18. Type of Toilet Facility*: 
+The toilet facility is an important indicator of the living conditions of the household. Write down the type of toilet facility that the household has access to. This can be as follows: (Source: Department of Health - Health Promotion Bureau)
+
+
+* Sanitary Toilet Facility
+   * Ventilated improved pit latrine (VIP) or composting toilet  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   * Pour/flush toilet connected to Septic tank
+  
+
+
+
+
+
+   * Pour/flush toilet connected to septic tank and to sewerage system
+  
+
+
+
+   * Unsanitary Toilet Facility
+   * Water-sealed connected to open drain  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      * Overhung latrine  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         * Open-pit Latrine  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            * Without toilet
+
+
+            19. Source of Water Supply*:
+Record the source of water supply. Access to clean water is essential for the health and well-being of the household. Write down the source of water supply for the household. This can be as follows:
+
+
+            * Level I - A protected well or a developed spring with an outlet but without a distribution system, generally adaptable for rural areas where the houses are thinly scattered. A Level I facility normally serves an average of 15 households.
+            * Level II - A water supply facility composed of a source, a reservoir, a piped distribution network with adequate treatment facility, and communal faucets. Usually, one faucet serves 4 to 6 households. Generally suitable for rural and urban fringe areas where houses are clustered densely to justify a simple piped system. The definition was modified with the inclusion of the underlined phrase 'with adequate treatment' to emphasize that source of water supply has passed the Philippine National Standards for Drinking Water
+            * Level III - A water supply facility with a source, a reservoir, a piped distribution network with adequate treatment facility and household taps. Level III water supply facility/service is generally suited for densely populated urban areas. The definition was modified with the inclusion of the underlined phrase 'with adequate treatment' to emphasize that the source of water supply has passed the Philippine National Standards for Drinking Water.

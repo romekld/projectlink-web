@@ -8,7 +8,7 @@ import {
     FieldSeparator,
     FieldSet,
 } from "@/components/ui/field"
-import { InputField } from "@/components/shared/field-input"
+import { InputField } from "@/components/shared-1/field-input"
 import { IdCard, MapPin, Fingerprint } from "lucide-react"
 
 export function Step2Triage() {
