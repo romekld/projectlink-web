@@ -1,0 +1,87 @@
+"use server"
+
+import { createClient } from "@/lib/supabase/server"
+import type { Household, Resident, SyncStatus } from "@/features/bhw/households/data/schema"
+import type { Database } from "@/lib/supabase/database.types"
+
+type HouseholdRow = Database["public"]["Tables"]["households"]["Row"]
+type ResidentRow = Database["public"]["Tables"]["residents"]["Row"]
+
+function mapResident(row: ResidentRow): Resident {
+  return {
+    id: row.id,
+    lastName: row.last_name,
+    firstName: row.first_name,
+    middleName: row.middle_name ?? undefined,
+    relationship: row.relationship,
+    relationshipOther: row.relationship_other ?? undefined,
+    sex: row.sex as "M" | "F",
+    birthdate: row.birthdate,
+    civilStatus: row.civil_status,
+    education: row.education ?? undefined,
+    religion: row.religion ?? undefined,
+    religionOther: row.religion_other ?? undefined,
+    is4ps: row.is_4ps,
+    fourPsId: row.four_ps_id ?? undefined,
+    isIndigenous: row.is_indigenous,
+    isPhilhealthMember: row.is_philhealth_member,
+    philhealthId: row.philhealth_id ?? undefined,
+    philhealthMembershipType: (row.philhealth_membership_type ?? undefined) as "M" | "D" | undefined,
+    philhealthCategory: row.philhealth_category ?? undefined,
+    medicalHistory: row.medical_history as string[],
+    classification: row.classification,
+    isPregnant: row.is_pregnant,
+    lmp: row.lmp ?? undefined,
+    usingFP: row.using_fp,
+    fpMethods: row.fp_methods as string[],
+    fpStatus: row.fp_status ?? undefined,
+  }
+}
+
+function mapHousehold(row: HouseholdRow & { residents: ResidentRow[] }): Household {
+  return {
+    id: row.id,
+    householdNumber: row.household_number ?? "",
+    assignedBhwId: row.assigned_bhw_id ?? "",
+    visitDate: row.visit_date,
+    barangayId: row.barangay_id,
+    houseNoStreet: row.house_no_street ?? undefined,
+    purok: row.purok ?? undefined,
+    enumerationArea: row.enumeration_area ?? undefined,
+    familyCount: row.family_count,
+    respondentLastName: row.respondent_last_name,
+    respondentFirstName: row.respondent_first_name,
+    respondentMiddleName: row.respondent_middle_name ?? undefined,
+    waterSource: row.water_source,
+    toiletFacility: row.toilet_facility,
+    is4ps: row.is_4ps,
+    isIndigenous: row.is_indigenous,
+    latitude: row.latitude ?? undefined,
+    longitude: row.longitude ?? undefined,
+    syncStatus: row.sync_status as SyncStatus,
+    year: row.year,
+    members: (row.residents ?? []).map(mapResident),
+    lastUpdated: row.updated_at,
+  }
+}
+
+export async function getBhwHouseholds(): Promise<Household[]> {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) return []
+
+  const { data, error } = await supabase
+    .from("households")
+    .select("*, residents(*)")
+    .eq("assigned_bhw_id", user.id)
+    .order("updated_at", { ascending: false })
+
+  if (error || !data) return []
+
+  return (data as unknown as (HouseholdRow & { residents: ResidentRow[] })[]).map(
+    mapHousehold
+  )
+}

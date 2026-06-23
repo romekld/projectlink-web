@@ -1,68 +1,85 @@
 import { createClient } from "@/lib/supabase/server"
+import { computeCentroid } from "./geometry-utils"
 
 export interface MapData {
   area: GeoJSON.FeatureCollection
   centroid: { lng: number; lat: number }
-  station: {
-    id: string
-    name: string
-    lng: number
-    lat: number
-  } | null
 }
 
-function computeCentroid(geometry: GeoJSON.Geometry): { lng: number; lat: number } | null {
-  if (geometry.type === "Polygon") {
-    const ring = (geometry as GeoJSON.Polygon).coordinates[0]
-    let sumLng = 0, sumLat = 0
-    for (const coord of ring) {
-      sumLng += coord[0]
-      sumLat += coord[1]
-    }
-    return { lng: sumLng / ring.length, lat: sumLat / ring.length }
-  }
-  if (geometry.type === "MultiPolygon") {
-    const coords = (geometry as GeoJSON.MultiPolygon).coordinates
-    let sumLng = 0, sumLat = 0, count = 0
-    for (const polygon of coords) {
-      for (const coord of polygon[0]) {
-        sumLng += coord[0]
-        sumLat += coord[1]
-        count++
-      }
-    }
-    return count > 0 ? { lng: sumLng / count, lat: sumLat / count } : null
-  }
-  return null
+export interface StationInfo {
+  id: string
+  name: string
+  lng: number
+  lat: number
+}
+
+export interface CoverageBarangay {
+  cityBarangayId: string
+  name: string
+  isPrimary: boolean
 }
 
 export const mapService = {
-  async getMapData(): Promise<MapData | null> {
+  async getCoverageBarangays(): Promise<CoverageBarangay[]> {
     const supabase = await createClient()
 
     const {
       data: { user },
     } = await supabase.auth.getUser()
-    if (!user) return null
+    if (!user) return []
 
     const { data: profile } = await supabase
       .from("profiles")
       .select("health_station_id")
       .eq("id", user.id)
       .single()
-    if (!profile?.health_station_id) return null
+    if (!profile?.health_station_id) return []
 
-    const { data: station } = await supabase
-      .from("health_stations")
-      .select("id, name, latitude, longitude, physical_city_barangay_id")
-      .eq("id", profile.health_station_id)
-      .single()
-    if (!station?.physical_city_barangay_id) return null
+    const { data: coverage } = await supabase
+      .from("health_station_coverage")
+      .select("barangay_id, is_primary")
+      .eq("health_station_id", profile.health_station_id)
+      .eq("is_active", true)
+
+    if (!coverage || coverage.length === 0) return []
+
+    const barangayIds = coverage.map((c) => c.barangay_id)
+
+    const { data: barangays } = await supabase
+      .from("barangays")
+      .select("id, city_barangay_id")
+      .in("id", barangayIds)
+
+    if (!barangays) return []
+
+    const cityBarangayIds = barangays.map((b) => b.city_barangay_id)
+
+    const { data: cityBarangays } = await supabase
+      .from("city_barangays")
+      .select("id, name")
+      .in("id", cityBarangayIds)
+
+    if (!cityBarangays) return []
+
+    const cityMap = new Map(cityBarangays.map((cb) => [cb.id, cb.name]))
+
+    return coverage.map((c) => {
+      const barangay = barangays.find((b) => b.id === c.barangay_id)
+      return {
+        cityBarangayId: barangay?.city_barangay_id ?? "",
+        name: cityMap.get(barangay?.city_barangay_id ?? "") ?? "",
+        isPrimary: c.is_primary ?? false,
+      }
+    })
+  },
+
+  async getBarangayBoundary(cityBarangayId: string): Promise<{ area: GeoJSON.FeatureCollection; centroid: { lng: number; lat: number } } | null> {
+    const supabase = await createClient()
 
     const { data: cityBarangay } = await supabase
       .from("city_barangays")
-      .select("geometry, name")
-      .eq("id", station.physical_city_barangay_id)
+      .select("geometry")
+      .eq("id", cityBarangayId)
       .single()
     if (!cityBarangay?.geometry) return null
 
@@ -81,17 +98,71 @@ export const mapService = {
 
     const centroid = computeCentroid(geometry) ?? { lng: 120.9842, lat: 14.5995 }
 
-    return {
-      area,
-      centroid,
-      station: station.latitude && station.longitude
-        ? {
-            id: station.id,
-            name: station.name,
-            lng: station.longitude,
-            lat: station.latitude,
-          }
-        : null,
-    }
+    return { area, centroid }
+  },
+
+  async getStationInfo(): Promise<StationInfo | null> {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return null
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("health_station_id")
+      .eq("id", user.id)
+      .single()
+    if (!profile?.health_station_id) return null
+
+    const { data: station } = await supabase
+      .from("health_stations")
+      .select("id, name, latitude, longitude")
+      .eq("id", profile.health_station_id)
+      .single()
+    if (!station) return null
+
+    return station.latitude && station.longitude
+      ? {
+          id: station.id,
+          name: station.name,
+          lng: station.longitude,
+          lat: station.latitude,
+        }
+      : null
+  },
+
+  async getMapData(cityBarangayId?: string): Promise<{ mapData: MapData | null; station: StationInfo | null }> {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return { mapData: null, station: null }
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("health_station_id")
+      .eq("id", user.id)
+      .single()
+    if (!profile?.health_station_id) return { mapData: null, station: null }
+
+    const [stationResult, stationInfo] = await Promise.all([
+      supabase
+        .from("health_stations")
+        .select("id, name, latitude, longitude, physical_city_barangay_id")
+        .eq("id", profile.health_station_id)
+        .single(),
+      this.getStationInfo(),
+    ])
+
+    const station = stationResult.data
+    const targetBarangayId = cityBarangayId ?? station?.physical_city_barangay_id
+    if (!targetBarangayId) return { mapData: null, station: stationInfo }
+
+    const boundary = await this.getBarangayBoundary(targetBarangayId)
+
+    return { mapData: boundary ?? null, station: stationInfo }
   },
 }

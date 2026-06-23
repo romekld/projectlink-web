@@ -21,6 +21,10 @@ export interface HouseholdFormData {
   waterSource: string
   toiletFacility: string
   visitDate: string
+  familyCount: number
+  is4ps: boolean
+  is4psId: string
+  isIndigenous: boolean
 }
 
 export interface HouseholdMember {
@@ -33,17 +37,17 @@ export interface HouseholdMember {
   age: number
   ageGroup: string
   relationship: string
-  relationshipOther: string
   civilStatus: string
   education: string
   religion: string
-  religionOther: string
   is4ps: boolean
   is4psId: string
   isIndigenous: boolean
+  isPhilhealthMember: boolean
   philhealthId: string
   philhealthMembershipType: string
   philhealthCategory: string
+  isPregnant: boolean
   medicalHistory: string[]
   lmpDate: string
   usingFP: boolean
@@ -82,6 +86,10 @@ const initialState = {
     waterSource: "",
     toiletFacility: "",
     visitDate: "",
+    familyCount: 1,
+    is4ps: false,
+    is4psId: "",
+    isIndigenous: false,
   },
   members: [] as HouseholdMember[],
   pinLocation: null as { lng: number; lat: number } | null,

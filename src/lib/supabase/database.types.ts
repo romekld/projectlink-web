@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       barangays: {
@@ -552,196 +577,83 @@ export type Database = {
           },
         ]
       }
-      household_members: {
-        Row: {
-          classification_q1:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q2:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q3:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q4:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          created_at: string
-          date_of_birth: string
-          dob_estimated: boolean
-          household_id: string
-          id: string
-          local_id: string | null
-          member_first_name: string
-          member_last_name: string
-          member_middle_name: string | null
-          member_mothers_maiden_name: string | null
-          member_philhealth_id: string | null
-          member_remarks: string | null
-          relationship_to_hh_head: Database["public"]["Enums"]["relationship_to_hh_head"]
-          sex: string
-          updated_at: string
-        }
-        Insert: {
-          classification_q1?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q2?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q3?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q4?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          created_at?: string
-          date_of_birth: string
-          dob_estimated?: boolean
-          household_id: string
-          id?: string
-          local_id?: string | null
-          member_first_name: string
-          member_last_name: string
-          member_middle_name?: string | null
-          member_mothers_maiden_name?: string | null
-          member_philhealth_id?: string | null
-          member_remarks?: string | null
-          relationship_to_hh_head: Database["public"]["Enums"]["relationship_to_hh_head"]
-          sex: string
-          updated_at?: string
-        }
-        Update: {
-          classification_q1?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q2?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q3?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          classification_q4?:
-            | Database["public"]["Enums"]["classification_code"]
-            | null
-          created_at?: string
-          date_of_birth?: string
-          dob_estimated?: boolean
-          household_id?: string
-          id?: string
-          local_id?: string | null
-          member_first_name?: string
-          member_last_name?: string
-          member_middle_name?: string | null
-          member_mothers_maiden_name?: string | null
-          member_philhealth_id?: string | null
-          member_remarks?: string | null
-          relationship_to_hh_head?: Database["public"]["Enums"]["relationship_to_hh_head"]
-          sex?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "household_members_household_id_fkey"
-            columns: ["household_id"]
-            isOneToOne: false
-            referencedRelation: "households"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       households: {
         Row: {
-          assigned_bhw_id: string | null
-          barangay_id: string | null
+          assigned_bhw_id: string
+          barangay_id: string
           created_at: string
-          health_station_id: string | null
-          hh_head_philhealth_category:
-            | Database["public"]["Enums"]["philhealth_category"]
-            | null
-          hh_head_philhealth_id: string | null
-          hh_head_philhealth_member: boolean
+          enumeration_area: string | null
+          family_count: number
           house_no_street: string | null
           household_number: string | null
           id: string
-          is_indigenous_people: boolean
+          is_indigenous: boolean
           latitude: number | null
-          local_id: string | null
+          location: unknown
           longitude: number | null
-          nhts_status: Database["public"]["Enums"]["nhts_status"]
+          nhts_status: string
           purok: string | null
           respondent_first_name: string
           respondent_last_name: string
           respondent_middle_name: string | null
-          returned_reason: string | null
+          reviewed_by_id: string | null
           sync_status: Database["public"]["Enums"]["hh_sync_status"]
+          toilet_facility: string
           updated_at: string
-          visit_date_q1: string | null
-          visit_date_q2: string | null
-          visit_date_q3: string | null
-          visit_date_q4: string | null
+          visit_date: string
+          water_source: string
           year: number
         }
         Insert: {
-          assigned_bhw_id?: string | null
-          barangay_id?: string | null
+          assigned_bhw_id: string
+          barangay_id: string
           created_at?: string
-          health_station_id?: string | null
-          hh_head_philhealth_category?:
-            | Database["public"]["Enums"]["philhealth_category"]
-            | null
-          hh_head_philhealth_id?: string | null
-          hh_head_philhealth_member?: boolean
+          enumeration_area?: string | null
+          family_count?: number
           house_no_street?: string | null
           household_number?: string | null
           id?: string
-          is_indigenous_people?: boolean
+          is_indigenous?: boolean
           latitude?: number | null
-          local_id?: string | null
+          location?: unknown
           longitude?: number | null
-          nhts_status?: Database["public"]["Enums"]["nhts_status"]
+          nhts_status?: string
           purok?: string | null
           respondent_first_name: string
           respondent_last_name: string
           respondent_middle_name?: string | null
-          returned_reason?: string | null
+          reviewed_by_id?: string | null
           sync_status?: Database["public"]["Enums"]["hh_sync_status"]
+          toilet_facility: string
           updated_at?: string
-          visit_date_q1?: string | null
-          visit_date_q2?: string | null
-          visit_date_q3?: string | null
-          visit_date_q4?: string | null
+          visit_date: string
+          water_source: string
           year?: number
         }
         Update: {
-          assigned_bhw_id?: string | null
-          barangay_id?: string | null
+          assigned_bhw_id?: string
+          barangay_id?: string
           created_at?: string
-          health_station_id?: string | null
-          hh_head_philhealth_category?:
-            | Database["public"]["Enums"]["philhealth_category"]
-            | null
-          hh_head_philhealth_id?: string | null
-          hh_head_philhealth_member?: boolean
+          enumeration_area?: string | null
+          family_count?: number
           house_no_street?: string | null
           household_number?: string | null
           id?: string
-          is_indigenous_people?: boolean
+          is_indigenous?: boolean
           latitude?: number | null
-          local_id?: string | null
+          location?: unknown
           longitude?: number | null
-          nhts_status?: Database["public"]["Enums"]["nhts_status"]
+          nhts_status?: string
           purok?: string | null
           respondent_first_name?: string
           respondent_last_name?: string
           respondent_middle_name?: string | null
-          returned_reason?: string | null
+          reviewed_by_id?: string | null
           sync_status?: Database["public"]["Enums"]["hh_sync_status"]
+          toilet_facility?: string
           updated_at?: string
-          visit_date_q1?: string | null
-          visit_date_q2?: string | null
-          visit_date_q3?: string | null
-          visit_date_q4?: string | null
+          visit_date?: string
+          water_source?: string
           year?: number
         }
         Relationships: [
@@ -781,17 +693,10 @@ export type Database = {
             referencedColumns: ["city_barangay_id"]
           },
           {
-            foreignKeyName: "households_health_station_id_fkey"
-            columns: ["health_station_id"]
+            foreignKeyName: "households_reviewed_by_id_fkey"
+            columns: ["reviewed_by_id"]
             isOneToOne: false
-            referencedRelation: "health_station_management_view"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "households_health_station_id_fkey"
-            columns: ["health_station_id"]
-            isOneToOne: false
-            referencedRelation: "health_stations"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -903,6 +808,107 @@ export type Database = {
             columns: ["health_station_id"]
             isOneToOne: false
             referencedRelation: "health_stations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      residents: {
+        Row: {
+          birthdate: string
+          civil_status: string
+          classification: string
+          created_at: string
+          education: string | null
+          first_name: string
+          four_ps_id: string | null
+          fp_methods: Json
+          fp_status: string | null
+          household_id: string
+          id: string
+          is_indigenous: boolean
+          is_philhealth_member: boolean
+          is_pregnant: boolean
+          last_name: string
+          lmp: string | null
+          medical_history: Json
+          metadata: Json
+          middle_name: string | null
+          nhts_status: string
+          philhealth_category: string | null
+          philhealth_id: string | null
+          philhealth_membership_type: string | null
+          relationship: string
+          religion: string | null
+          sex: string
+          updated_at: string
+          using_fp: boolean
+        }
+        Insert: {
+          birthdate: string
+          civil_status: string
+          classification: string
+          created_at?: string
+          education?: string | null
+          first_name: string
+          four_ps_id?: string | null
+          fp_methods?: Json
+          fp_status?: string | null
+          household_id: string
+          id?: string
+          is_indigenous?: boolean
+          is_philhealth_member?: boolean
+          is_pregnant?: boolean
+          last_name: string
+          lmp?: string | null
+          medical_history?: Json
+          metadata?: Json
+          middle_name?: string | null
+          nhts_status?: string
+          philhealth_category?: string | null
+          philhealth_id?: string | null
+          philhealth_membership_type?: string | null
+          relationship: string
+          religion?: string | null
+          sex: string
+          updated_at?: string
+          using_fp?: boolean
+        }
+        Update: {
+          birthdate?: string
+          civil_status?: string
+          classification?: string
+          created_at?: string
+          education?: string | null
+          first_name?: string
+          four_ps_id?: string | null
+          fp_methods?: Json
+          fp_status?: string | null
+          household_id?: string
+          id?: string
+          is_indigenous?: boolean
+          is_philhealth_member?: boolean
+          is_pregnant?: boolean
+          last_name?: string
+          lmp?: string | null
+          medical_history?: Json
+          metadata?: Json
+          middle_name?: string | null
+          nhts_status?: string
+          philhealth_category?: string | null
+          philhealth_id?: string | null
+          philhealth_membership_type?: string | null
+          relationship?: string
+          religion?: string | null
+          sex?: string
+          updated_at?: string
+          using_fp?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "residents_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
             referencedColumns: ["id"]
           },
         ]
@@ -2159,40 +2165,39 @@ export type Database = {
       }
     }
     Enums: {
+      civil_status:
+        | "Single"
+        | "Married"
+        | "Widowed"
+        | "Separated"
+        | "Cohabitation"
       classification_code:
-        | "N"
-        | "I"
-        | "U"
-        | "S"
-        | "A"
-        | "P"
-        | "AP"
-        | "PP"
+        | "Infant"
+        | "Child"
+        | "Adolescent"
         | "WRA"
-        | "SC"
+        | "Pregnant"
+        | "Post-Partum"
+        | "Senior Citizen"
         | "PWD"
-        | "AB"
+        | "Adult"
       hh_sync_status:
         | "draft"
         | "pending_sync"
         | "pending_validation"
         | "returned"
         | "validated"
-      nhts_status: "NHTS-4Ps" | "Non-NHTS"
-      philhealth_category:
-        | "Formal Economy"
-        | "Informal Economy"
-        | "Indigent/Sponsored"
-        | "Senior Citizen"
-        | "Other"
-      relationship_to_hh_head:
-        | "1-Head"
-        | "2-Spouse"
-        | "3-Son"
-        | "4-Daughter"
-        | "5-Others"
+      nhts_status: "4Ps" | "Non-4Ps"
+      ph_category: "Direct" | "Indirect" | "Unknown"
+      rel_to_head: "Head" | "Spouse" | "Son" | "Daughter" | "Other"
+      toilet_type:
+        | "Sanitary-VIP"
+        | "Sanitary-Septic"
+        | "Unsanitary-Open"
+        | "None"
       user_role: "bhw" | "rhm" | "phn" | "phis" | "cho" | "system_admin"
       user_status: "active" | "inactive" | "invited" | "suspended"
+      water_source_level: "Level I" | "Level II" | "Level III"
     }
     CompositeTypes: {
       geometry_dump: {
@@ -2326,21 +2331,28 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
+      civil_status: [
+        "Single",
+        "Married",
+        "Widowed",
+        "Separated",
+        "Cohabitation",
+      ],
       classification_code: [
-        "N",
-        "I",
-        "U",
-        "S",
-        "A",
-        "P",
-        "AP",
-        "PP",
+        "Infant",
+        "Child",
+        "Adolescent",
         "WRA",
-        "SC",
+        "Pregnant",
+        "Post-Partum",
+        "Senior Citizen",
         "PWD",
-        "AB",
+        "Adult",
       ],
       hh_sync_status: [
         "draft",
@@ -2349,23 +2361,18 @@ export const Constants = {
         "returned",
         "validated",
       ],
-      nhts_status: ["NHTS-4Ps", "Non-NHTS"],
-      philhealth_category: [
-        "Formal Economy",
-        "Informal Economy",
-        "Indigent/Sponsored",
-        "Senior Citizen",
-        "Other",
-      ],
-      relationship_to_hh_head: [
-        "1-Head",
-        "2-Spouse",
-        "3-Son",
-        "4-Daughter",
-        "5-Others",
+      nhts_status: ["4Ps", "Non-4Ps"],
+      ph_category: ["Direct", "Indirect", "Unknown"],
+      rel_to_head: ["Head", "Spouse", "Son", "Daughter", "Other"],
+      toilet_type: [
+        "Sanitary-VIP",
+        "Sanitary-Septic",
+        "Unsanitary-Open",
+        "None",
       ],
       user_role: ["bhw", "rhm", "phn", "phis", "cho", "system_admin"],
       user_status: ["active", "inactive", "invited", "suspended"],
+      water_source_level: ["Level I", "Level II", "Level III"],
     },
   },
 } as const

@@ -1,0 +1,138 @@
+"use server"
+
+import { z } from "zod"
+import { createClient } from "@/lib/supabase/server"
+
+const residentInputSchema = z.object({
+  lastName: z.string().min(1),
+  firstName: z.string().min(1),
+  middleName: z.string().optional(),
+  relationship: z.string().min(1),
+  relationshipOther: z.string().optional(),
+  sex: z.enum(["M", "F"]),
+  birthdate: z.string().min(1),
+  civilStatus: z.string().min(1),
+  education: z.string().optional(),
+  religion: z.string().optional(),
+  religionOther: z.string().optional(),
+  is4ps: z.boolean().default(false),
+  fourPsId: z.string().optional(),
+  isIndigenous: z.boolean().default(false),
+  isPhilhealthMember: z.boolean().default(false),
+  philhealthId: z.string().optional(),
+  philhealthMembershipType: z.enum(["M", "D"]).optional(),
+  philhealthCategory: z.string().optional(),
+  medicalHistory: z.array(z.string()).default([]),
+  classification: z.string().min(1),
+  isPregnant: z.boolean().default(false),
+  lmp: z.string().optional(),
+  usingFP: z.boolean().default(false),
+  fpMethods: z.array(z.string()).default([]),
+  fpStatus: z.string().optional(),
+})
+
+const createHouseholdSchema = z.object({
+  visitDate: z.string().min(1),
+  barangayId: z.string().uuid(),
+  houseNoStreet: z.string().optional(),
+  purok: z.string().optional(),
+  enumerationArea: z.string().optional(),
+  familyCount: z.number().int().min(1).default(1),
+  respondentLastName: z.string().min(1),
+  respondentFirstName: z.string().min(1),
+  respondentMiddleName: z.string().optional(),
+  waterSource: z.string().min(1),
+  toiletFacility: z.string().min(1),
+  is4ps: z.boolean().default(false),
+  isIndigenous: z.boolean().default(false),
+  latitude: z.number().nullable().optional(),
+  longitude: z.number().nullable().optional(),
+  residents: z.array(residentInputSchema).min(1),
+})
+
+export type CreateHouseholdInput = z.infer<typeof createHouseholdSchema>
+
+export async function createHousehold(
+  input: CreateHouseholdInput
+): Promise<{ id: string } | { error: string }> {
+  const parsed = createHouseholdSchema.safeParse(input)
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? "Invalid input" }
+  }
+
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) return { error: "Not authenticated" }
+
+  const d = parsed.data
+
+  const { data: household, error: hhError } = await supabase
+    .from("households")
+    .insert({
+      visit_date: d.visitDate,
+      barangay_id: d.barangayId,
+      house_no_street: d.houseNoStreet ?? null,
+      purok: d.purok ?? null,
+      enumeration_area: d.enumerationArea ?? null,
+      family_count: d.familyCount,
+      respondent_last_name: d.respondentLastName,
+      respondent_first_name: d.respondentFirstName,
+      respondent_middle_name: d.respondentMiddleName ?? null,
+      water_source: d.waterSource,
+      toilet_facility: d.toiletFacility,
+      is_4ps: d.is4ps,
+      is_indigenous: d.isIndigenous,
+      latitude: d.latitude ?? null,
+      longitude: d.longitude ?? null,
+      assigned_bhw_id: user.id,
+      sync_status: "pending_validation",
+    })
+    .select("id")
+    .single()
+
+  if (hhError || !household) {
+    return { error: hhError?.message ?? "Failed to create household" }
+  }
+
+  if (d.residents.length > 0) {
+    const residentRows = d.residents.map((r) => ({
+      household_id: household.id,
+      last_name: r.lastName,
+      first_name: r.firstName,
+      middle_name: r.middleName ?? null,
+      relationship: r.relationship,
+      relationship_other: r.relationshipOther ?? null,
+      sex: r.sex,
+      birthdate: r.birthdate,
+      civil_status: r.civilStatus,
+      education: r.education ?? null,
+      religion: r.religion ?? null,
+      religion_other: r.religionOther ?? null,
+      is_4ps: r.is4ps,
+      four_ps_id: r.fourPsId ?? null,
+      is_indigenous: r.isIndigenous,
+      is_philhealth_member: r.isPhilhealthMember,
+      philhealth_id: r.philhealthId ?? null,
+      philhealth_membership_type: r.philhealthMembershipType ?? null,
+      philhealth_category: r.philhealthCategory ?? null,
+      medical_history: r.medicalHistory,
+      classification: r.classification,
+      is_pregnant: r.isPregnant,
+      lmp: r.lmp ?? null,
+      using_fp: r.usingFP,
+      fp_methods: r.fpMethods,
+      fp_status: r.fpStatus ?? null,
+    }))
+
+    const { error: residentsError } = await supabase
+      .from("residents")
+      .insert(residentRows)
+
+    if (residentsError) return { error: residentsError.message }
+  }
+
+  return { id: household.id }
+}
