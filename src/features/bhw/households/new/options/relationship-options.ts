@@ -9,5 +9,4 @@ export const relationshipOptions: SelectOption[] = [
   { value: "Spouse", label: "Spouse", code: "2" },
   { value: "Son", label: "Son", code: "3" },
   { value: "Daughter", label: "Daughter", code: "4" },
-  { value: "Other", label: "Other Specify relationship", code: "5" },
 ]

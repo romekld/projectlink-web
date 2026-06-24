@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, useTransition } from "react"
 import { FormProvider } from "react-hook-form"
 import { ArrowLeft, ArrowRight, X, Loader2, Eye, CheckCircle2, AlertCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 import { useWizardStore, TOTAL_STEPS } from "./stores/wizard-store"
 import { useHouseholdForm } from "./components/hooks/use-household-form"
@@ -22,6 +23,18 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog"
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import { getSubmissionPayload, type SubmissionPayload } from "./services/submit-household"
 import { submitHouseholdAction, type SubmitResult } from "./actions/submit-household-action"
@@ -53,12 +66,14 @@ const stepVariants = {
 }
 
 export function NewHouseholdPage({ coverageBarangays, initialMapData, station }: NewHouseholdPageProps) {
+  const router = useRouter()
   const { currentStep, nextStep, previousStep, resetWizard } = useWizardStore()
   const { form, validateStep, syncToStore } = useHouseholdForm()
 
   const [direction, setDirection] = useState(0)
   const [submissionPayload, setSubmissionPayload] = useState<SubmissionPayload | null>(null)
   const [showPreview, setShowPreview] = useState(false)
+  const [showCloseDialog, setShowCloseDialog] = useState(false)
   const [dialogMode, setDialogMode] = useState<DialogMode>("preview")
   const [submitResult, setSubmitResult] = useState<SubmitResult | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -81,19 +96,15 @@ export function NewHouseholdPage({ coverageBarangays, initialMapData, station }:
     previousStep()
   }, [previousStep])
 
-  const handleClose = useCallback(() => {
-    if (confirm("Are you sure you want to close? Your progress will be saved as a draft.")) {
-      resetWizard()
-    }
-  }, [resetWizard])
+  const handleReset = useCallback(() => {
+    resetWizard()
+    form.reset()
+    setShowCloseDialog(false)
+  }, [resetWizard, form])
 
   const handleBack = useCallback(() => {
-    if (isFirstStep) {
-      handleClose()
-    } else {
-      handlePrevious()
-    }
-  }, [isFirstStep, handleClose, handlePrevious])
+    router.push("/bhw/households")
+  }, [router])
 
   const handleReview = useCallback(async () => {
     const step0valid = await validateStep(0)
@@ -147,12 +158,12 @@ export function NewHouseholdPage({ coverageBarangays, initialMapData, station }:
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose()
+      if (e.key === "Escape") setShowCloseDialog(true)
       if (e.key === "Enter" && !isLastStep) handleNext()
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
-  }, [handleClose, handleNext, isLastStep])
+  }, [handleNext, isLastStep])
 
   return (
     <FormProvider {...form}>
@@ -163,9 +174,25 @@ export function NewHouseholdPage({ coverageBarangays, initialMapData, station }:
             <ArrowLeft className="size-5" />
           </Button>
           <h1 className="text-base font-semibold">New e-ITR</h1>
-          <Button variant="ghost" size="icon" className="size-10" onClick={handleClose}>
-            <X className="size-5" />
-          </Button>
+          <AlertDialog open={showCloseDialog} onOpenChange={setShowCloseDialog}>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-10">
+                <X className="size-5" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Close household form?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Your progress will be lost. Are you sure you want to close?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="grid grid-cols-2 gap-4">
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction variant="destructive" onClick={handleReset}>Reset</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </header>
 
         {/* Main Content with Animated Transitions */}
@@ -204,6 +231,7 @@ export function NewHouseholdPage({ coverageBarangays, initialMapData, station }:
             <div className="flex gap-2">
               {!isFirstStep && (
                 <Button variant="outline" size="lg" onClick={handlePrevious}>
+                  <ArrowLeft />
                   Previous
                 </Button>
               )}

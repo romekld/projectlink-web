@@ -884,9 +884,13 @@ function MapControls({
           setWaitingForLocation(false);
         },
         (error) => {
-          console.error("Error getting location:", error);
+          console.error("Error getting location:", {
+            code: error.code,
+            message: error.message,
+          });
           setWaitingForLocation(false);
         },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 },
       );
     }
   }, [map, onLocate]);

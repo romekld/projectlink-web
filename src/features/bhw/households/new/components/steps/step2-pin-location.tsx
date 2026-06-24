@@ -154,7 +154,7 @@ export function Step2PinLocation({ initialMapData, station, coverageBarangays }:
           zoom={16}
           styles={{
             light: `https://api.maptiler.com/maps/streets-v2/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_API_KEY}`,
-            dark: `https://api.maptiler.com/maps/darkmatter/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_API_KEY}`,
+            dark: `https://api.maptiler.com/maps/streets-v2/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_API_KEY}`,
           }}
         >
           {currentBoundary?.area && (
@@ -169,6 +169,7 @@ export function Step2PinLocation({ initialMapData, station, coverageBarangays }:
             showCompass
             showFullscreen
             showLocate
+            onLocate={(coords) => handleDrag({ lng: coords.longitude, lat: coords.latitude })}
           />
           {station && (
             <MapMarker

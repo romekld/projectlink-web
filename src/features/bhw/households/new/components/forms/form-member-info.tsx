@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 
-import { Church, GraduationCap, Sparkles, Hash, Fingerprint, CalendarDays } from "lucide-react"
+import { Church, GraduationCap, Sparkles, Hash, Fingerprint, CalendarDays, Plus } from "lucide-react"
 
 import {
   Combobox,
@@ -96,6 +96,8 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
   const [lmpOpen, setLmpOpen] = React.useState(false)
   const [relationshipItems, setRelationshipItems] = React.useState(relationshipOptions)
   const [religionItems, setReligionItems] = React.useState(religionOptions)
+  const [relInputValue, setRelInputValue] = React.useState("")
+  const [religionInputValue, setReligionInputValue] = React.useState("")
   const fpMethodAnchor = useComboboxAnchor()
 
   const initialFpMethodItems = React.useMemo(() => fpMethodOptions, [])
@@ -215,40 +217,39 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                     items={relationshipItems}
                     value={relationshipItems.find((o) => o.value === field.value) ?? null}
                     onValueChange={(val) => field.onChange(val?.value ?? "")}
+                    onInputValueChange={(val) => setRelInputValue(val ?? "")}
                   >
                     <ComboboxInput
                       placeholder="Select or type custom..."
                       showClear
                       required
                       aria-invalid={fieldState.invalid}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          const text = e.currentTarget.value.trim()
-                          if (!text) return
-                          const known = relationshipItems.some(
-                            (o) => o.label === text || o.value === text,
-                          )
-                          if (!known) {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            e.nativeEvent?.stopImmediatePropagation()
-                            const newItem = { value: text, label: text }
-                            setRelationshipItems((prev) => [...prev, newItem])
-                            field.onChange(text)
-                            e.currentTarget.value = ""
-                          } else {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            e.nativeEvent?.stopImmediatePropagation()
-                          }
-                        }
-                      }}
                     />
                     <ComboboxContent container={comboboxContainer}>
                       <ComboboxEmpty>
-                        {field.value
-                          ? `Press Enter to add &ldquo;${field.value}&rdquo;`
-                          : "Press Enter to add custom relationship"}
+                        {relInputValue.trim() ? (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const text = relInputValue.trim()
+                              const exists = relationshipItems.some(
+                                (o) => o.label === text || o.value === text,
+                              )
+                              if (!exists) {
+                                setRelationshipItems((prev) => [...prev, { value: text, label: text }])
+                              }
+                              field.onChange(text)
+                            }}
+                            className="gap-1"
+                          >
+                            <Plus />
+                            Add &ldquo;{relInputValue.trim()}&rdquo;
+                          </Button>
+                        ) : (
+                          "Type to add a custom relationship"
+                        )}
                       </ComboboxEmpty>
                       <ComboboxList>
                         {(item) => (
@@ -257,7 +258,7 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                             value={item}
                             disabled={item.value === "Head" && hasHead}
                           >
-                            <Badge variant="outline">{item.code}</Badge>
+                            {/* <Badge variant="outline">{item.code}</Badge> */}
                             {item.label}
                           </ComboboxItem>
                         )}
@@ -267,7 +268,7 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                 <FieldDescription>
                   {hasHead && field.value !== "Head"
                     ? "Head already assigned. Only one head per household."
-                    : "Select the relationship of the member to the household head, or type a custom one and press Enter."}
+                    : "Select the relationship of the member to the household head, or type a custom one and tap Add."}
                 </FieldDescription>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
@@ -454,33 +455,12 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                   items={religionItems}
                   value={religionItems.find((o) => o.label === field.value) ?? null}
                   onValueChange={(val) => field.onChange(val?.label ?? "")}
+                  onInputValueChange={(val) => setReligionInputValue(val ?? "")}
                 >
                   <ComboboxInput
                     placeholder="Select or type custom..."
                     showClear
                     aria-invalid={fieldState.invalid}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        const text = e.currentTarget.value.trim()
-                        if (!text) return
-                        const known = religionItems.some(
-                          (o) => o.label === text || o.value === text,
-                        )
-                        if (!known) {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          e.nativeEvent?.stopImmediatePropagation()
-                          const newItem = { value: text, label: text }
-                          setReligionItems((prev) => [...prev, newItem])
-                          field.onChange(text)
-                          e.currentTarget.value = ""
-                        } else {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          e.nativeEvent?.stopImmediatePropagation()
-                        }
-                      }
-                    }}
                   >
                     <InputGroupAddon>
                       <Church />
@@ -488,9 +468,29 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                   </ComboboxInput>
                   <ComboboxContent container={comboboxContainer}>
                     <ComboboxEmpty>
-                      {field.value
-                        ? `Press Enter to add &ldquo;${field.value}&rdquo;`
-                        : "Press Enter to add custom religion"}
+                      {religionInputValue.trim() ? (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            const text = religionInputValue.trim()
+                            const exists = religionItems.some(
+                              (o) => o.label === text || o.value === text,
+                            )
+                            if (!exists) {
+                              setReligionItems((prev) => [...prev, { value: text, label: text }])
+                            }
+                            field.onChange(text)
+                          }}
+                          className="gap-1"
+                        >
+                          <Plus />
+                          Add &ldquo;{religionInputValue.trim()}&rdquo;
+                        </Button>
+                      ) : (
+                        "Type to add a custom religion"
+                      )}
                     </ComboboxEmpty>
                     <ComboboxList>
                       {(item) => (
@@ -502,7 +502,7 @@ export function MemberInfoForm({ comboboxContainer, onCancel }: MemberInfoFormPr
                   </ComboboxContent>
                 </Combobox>
                 <FieldDescription>
-                  Select the religious affiliation of the member, or type a custom one and press Enter.
+                  Select the religious affiliation of the member, or type a custom one and tap Add.
                 </FieldDescription>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>

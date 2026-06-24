@@ -32,7 +32,7 @@ export function Step3MemberInfo() {
   const handleAppend = (data: MemberFormValues) => {
     append(data)
     addMemberToStore({
-      id: crypto.randomUUID(),
+      id: globalThis.crypto.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
       lastName: data.lastName,
       firstName: data.firstName,
       middleName: data.middleName ?? "",

@@ -21,5 +21,4 @@ export const religionOptions: SelectOption[] = [
   { value: "evangelical", label: "Evangelical" },
   { value: "pentecostal", label: "Pentecostal" },
   { value: "unknown", label: "Unknown" },
-  { value: "other", label: "Others (please specify)" },
 ]
